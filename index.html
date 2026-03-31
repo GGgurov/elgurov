@@ -158,6 +158,14 @@
             z-index: 1;
             overflow: hidden;
         }
+        
+        /* Стили для того, чтобы фото ровно встало в круг */
+        .avatar-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
 
         /* Статус "Онлайн" */
         .status-dot {
@@ -439,7 +447,8 @@
         <div class="profile-area">
             <div class="avatar-wrapper">
                 <div class="avatar-img">
-                    <i class="fa-solid fa-gamepad"></i> </div>
+                    <img src="avatar.jpg" alt="elgurov" />
+                </div>
                 <div class="status-dot"></div>
             </div>
             <span class="nickname-prefix"></span>
