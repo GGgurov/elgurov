@@ -4,24 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>elgurov | Hub</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- ОСНОВНЫЕ ПЕРЕМЕННЫЕ И СБРОС --- */
+        /* --- ПЕРЕМЕННЫЕ --- */
         :root {
             --bg-dark: #050509;
             --primary-neon: #00f2fe;
             --secondary-neon: #4facfe;
             --twitch-color: #9146FF;
             --tg-color: #0088cc;
-            --donate-color: #ff9f43;
             --kaspi-color: #f14635;
+            --vtb-color: #002882;
             --crypto-color: #f3ba2f;
+            --dalink-color: #ff3b8f;
             --text-main: #ffffff;
             --text-muted: #8b9bb4;
             --glass: rgba(255, 255, 255, 0.03);
             --border-glass: rgba(255, 255, 255, 0.08);
+            --menu-glass: rgba(0, 0, 0, 0.3);
         }
 
         * {
@@ -29,7 +34,7 @@
             margin: 0;
             padding: 0;
             outline: none;
-            -webkit-tap-highlight-color: transparent; /* Убираем синий блик на мобильных */
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -43,9 +48,11 @@
             padding: 20px;
             overflow-x: hidden;
             position: relative;
+            /* Аппаратное ускорение для плавности */
+            transform: translateZ(0); 
         }
 
-        /* --- АНИМИРОВАННЫЙ ФОН --- */
+        /* --- ФОН --- */
         body::before {
             content: '';
             position: fixed;
@@ -59,6 +66,7 @@
                 linear-gradient(135deg, #050509 0%, #11111d 100%);
             z-index: -1;
             animation: bgPulse 15s ease infinite alternate;
+            will-change: transform, opacity;
         }
 
         @keyframes bgPulse {
@@ -66,7 +74,7 @@
             100% { transform: scale(1.05); opacity: 1; }
         }
 
-        /* --- ГЛАВНЫЙ КОНТЕЙНЕР (СТЕКЛО) --- */
+        /* --- КАРТОЧКА --- */
         .main-card {
             width: 100%;
             max-width: 420px;
@@ -76,45 +84,21 @@
             border-radius: 30px;
             padding: 40px 25px;
             border: 1px solid var(--border-glass);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
             text-align: center;
             position: relative;
-            overflow: hidden;
-            /* Анимация появления контейнера */
             animation: cardAppear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
             opacity: 0;
             transform: translateY(40px);
+            will-change: transform, opacity;
         }
 
         @keyframes cardAppear {
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Блик на стекле при загрузке */
-        .main-card::after {
-            content: '';
-            position: absolute;
-            top: -150%;
-            left: -150%;
-            width: 300%;
-            height: 300%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03), transparent);
-            transform: rotate(45deg);
-            animation: shine 4s infinite;
-        }
-
-        @keyframes shine {
-            0% { left: -150%; top: -150%; }
-            20% { left: 100%; top: 100%; }
-            100% { left: 100%; top: 100%; }
-        }
-
         /* --- ПРОФИЛЬ --- */
-        .profile-area {
-            margin-bottom: 35px;
-            position: relative;
-            z-index: 1;
-        }
+        .profile-area { margin-bottom: 30px; }
 
         .avatar-wrapper {
             width: 110px;
@@ -127,39 +111,20 @@
             box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
         }
 
-        .avatar-wrapper::before {
-            content: '';
-            position: absolute;
-            top: -5px; left: -5px; right: -5px; bottom: -5px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-neon), var(--secondary-neon));
-            opacity: 0.5;
-            filter: blur(10px);
-            animation: pulseGlow 2s infinite;
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.05); }
-        }
-
         .avatar-img {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: #111; /* Заглушка если нет фото */
+            background: #111;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 45px;
-            color: var(--primary-neon);
             border: 4px solid #0a0a12;
             position: relative;
             z-index: 1;
             overflow: hidden;
         }
         
-        /* Стили для того, чтобы фото ровно встало в круг */
         .avatar-img img {
             width: 100%;
             height: 100%;
@@ -167,7 +132,6 @@
             border-radius: 50%;
         }
 
-        /* Статус "Онлайн" */
         .status-dot {
             width: 18px;
             height: 18px;
@@ -184,54 +148,35 @@
         h1 {
             font-size: 28px;
             font-weight: 700;
-            letter-spacing: -0.5px;
             background: linear-gradient(to right, #fff, #b2b9c9);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 8px;
         }
 
-        .nickname-prefix {
-            color: var(--primary-neon);
-            font-weight: 300;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        p.description {
-            color: var(--text-muted);
-            font-size: 15px;
-            font-weight: 300;
-            max-width: 80%;
-            margin: 0 auto;
-        }
-
-        /* ---КНОПКИ --- */
+        /* --- КНОПКИ --- */
         .links-list {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 18px;
-            position: relative;
-            z-index: 1;
+            gap: 16px;
         }
 
-        /* Стили для всех кнопок (и <a> и <button>) */
         .link-item {
             opacity: 0;
             transform: translateY(20px);
             animation: itemAppear 0.5s ease forwards;
+            will-change: transform, opacity;
         }
 
-        /* Задержки появления для каждой кнопки */
-        .link-item:nth-child(1) { animation-delay: 0.3s; }
-        .link-item:nth-child(2) { animation-delay: 0.4s; }
-        .link-item:nth-child(3) { animation-delay: 0.5s; }
-        .link-item:nth-child(4) { animation-delay: 0.6s; }
-        .link-item:nth-child(5) { animation-delay: 0.7s; }
+        /* Задержки */
+        .link-item:nth-child(1) { animation-delay: 0.2s; }
+        .link-item:nth-child(2) { animation-delay: 0.3s; }
+        .link-item:nth-child(3) { animation-delay: 0.4s; }
+        .link-item:nth-child(4) { animation-delay: 0.5s; }
+        .link-item:nth-child(5) { animation-delay: 0.6s; }
+        .link-item:nth-child(6) { animation-delay: 0.7s; }
+        .link-item:nth-child(7) { animation-delay: 0.8s; }
 
         @keyframes itemAppear {
             to { opacity: 1; transform: translateY(0); }
@@ -241,7 +186,7 @@
             display: flex;
             align-items: center;
             width: 100%;
-            padding: 18px 25px;
+            padding: 18px 22px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border-glass);
             border-radius: 18px;
@@ -249,36 +194,28 @@
             text-decoration: none;
             font-size: 16px;
             font-weight: 600;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            font-family: 'Poppins', sans-serif;
+            text-align: left;
         }
 
-        /* Иконка слева */
         .btn-action i.main-icon {
-            font-size: 22px;
+            font-size: 24px;
             margin-right: 15px;
             width: 30px;
             text-align: center;
             transition: transform 0.3s ease;
         }
 
-        /* Текст внутри кнопки */
         .btn-content {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
             flex: 1;
         }
 
-        .btn-title {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
+        .btn-title { font-size: 15px; }
         .btn-subtitle {
             font-size: 12px;
             color: var(--text-muted);
@@ -286,158 +223,183 @@
             margin-top: 2px;
         }
 
-        /* Иконка стрелочки справа */
         .arrow-icon {
             font-size: 12px;
-            opacity: 0.3;
+            opacity: 0.4;
             transition: all 0.3s ease;
         }
 
-        /* --- ХОВЕР ЭФФЕКТЫ (ПК и Мобильные) --- */
-        
-        /* Общий эффект при наведении/нажатии */
-        .btn-action:hover, .btn-action:active {
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-3px) scale(1.02);
+        /* Общий ховер */
+        .btn-action:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-2px);
             border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .btn-action:hover i.main-icon {
-            transform: scale(1.1);
-        }
+        .btn-action:active { transform: scale(0.98); }
 
-        .btn-action:hover .arrow-icon {
-            opacity: 1;
-            transform: translateX(3px);
-            color: inherit;
+        /* --- 1. ДОНЕЙШН АЛЕРТС (СУПЕР АНИМАЦИЯ) --- */
+        .btn-donate-mega {
+            background: linear-gradient(270deg, #ff9f43, #ff4757, #ff9f43);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+            border: 1px solid rgba(255, 159, 67, 0.6);
+            box-shadow: 0 5px 25px rgba(255, 71, 87, 0.3);
         }
-
-        /* Кастомные цвета и свечения для каждой соцсети */
         
-        /* Twitch */
-        .btn-twitch:hover, .btn-twitch:active {
-            color: var(--twitch-color);
-            box-shadow: 0 0 20px rgba(145, 70, 255, 0.15);
+        .btn-donate-mega .btn-title, .btn-donate-mega .btn-subtitle, .btn-donate-mega i {
+            color: #fff !important;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
-        .btn-twitch i.main-icon { color: var(--twitch-color); }
 
-        /* Telegram */
-        .btn-tg:hover, .btn-tg:active {
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .btn-donate-mega:hover {
+            box-shadow: 0 8px 35px rgba(255, 71, 87, 0.5);
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        /* --- 2. DALINK --- */
+        .btn-dalink i.main-icon { color: var(--dalink-color); }
+        .btn-dalink:hover {
+            color: var(--dalink-color);
+            box-shadow: 0 0 20px rgba(255, 59, 143, 0.15);
+        }
+
+        /* --- 3. КАСПИ БАНК --- */
+        .btn-kaspi i.main-icon { color: var(--kaspi-color); }
+        .btn-kaspi.active {
+            background: rgba(241, 70, 53, 0.1);
+            border-color: rgba(241, 70, 53, 0.3);
+        }
+        
+        /* --- 4. ВТБ БАНК --- */
+        .btn-vtb i.main-icon { color: #00a3ff; }
+        .btn-vtb.active {
+            background: rgba(0, 163, 255, 0.1);
+            border-color: rgba(0, 163, 255, 0.3);
+        }
+
+        /* --- 5. TELEGRAM --- */
+        .btn-tg i.main-icon { color: var(--tg-color); }
+        .btn-tg:hover {
             color: var(--tg-color);
             box-shadow: 0 0 20px rgba(0, 136, 204, 0.15);
         }
-        .btn-tg i.main-icon { color: var(--tg-color); }
 
-        /* Donatalerts - Спецэффект переливания */
-        .btn-donate {
-            background: linear-gradient(135deg, rgba(255,159,67,0.05), rgba(255,71,87,0.05));
-            border-color: rgba(255,159,67,0.1);
-        }
-        .btn-donate i.main-icon { color: var(--donate-color); }
-        
-        .btn-donate:hover, .btn-donate:active {
-            background: linear-gradient(135deg, rgba(255,159,67,0.1), rgba(255,71,87,0.1));
-            color: #fff;
-            box-shadow: 0 0 20px rgba(255, 159, 67, 0.2);
+        /* --- 6. TWITCH --- */
+        .btn-twitch i.main-icon { color: var(--twitch-color); }
+        .btn-twitch:hover {
+            color: var(--twitch-color);
+            box-shadow: 0 0 20px rgba(145, 70, 255, 0.15);
         }
 
-        /* Kaspi - Кнопка копирования */
-        .btn-kaspi i.main-icon { color: var(--kaspi-color); }
-        .btn-kaspi:hover, .btn-kaspi:active {
-            color: #fff;
-            background-color: var(--kaspi-color);
-            border-color: var(--kaspi-color);
-            box-shadow: 0 0 20px rgba(241, 70, 53, 0.3);
-        }
-        .btn-kaspi:hover .btn-subtitle { color: rgba(255,255,255,0.8); }
-
-        /* Crypto - Кнопка копирования */
+        /* --- 7. КРИПТА --- */
         .btn-crypto i.main-icon { color: var(--crypto-color); }
-        .btn-crypto:hover, .btn-crypto:active {
-            color: #000;
-            background-color: var(--crypto-color);
-            border-color: var(--crypto-color);
-            box-shadow: 0 0 20px rgba(243, 186, 47, 0.3);
+        .btn-crypto:hover {
+            color: var(--crypto-color);
+            box-shadow: 0 0 20px rgba(243, 186, 47, 0.15);
         }
-        .btn-crypto:hover .btn-subtitle { color: rgba(0,0,0,0.7); }
-        .btn-crypto:hover .arrow-icon { color: #000; opacity: 0.5; }
 
+        /* --- ВЫПАДАЮЩЕЕ МЕНЮ (ДЛЯ БАНКОВ) --- */
+        .submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            background: var(--menu-glass);
+            border-radius: 0 0 18px 18px;
+            margin-top: -10px;
+            padding: 0 10px;
+            opacity: 0;
+            transform: translateY(-10px);
+        }
 
-        /* --- УВЕДОМЛЕНИЕ (TOAST) --- */
+        .submenu.open {
+            opacity: 1;
+            transform: translateY(0);
+            padding: 15px 10px 10px 10px;
+            margin-bottom: 5px;
+        }
+
+        .sub-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 13px;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            margin-bottom: 8px;
+            transition: 0.2s;
+        }
+        
+        .sub-btn:last-child { margin-bottom: 0; }
+
+        .sub-btn:hover {
+            background: rgba(255,255,255,0.15);
+            transform: scale(1.02);
+        }
+        .sub-btn i { font-size: 14px; opacity: 0.7; }
+
+        /* Вращение стрелочки при открытии */
+        .btn-action.active .arrow-icon {
+            transform: rotate(180deg);
+            opacity: 1;
+        }
+
+        /* --- УВЕДОМЛЕНИЯ --- */
         #toast-container {
             position: fixed;
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 9999;
-            width: auto;
-            max-width: 90%;
         }
 
         .toast {
-            background: rgba(10, 10, 18, 0.9);
+            background: rgba(10, 10, 18, 0.95);
             color: #fff;
             padding: 15px 25px;
             border-radius: 12px;
             border: 1px solid var(--primary-neon);
             box-shadow: 0 10px 30px rgba(0, 242, 254, 0.2);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             gap: 12px;
             font-weight: 600;
             font-size: 14px;
-            
-            /* Анимация появления сверху */
             transform: translateY(-100px);
             opacity: 0;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast i { color: var(--primary-neon); font-size: 18px; }
 
-        .toast i {
-            color: var(--primary-neon);
-            font-size: 18px;
-        }
-
-        /* --- ПОДВАЛ --- */
+        /* Подвал */
         footer {
             margin-top: 30px;
             font-size: 12px;
             color: var(--text-muted);
             opacity: 0.5;
-            z-index: 1;
         }
 
-        /* --- АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ --- */
+        /* Мобилки */
         @media (max-width: 480px) {
-            body {
-                padding: 15px;
-                align-items: flex-start; /* На оч. маленьких экранах скролл вниз */
-            }
-
-            .main-card {
-                padding: 30px 20px;
-                border-radius: 25px;
-            }
-
+            body { padding: 15px; align-items: flex-start; }
+            .main-card { padding: 30px 20px; border-radius: 25px; }
             h1 { font-size: 24px; }
-            .avatar-wrapper { width: 90px; height: 90px; }
-            .avatar-img { font-size: 35px; }
-            .btn-action { padding: 15px 20px; }
-            .btn-title { font-size: 15px; }
-            .btn-subtitle { font-size: 11px; }
-        }
-
-        /* Кастомный курсор для ПК (опционально) */
-        @media (pointer: fine) {
-            .btn-action { cursor: pointer; }
+            .btn-action { padding: 16px 20px; }
         }
     </style>
 </head>
@@ -451,7 +413,6 @@
                 </div>
                 <div class="status-dot"></div>
             </div>
-            <span class="nickname-prefix"></span>
             <h1>elgurov</h1>
             <p class="description"></p>
         </div>
@@ -459,14 +420,67 @@
         <ul class="links-list">
             
             <li class="link-item">
-                <a href="https://www.twitch.tv/elgurov" target="_blank" class="btn-action btn-twitch">
-                    <i class="fa-brands fa-twitch main-icon"></i>
+                <a href="https://www.donationalerts.com/r/elgurov" target="_blank" class="btn-action btn-donate-mega">
+                    <i class="fa-solid fa-fire main-icon"></i>
                     <div class="btn-content">
-                        <span class="btn-title">Twitch Канал</span>
-                        <span class="btn-subtitle">Смотри прямые трансляции здесь</span>
+                        <span class="btn-title">Донаты из РФ и СНГ</span>
+                        <span class="btn-subtitle">Поддержи стримера (Алерт на экран)</span>
+                    </div>
+                    <i class="fa-solid fa-bolt arrow-icon"></i>
+                </a>
+            </li>
+
+            <li class="link-item">
+                <a href="https://dalink.to/elgurov" target="_blank" class="btn-action btn-dalink">
+                    <i class="fa-solid fa-link main-icon"></i>
+                    <div class="btn-content">
+                        <span class="btn-title">Dalink (Альтернатива)</span>
+                        <span class="btn-subtitle">Еще один способ поддержать</span>
                     </div>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </a>
+            </li>
+
+            <li class="link-item">
+                <div class="expand-container">
+                    <button class="btn-action btn-kaspi toggle-menu">
+                        <i class="fa-solid fa-credit-card main-icon"></i>
+                        <div class="btn-content">
+                            <span class="btn-title">Kaspi Bank (Казахстан)</span>
+                            <span class="btn-subtitle">Нажми, чтобы открыть реквизиты</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                    </button>
+                    <div class="submenu">
+                        <button class="sub-btn" onclick="copyToClipboard('4400430366330691', 'Номер карты Kaspi')">
+                            Номер карты <span><i class="fa-regular fa-copy"></i></span>
+                        </button>
+                        <button class="sub-btn" onclick="copyToClipboard('7066678819', 'Номер телефона Kaspi')">
+                            По номеру телефона <span><i class="fa-regular fa-copy"></i></span>
+                        </button>
+                    </div>
+                </div>
+            </li>
+
+            <li class="link-item">
+                <div class="expand-container">
+                    <button class="btn-action btn-vtb toggle-menu">
+                        <i class="fa-solid fa-building-columns main-icon"></i>
+                        <div class="btn-content">
+                            <span class="btn-title">ВТБ (Прямой из РФ)</span>
+                            <span class="btn-subtitle">Нажми, чтобы открыть реквизиты</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                    </button>
+                    <div class="submenu">
+                        <button class="sub-btn" onclick="copyToClipboard('2204360100149580', 'Номер карты ВТБ')">
+                            Скопировать карту <span><i class="fa-regular fa-copy"></i></span>
+                        </button>
+                        <button class="sub-btn" onclick="copyToClipboard('VLADISLAV GUROV', 'Имя получателя')">
+                            Скопировать имя (ENG) <span><i class="fa-regular fa-copy"></i></span>
+                        </button>
+                    </div>
+                </div>
             </li>
 
             <li class="link-item">
@@ -481,35 +495,24 @@
             </li>
 
             <li class="link-item">
-                <a href="https://www.donationalerts.com/r/elgurov" target="_blank" class="btn-action btn-donate">
-                    <i class="fa-solid fa-heart main-icon"></i>
+                <a href="https://www.twitch.tv/elgurov" target="_blank" class="btn-action btn-twitch">
+                    <i class="fa-brands fa-twitch main-icon"></i>
                     <div class="btn-content">
-                        <span class="btn-title">Поддержать из РФ</span>
-                        <span class="btn-subtitle">Твое сообщение на стриме</span>
+                        <span class="btn-title">Twitch Канал</span>
+                        <span class="btn-subtitle">Смотри прямые трансляции здесь</span>
                     </div>
-                    <i class="fa-solid fa-fire arrow-icon"></i>
+                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </a>
             </li>
 
             <li class="link-item">
-                <button class="btn-action btn-kaspi" onclick="copyToClipboard('7066678819', 'Номер Kaspi')">
-                    <i class="fa-solid fa-credit-card main-icon"></i>
-                    <div class="btn-content">
-                        <span class="btn-title">Kaspi Bank</span>
-                        <span class="btn-subtitle">Нажми, чтобы скопировать номер</span>
-                    </div>
-                    <i class="fa-solid fa-copy arrow-icon"></i>
-                </button>
-            </li>
-
-            <li class="link-item">
                 <button class="btn-action btn-crypto" onclick="copyToClipboard('0x06a300e8b8c459ae210432203bdf12e02e301798', 'BEP20 адрес')">
-                    <i class="fa-brands fa-binance main-icon"></i>
+                    <i class="fa-solid fa-wallet main-icon"></i>
                     <div class="btn-content">
-                        <span class="btn-title">Крипта (BEP20)</span>
+                        <span class="btn-title">Крипта (USDT BEP20)</span>
                         <span class="btn-subtitle">Скопировать адрес кошелька</span>
                     </div>
-                    <i class="fa-solid fa-copy arrow-icon"></i>
+                    <i class="fa-regular fa-copy arrow-icon"></i>
                 </button>
             </li>
 
@@ -521,84 +524,88 @@
     <div id="toast-container">
         <div class="toast" id="copy-toast">
             <i class="fa-solid fa-circle-check"></i>
-            <span id="toast-message">Скопировано в буфер</span>
+            <span id="toast-message">Скопировано!</span>
         </div>
     </div>
 
     <script>
-        // Функция копирования
+        // --- ЛОГИКА ВЫПАДАЮЩИХ МЕНЮ ---
+        document.querySelectorAll('.toggle-menu').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const submenu = this.nextElementSibling;
+                const parent = this.parentElement;
+                
+                // Закрываем остальные меню
+                document.querySelectorAll('.submenu').forEach(menu => {
+                    if (menu !== submenu) {
+                        menu.classList.remove('open');
+                        menu.style.maxHeight = null;
+                        menu.previousElementSibling.classList.remove('active');
+                    }
+                });
+
+                // Тогглим текущее
+                if (submenu.classList.contains('open')) {
+                    submenu.classList.remove('open');
+                    submenu.style.maxHeight = null;
+                    this.classList.remove('active');
+                } else {
+                    submenu.classList.add('open');
+                    submenu.style.maxHeight = submenu.scrollHeight + 30 + "px"; // +30px для паддингов
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // --- ЛОГИКА КОПИРОВАНИЯ ---
         function copyToClipboard(textToCopy, label) {
-            // Используем современный Clipboard API
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(textToCopy).then(() => {
                     showToast(label + ' скопирован!');
                 }).catch(err => {
-                    console.error('Ошибка копирования: ', err);
-                    fallbackCopy(textToCopy, label); // Попытка старым методом если API не сработал
+                    fallbackCopy(textToCopy, label);
                 });
             } else {
-                fallbackCopy(textToCopy, label); // Старый метод для старых браузеров/iOS
+                fallbackCopy(textToCopy, label);
             }
         }
 
-        // Старый метод копирования (создание временного textarea)
         function fallbackCopy(text, label) {
             const textArea = document.createElement("textarea");
             textArea.value = text;
-            // Делаем элемент невидимым
             textArea.style.position = "fixed";
             textArea.style.left = "-9999px";
-            textArea.style.top = "0";
             document.body.appendChild(textArea);
             textArea.focus();
             textArea.select();
-
             try {
                 const successful = document.execCommand('copy');
-                if (successful) {
-                    showToast(label + ' скопирован!');
-                } else {
-                    showToast('Не удалось скопировать :(');
-                }
-            } catch (err) {
-                console.error('Fallback ошибка', err);
-            }
-
+                if (successful) showToast(label + ' скопирован!');
+            } catch (err) {}
             document.body.removeChild(textArea);
         }
 
-        // Логика показа уведомления
+        // --- УВЕДОМЛЕНИЯ ---
         let toastTimeout;
         function showToast(message) {
             const toast = document.getElementById('copy-toast');
             const toastMsg = document.getElementById('toast-message');
             
             toastMsg.textContent = message;
-            
-            // Удаляем класс show, если он был (для сброса анимации при частых кликах)
             toast.classList.remove('show');
             clearTimeout(toastTimeout);
             
-            // Триггерим рефлоу для перезапуска CSS анимации
-            void toast.offsetWidth; 
-            
-            // Показываем
+            void toast.offsetWidth; // Рестарт анимации
             toast.classList.add('show');
 
-            // Скрываем через 2.5 секунды
             toastTimeout = setTimeout(() => {
                 toast.classList.remove('show');
             }, 2500);
+            
+            // Вибрация (если поддерживается)
+            if ('vibrate' in navigator) navigator.vibrate(50);
         }
-
-        // Добавляем легкий виброотклик на мобильных при клике на кнопки копирования (только Android)
-        document.querySelectorAll('button.btn-action').forEach(btn => {
-            btn.addEventListener('click', () => {
-                if ('vibrate' in navigator) {
-                    navigator.vibrate(50); // Вибрация 50мс
-                }
-            });
-        });
     </script>
 </body>
 </html>
