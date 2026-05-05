@@ -11,7 +11,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- ПЕРЕМЕННЫЕ --- */
         :root {
             --bg-dark: #050509;
             --primary-neon: #00f2fe;
@@ -48,21 +47,18 @@
             padding: 20px;
             overflow-x: hidden;
             position: relative;
-            /* Аппаратное ускорение для плавности */
-            transform: translateZ(0); 
+            transform: translateZ(0);
         }
 
-        /* --- ФОН --- */
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: 
                 radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.15) 0%, transparent 40%),
                 radial-gradient(circle at 90% 80%, rgba(0, 242, 254, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(145, 70, 255, 0.05) 0%, transparent 60%),
                 linear-gradient(135deg, #050509 0%, #11111d 100%);
             z-index: -1;
             animation: bgPulse 15s ease infinite alternate;
@@ -74,7 +70,6 @@
             100% { transform: scale(1.05); opacity: 1; }
         }
 
-        /* --- КАРТОЧКА --- */
         .main-card {
             width: 100%;
             max-width: 420px;
@@ -97,7 +92,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- ПРОФИЛЬ --- */
         .profile-area { margin-bottom: 30px; }
 
         .avatar-wrapper {
@@ -124,7 +118,7 @@
             z-index: 1;
             overflow: hidden;
         }
-        
+
         .avatar-img img {
             width: 100%;
             height: 100%;
@@ -138,8 +132,7 @@
             background-color: #00ff88;
             border-radius: 50%;
             position: absolute;
-            bottom: 5px;
-            right: 5px;
+            bottom: 5px; right: 5px;
             border: 3px solid #0a0a12;
             z-index: 2;
             box-shadow: 0 0 10px #00ff88;
@@ -154,12 +147,12 @@
             margin-bottom: 8px;
         }
 
-        /* --- КНОПКИ --- */
+        /* ========== СПИСОК КНОПОК ========== */
         .links-list {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
         }
 
         .link-item {
@@ -169,19 +162,20 @@
             will-change: transform, opacity;
         }
 
-        /* Задержки */
-        .link-item:nth-child(1) { animation-delay: 0.2s; }
-        .link-item:nth-child(2) { animation-delay: 0.3s; }
-        .link-item:nth-child(3) { animation-delay: 0.4s; }
-        .link-item:nth-child(4) { animation-delay: 0.5s; }
-        .link-item:nth-child(5) { animation-delay: 0.6s; }
-        .link-item:nth-child(6) { animation-delay: 0.7s; }
-        .link-item:nth-child(7) { animation-delay: 0.8s; }
+        .link-item:nth-child(1) { animation-delay: 0.15s; }
+        .link-item:nth-child(2) { animation-delay: 0.25s; }
+        .link-item:nth-child(3) { animation-delay: 0.35s; }
+        .link-item:nth-child(4) { animation-delay: 0.45s; }
+        .link-item:nth-child(5) { animation-delay: 0.55s; }
+        .link-item:nth-child(6) { animation-delay: 0.65s; }
+        .link-item:nth-child(7) { animation-delay: 0.75s; }
+        .link-item:nth-child(8) { animation-delay: 0.85s; }
 
         @keyframes itemAppear {
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* ===== БАЗОВЫЕ КНОПКИ ===== */
         .btn-action {
             display: flex;
             align-items: center;
@@ -229,7 +223,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Общий ховер */
         .btn-action:hover {
             background: rgba(255, 255, 255, 0.06);
             transform: translateY(-2px);
@@ -238,23 +231,159 @@
 
         .btn-action:active { transform: scale(0.98); }
 
-        /* --- 1. ДОНЕЙШН АЛЕРТС (СУПЕР АНИМАЦИЯ) --- */
+        /* ===== МАЛЕНЬКИЕ КНОПКИ (вторичные) ===== */
+        .btn-action.btn-small {
+            padding: 13px 18px;
+        }
+        .btn-action.btn-small i.main-icon {
+            font-size: 19px;
+            margin-right: 12px;
+            width: 24px;
+        }
+        .btn-action.btn-small .btn-title { font-size: 13px; }
+        .btn-action.btn-small .btn-subtitle { font-size: 11px; }
+
+        /* ===== 1. KASPI — HERO (самый большой) ===== */
+        .btn-kaspi-hero {
+            padding: 22px 24px;
+            background: linear-gradient(135deg, rgba(241, 70, 53, 0.18) 0%, rgba(200, 40, 30, 0.10) 100%);
+            border: 1.5px solid rgba(241, 70, 53, 0.5);
+            border-radius: 22px;
+            box-shadow: 0 6px 30px rgba(241, 70, 53, 0.2), inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+        .btn-kaspi-hero i.main-icon {
+            font-size: 28px;
+            color: var(--kaspi-color);
+        }
+        .btn-kaspi-hero .btn-title { font-size: 17px; }
+        .btn-kaspi-hero .btn-subtitle { font-size: 13px; }
+        .btn-kaspi-hero:hover {
+            background: linear-gradient(135deg, rgba(241, 70, 53, 0.28) 0%, rgba(200, 40, 30, 0.18) 100%);
+            box-shadow: 0 8px 40px rgba(241, 70, 53, 0.35);
+            transform: translateY(-3px);
+            border-color: rgba(241, 70, 53, 0.7);
+        }
+
+        /* ===== 2. TWITCH — ГЛАВНЫЙ (светящийся) ===== */
+        .btn-twitch-hero {
+            padding: 20px 22px;
+            background: linear-gradient(135deg, rgba(145, 70, 255, 0.25) 0%, rgba(100, 40, 220, 0.15) 100%);
+            border: 1.5px solid rgba(145, 70, 255, 0.6);
+            border-radius: 20px;
+            box-shadow:
+                0 0 0 0 rgba(145, 70, 255, 0.5),
+                0 6px 30px rgba(145, 70, 255, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.07);
+            animation: itemAppear 0.5s ease forwards, twitchGlow 2.5s ease-in-out infinite;
+            position: relative;
+            overflow: visible;
+        }
+
+        /* Светящийся ореол */
+        .btn-twitch-hero::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(145, 70, 255, 0.4), rgba(180, 120, 255, 0.2), rgba(145, 70, 255, 0.4));
+            background-size: 200% 200%;
+            animation: twitchBorderFlow 2.5s linear infinite;
+            z-index: -1;
+            filter: blur(4px);
+        }
+
+        @keyframes twitchGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(145, 70, 255, 0.4), 0 6px 30px rgba(145, 70, 255, 0.25); }
+            50%       { box-shadow: 0 0 40px rgba(145, 70, 255, 0.7), 0 8px 40px rgba(145, 70, 255, 0.45); }
+        }
+
+        @keyframes twitchBorderFlow {
+            0%   { background-position: 0% 50%; opacity: 0.8; }
+            50%  { background-position: 100% 50%; opacity: 1; }
+            100% { background-position: 0% 50%; opacity: 0.8; }
+        }
+
+        .btn-twitch-hero i.main-icon {
+            font-size: 26px;
+            color: #bf94ff;
+            filter: drop-shadow(0 0 8px rgba(145, 70, 255, 0.9));
+            animation: iconPulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { filter: drop-shadow(0 0 8px rgba(145, 70, 255, 0.9)); }
+            50%       { filter: drop-shadow(0 0 16px rgba(145, 70, 255, 1)) drop-shadow(0 0 30px rgba(180, 120, 255, 0.5)); }
+        }
+
+        .btn-twitch-hero .btn-title {
+            font-size: 16px;
+            background: linear-gradient(to right, #fff, #d4b4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-twitch-hero .btn-subtitle { font-size: 12px; }
+        .btn-twitch-hero .arrow-icon {
+            color: #9146FF;
+            opacity: 0.8;
+        }
+
+        .btn-twitch-hero:hover {
+            transform: translateY(-3px) scale(1.01);
+            background: linear-gradient(135deg, rgba(145, 70, 255, 0.35) 0%, rgba(100, 40, 220, 0.25) 100%);
+            border-color: rgba(145, 70, 255, 0.85);
+        }
+
+        /* LIVE Badge */
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(145, 70, 255, 0.2);
+            border: 1px solid rgba(145, 70, 255, 0.5);
+            border-radius: 20px;
+            padding: 3px 9px;
+            font-size: 10px;
+            font-weight: 700;
+            color: #bf94ff;
+            letter-spacing: 0.5px;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .live-badge .live-dot {
+            width: 6px;
+            height: 6px;
+            background: #9146FF;
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(145, 70, 255, 0.9);
+            animation: livePulse 1.2s ease infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.7); }
+        }
+
+        /* ===== 3. ДОНАТ — MEGA ===== */
         .btn-donate-mega {
             background: linear-gradient(270deg, #ff9f43, #ff4757, #ff9f43);
             background-size: 200% 200%;
-            animation: gradientShift 3s ease infinite;
+            animation: itemAppear 0.5s ease forwards, gradientShift 3s ease infinite;
             border: 1px solid rgba(255, 159, 67, 0.6);
             box-shadow: 0 5px 25px rgba(255, 71, 87, 0.3);
         }
-        
-        .btn-donate-mega .btn-title, .btn-donate-mega .btn-subtitle, .btn-donate-mega i {
+
+        .btn-donate-mega .btn-title,
+        .btn-donate-mega .btn-subtitle,
+        .btn-donate-mega i {
             color: #fff !important;
+            -webkit-text-fill-color: #fff !important;
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
@@ -263,49 +392,47 @@
             transform: translateY(-3px) scale(1.02);
         }
 
-        /* --- 2. DALINK --- */
+        /* ===== ОСТАЛЬНЫЕ (маленькие) ===== */
         .btn-dalink i.main-icon { color: var(--dalink-color); }
-        .btn-dalink:hover {
-            color: var(--dalink-color);
-            box-shadow: 0 0 20px rgba(255, 59, 143, 0.15);
-        }
+        .btn-dalink:hover { box-shadow: 0 0 20px rgba(255, 59, 143, 0.15); }
 
-        /* --- 3. КАСПИ БАНК --- */
-        .btn-kaspi i.main-icon { color: var(--kaspi-color); }
-        .btn-kaspi.active {
-            background: rgba(241, 70, 53, 0.1);
-            border-color: rgba(241, 70, 53, 0.3);
-        }
-        
-        /* --- 4. ВТБ БАНК --- */
         .btn-vtb i.main-icon { color: #00a3ff; }
         .btn-vtb.active {
             background: rgba(0, 163, 255, 0.1);
             border-color: rgba(0, 163, 255, 0.3);
         }
 
-        /* --- 5. TELEGRAM --- */
         .btn-tg i.main-icon { color: var(--tg-color); }
-        .btn-tg:hover {
-            color: var(--tg-color);
-            box-shadow: 0 0 20px rgba(0, 136, 204, 0.15);
-        }
+        .btn-tg:hover { box-shadow: 0 0 20px rgba(0, 136, 204, 0.15); }
 
-        /* --- 6. TWITCH --- */
-        .btn-twitch i.main-icon { color: var(--twitch-color); }
-        .btn-twitch:hover {
-            color: var(--twitch-color);
-            box-shadow: 0 0 20px rgba(145, 70, 255, 0.15);
-        }
-
-        /* --- 7. КРИПТА --- */
         .btn-crypto i.main-icon { color: var(--crypto-color); }
-        .btn-crypto:hover {
-            color: var(--crypto-color);
-            box-shadow: 0 0 20px rgba(243, 186, 47, 0.15);
+        .btn-crypto:hover { box-shadow: 0 0 20px rgba(243, 186, 47, 0.15); }
+
+        /* ===== РАЗДЕЛИТЕЛЬ ===== */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            animation: itemAppear 0.5s ease forwards;
+        }
+        .section-divider span {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-glass);
         }
 
-        /* --- ВЫПАДАЮЩЕЕ МЕНЮ (ДЛЯ БАНКОВ) --- */
+        /* ===== ВЫПАДАЮЩИЕ МЕНЮ ===== */
         .submenu {
             max-height: 0;
             overflow: hidden;
@@ -341,22 +468,28 @@
             margin-bottom: 8px;
             transition: 0.2s;
         }
-        
+
         .sub-btn:last-child { margin-bottom: 0; }
 
         .sub-btn:hover {
             background: rgba(255,255,255,0.15);
             transform: scale(1.02);
         }
+
         .sub-btn i { font-size: 14px; opacity: 0.7; }
 
-        /* Вращение стрелочки при открытии */
         .btn-action.active .arrow-icon {
             transform: rotate(180deg);
             opacity: 1;
         }
 
-        /* --- УВЕДОМЛЕНИЯ --- */
+        /* Kaspi hero — тоже expand */
+        .btn-kaspi-hero.active .arrow-icon {
+            transform: rotate(180deg);
+            opacity: 1;
+        }
+
+        /* ===== TOAST ===== */
         #toast-container {
             position: fixed;
             top: 20px;
@@ -386,7 +519,6 @@
         .toast.show { transform: translateY(0); opacity: 1; }
         .toast i { color: var(--primary-neon); font-size: 18px; }
 
-        /* Подвал */
         footer {
             margin-top: 30px;
             font-size: 12px;
@@ -394,12 +526,13 @@
             opacity: 0.5;
         }
 
-        /* Мобилки */
         @media (max-width: 480px) {
             body { padding: 15px; align-items: flex-start; }
             .main-card { padding: 30px 20px; border-radius: 25px; }
             h1 { font-size: 24px; }
             .btn-action { padding: 16px 20px; }
+            .btn-kaspi-hero { padding: 20px 20px; }
+            .btn-twitch-hero { padding: 18px 20px; }
         }
     </style>
 </head>
@@ -414,36 +547,14 @@
                 <div class="status-dot"></div>
             </div>
             <h1>elgurov</h1>
-            <p class="description"></p>
         </div>
 
         <ul class="links-list">
-            
-            <li class="link-item">
-                <a href="https://www.donationalerts.com/r/elgurov" target="_blank" class="btn-action btn-donate-mega">
-                    <i class="fa-solid fa-fire main-icon"></i>
-                    <div class="btn-content">
-                        <span class="btn-title">Донаты из РФ и СНГ</span>
-                        <span class="btn-subtitle">Поддержи стримера (Алерт на экран)</span>
-                    </div>
-                    <i class="fa-solid fa-bolt arrow-icon"></i>
-                </a>
-            </li>
 
-            <li class="link-item">
-                <a href="https://dalink.to/elgurov" target="_blank" class="btn-action btn-dalink">
-                    <i class="fa-solid fa-link main-icon"></i>
-                    <div class="btn-content">
-                        <span class="btn-title">Dalink (Альтернатива)</span>
-                        <span class="btn-subtitle">Еще один способ поддержать</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
-                </a>
-            </li>
-
+            <!-- 1. KASPI — САМАЯ БОЛЬШАЯ -->
             <li class="link-item">
                 <div class="expand-container">
-                    <button class="btn-action btn-kaspi toggle-menu">
+                    <button class="btn-action btn-kaspi-hero toggle-menu">
                         <i class="fa-solid fa-credit-card main-icon"></i>
                         <div class="btn-content">
                             <span class="btn-title">Kaspi Bank (Казахстан)</span>
@@ -462,9 +573,54 @@
                 </div>
             </li>
 
+            <!-- 2. TWITCH — СВЕТЯЩИЙСЯ ГЛАВНЫЙ -->
+            <li class="link-item">
+                <a href="https://www.twitch.tv/elgurov" target="_blank" class="btn-action btn-twitch-hero">
+                    <i class="fa-brands fa-twitch main-icon"></i>
+                    <div class="btn-content">
+                        <span class="btn-title">Twitch Канал</span>
+                        <span class="btn-subtitle">Смотри прямые трансляции здесь</span>
+                    </div>
+                    <div class="live-badge">
+                        <div class="live-dot"></div>
+                        LIVE
+                    </div>
+                </a>
+            </li>
+
+            <!-- 3. ДОНАТ ИЗ РФ — MEGA -->
+            <li class="link-item">
+                <a href="https://www.donationalerts.com/r/elgurov" target="_blank" class="btn-action btn-donate-mega">
+                    <i class="fa-solid fa-fire main-icon"></i>
+                    <div class="btn-content">
+                        <span class="btn-title">Донаты из РФ и СНГ</span>
+                        <span class="btn-subtitle">Поддержи стримера (Алерт на экран)</span>
+                    </div>
+                    <i class="fa-solid fa-bolt arrow-icon"></i>
+                </a>
+            </li>
+
+            <!-- РАЗДЕЛИТЕЛЬ -->
+            <li class="link-item section-divider" style="animation-delay:0.55s">
+                <span>Другие способы</span>
+            </li>
+
+            <!-- 4. DALINK -->
+            <li class="link-item">
+                <a href="https://dalink.to/elgurov" target="_blank" class="btn-action btn-dalink btn-small">
+                    <i class="fa-solid fa-link main-icon"></i>
+                    <div class="btn-content">
+                        <span class="btn-title">Dalink (Альтернатива)</span>
+                        <span class="btn-subtitle">Ещё один способ поддержать</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                </a>
+            </li>
+
+            <!-- 5. ВТБ -->
             <li class="link-item">
                 <div class="expand-container">
-                    <button class="btn-action btn-vtb toggle-menu">
+                    <button class="btn-action btn-vtb btn-small toggle-menu">
                         <i class="fa-solid fa-building-columns main-icon"></i>
                         <div class="btn-content">
                             <span class="btn-title">ВТБ (Прямой из РФ)</span>
@@ -483,8 +639,9 @@
                 </div>
             </li>
 
+            <!-- 6. TELEGRAM -->
             <li class="link-item">
-                <a href="https://t.me/elgurov" target="_blank" class="btn-action btn-tg">
+                <a href="https://t.me/elgurov" target="_blank" class="btn-action btn-tg btn-small">
                     <i class="fa-brands fa-telegram main-icon"></i>
                     <div class="btn-content">
                         <span class="btn-title">Telegram Канал</span>
@@ -494,19 +651,9 @@
                 </a>
             </li>
 
+            <!-- 7. КРИПТА -->
             <li class="link-item">
-                <a href="https://www.twitch.tv/elgurov" target="_blank" class="btn-action btn-twitch">
-                    <i class="fa-brands fa-twitch main-icon"></i>
-                    <div class="btn-content">
-                        <span class="btn-title">Twitch Канал</span>
-                        <span class="btn-subtitle">Смотри прямые трансляции здесь</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
-                </a>
-            </li>
-
-            <li class="link-item">
-                <button class="btn-action btn-crypto" onclick="copyToClipboard('0x06a300e8b8c459ae210432203bdf12e02e301798', 'BEP20 адрес')">
+                <button class="btn-action btn-crypto btn-small" onclick="copyToClipboard('0x06a300e8b8c459ae210432203bdf12e02e301798', 'BEP20 адрес')">
                     <i class="fa-solid fa-wallet main-icon"></i>
                     <div class="btn-content">
                         <span class="btn-title">Крипта (USDT BEP20)</span>
@@ -529,14 +676,11 @@
     </div>
 
     <script>
-        // --- ЛОГИКА ВЫПАДАЮЩИХ МЕНЮ ---
         document.querySelectorAll('.toggle-menu').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
                 const submenu = this.nextElementSibling;
-                const parent = this.parentElement;
-                
-                // Закрываем остальные меню
+
                 document.querySelectorAll('.submenu').forEach(menu => {
                     if (menu !== submenu) {
                         menu.classList.remove('open');
@@ -545,27 +689,23 @@
                     }
                 });
 
-                // Тогглим текущее
                 if (submenu.classList.contains('open')) {
                     submenu.classList.remove('open');
                     submenu.style.maxHeight = null;
                     this.classList.remove('active');
                 } else {
                     submenu.classList.add('open');
-                    submenu.style.maxHeight = submenu.scrollHeight + 30 + "px"; // +30px для паддингов
+                    submenu.style.maxHeight = submenu.scrollHeight + 30 + "px";
                     this.classList.add('active');
                 }
             });
         });
 
-        // --- ЛОГИКА КОПИРОВАНИЯ ---
         function copyToClipboard(textToCopy, label) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(textToCopy).then(() => {
                     showToast(label + ' скопирован!');
-                }).catch(err => {
-                    fallbackCopy(textToCopy, label);
-                });
+                }).catch(() => fallbackCopy(textToCopy, label));
             } else {
                 fallbackCopy(textToCopy, label);
             }
@@ -580,30 +720,21 @@
             textArea.focus();
             textArea.select();
             try {
-                const successful = document.execCommand('copy');
-                if (successful) showToast(label + ' скопирован!');
+                if (document.execCommand('copy')) showToast(label + ' скопирован!');
             } catch (err) {}
             document.body.removeChild(textArea);
         }
 
-        // --- УВЕДОМЛЕНИЯ ---
         let toastTimeout;
         function showToast(message) {
             const toast = document.getElementById('copy-toast');
             const toastMsg = document.getElementById('toast-message');
-            
             toastMsg.textContent = message;
             toast.classList.remove('show');
             clearTimeout(toastTimeout);
-            
-            void toast.offsetWidth; // Рестарт анимации
+            void toast.offsetWidth;
             toast.classList.add('show');
-
-            toastTimeout = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2500);
-            
-            // Вибрация (если поддерживается)
+            toastTimeout = setTimeout(() => toast.classList.remove('show'), 2500);
             if ('vibrate' in navigator) navigator.vibrate(50);
         }
     </script>
