@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>elgurov | Hub</title>
     
+    <!-- Шрифты и иконки -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -21,6 +22,7 @@
             --dalink-color: #ff3b8f;
             --text-main: #ffffff;
             --text-muted: rgba(255, 255, 255, 0.5);
+            --success-color: #00e676;
         }
 
         * {
@@ -97,26 +99,23 @@
             letter-spacing: 1px;
         }
 
-        /* ===== ГЛАВНАЯ КНОПКА KASPI (Premium Liquid Glass) ===== */
+        /* ===== ГЛАВНАЯ КНОПКА KASPI (Интегрированное уведомление) ===== */
         .glass-btn {
             position: relative;
             width: 100%;
+            height: 110px; /* Фиксированная высота для анимации внутренностей */
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px) saturate(150%);
             -webkit-backdrop-filter: blur(20px) saturate(150%);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             border-radius: 32px;
-            padding: 30px 20px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             text-decoration: none;
             overflow: hidden;
             margin-bottom: 30px;
+            padding: 0;
         }
 
         .glass-btn::before {
@@ -137,6 +136,49 @@
         }
         .glass-btn:active { transform: scale(0.97); }
 
+        /* Внутренние состояния кнопки Kaspi */
+        .kaspi-state {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
+            height: 100%;
+        }
+
+        .kaspi-default {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .kaspi-success {
+            opacity: 0;
+            transform: scale(0.5) translateY(20px);
+            pointer-events: none;
+            background: rgba(240, 45, 45, 0.15); /* Легкая подсветка при успехе */
+        }
+
+        /* Класс, который вешается через JS при клике */
+        .glass-btn.copied {
+            border-color: var(--kaspi-red);
+            box-shadow: 0 0 40px rgba(240, 45, 45, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .glass-btn.copied .kaspi-default {
+            opacity: 0;
+            transform: scale(1.2) translateY(-20px);
+        }
+
+        .glass-btn.copied .kaspi-success {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        /* Тексты внутри кнопки */
         .btn-title-main {
             font-size: 24px;
             font-weight: 800;
@@ -145,12 +187,32 @@
             align-items: center;
             gap: 12px;
         }
-        .btn-title-main i { color: var(--kaspi-red); font-size: 28px; }
+        .btn-title-main i.fa-credit-card { color: var(--kaspi-red); font-size: 28px; }
+        
         .btn-number-main {
             font-size: 18px;
             font-weight: 400;
             color: var(--text-muted);
             letter-spacing: 2px;
+        }
+
+        /* Стили для успешного текста */
+        .success-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .success-title i { color: var(--success-color); font-size: 22px; }
+        
+        .success-subtitle {
+            font-size: 15px;
+            font-weight: 600;
+            color: #ffb7b7;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         /* ===== КНОПКА РАСКРЫТИЯ (ДОПОЛНИТЕЛЬНО) ===== */
@@ -229,7 +291,6 @@
             border-color: rgba(255, 255, 255, 0.1);
         }
         
-        /* Специфичные цвета иконок */
         .btn-twitch i.main-icon { color: var(--twitch-color); text-shadow: 0 0 10px rgba(145, 70, 255, 0.5); }
         .btn-donate i.main-icon { color: #ff4757; }
         .btn-vtb i.main-icon { color: #00a3ff; }
@@ -270,10 +331,10 @@
         }
         .sub-btn:hover { background: rgba(255,255,255,0.1); }
         
-        /* ===== УВЕДОМЛЕНИЯ (TOASTS) ===== */
+        /* ===== ОБЫЧНЫЕ УВЕДОМЛЕНИЯ (ДЛЯ ОСТАЛЬНЫХ КНОПОК) ===== */
         .toast {
             position: fixed;
-            top: -120px;
+            top: -100px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(20, 20, 20, 0.85);
@@ -283,69 +344,55 @@
             padding: 16px 24px;
             border-radius: 20px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             gap: 12px;
-            transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: top 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             z-index: 1000;
-            min-width: 280px;
-        }
-        .toast.toast-kaspi { border-color: rgba(240, 45, 45, 0.3); }
-        .toast.show { top: 30px; }
-        
-        .toast-text {
             font-size: 14px;
             font-weight: 600;
-            text-align: center;
-            line-height: 1.4;
         }
-        .toast-highlight { color: var(--kaspi-red); font-weight: 700; }
-        .toast-subtext { font-size: 11px; color: var(--text-muted); font-weight: 400; }
-        
-        .progress-bar {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            overflow: hidden;
-            display: none;
-        }
-        .progress-bar.active { display: block; }
-        .progress-fill {
-            height: 100%;
-            width: 0%;
-            background: var(--kaspi-red);
-            transition: width 1.5s linear;
-        }
+        .toast.show { top: 30px; }
     </style>
 </head>
 <body>
 
     <div class="glow-circle"></div>
 
+    <!-- Уведомление для крипты и ВТБ -->
     <div id="toast" class="toast">
-        <div class="toast-text" id="toast-message">
-            </div>
-        <div class="progress-bar" id="toast-progress-bar">
-            <div id="progress" class="progress-fill"></div>
-        </div>
+        <span id="toast-message">Скопировано!</span>
     </div>
 
     <div class="main-container">
+        <!-- Профиль -->
         <div class="avatar-img">
             <img src="avatar.jpg" alt="elgurov" onerror="this.src='https://via.placeholder.com/90/111/fff?text=EG'"/>
         </div>
         <h1>elgurov</h1>
 
-        <button class="glass-btn" onclick="copyAndRedirectKaspi()">
-            <span class="btn-title-main"><i class="fa-solid fa-credit-card"></i> Kaspi Pay</span>
-            <span class="btn-number-main">77471242778</span>
+        <!-- Главная кнопка Kaspi с двумя стейтами внутри -->
+        <button class="glass-btn" id="kaspi-main-btn" onclick="copyKaspiIntegrated()">
+            
+            <!-- Обычное состояние -->
+            <div class="kaspi-state kaspi-default">
+                <span class="btn-title-main"><i class="fa-solid fa-credit-card"></i> Kaspi Pay</span>
+                <span class="btn-number-main">77471242778</span>
+            </div>
+
+            <!-- Успешное состояние (Скопировано) -->
+            <div class="kaspi-state kaspi-success">
+                <span class="success-title"><i class="fa-solid fa-circle-check"></i> Скопировано</span>
+                <span class="success-subtitle">Спасибо • Рахмет ❤️</span>
+            </div>
+
         </button>
 
+        <!-- Кнопка скрытого меню -->
         <button class="toggle-hub-btn" onclick="toggleHub()">
-            Секретный арсенал <i class="fa-solid fa-chevron-down"></i>
+            Донат из СНГ и тд. <i class="fa-solid fa-chevron-down"></i>
         </button>
 
+        <!-- Скрытые ссылки -->
         <div class="hub-links-wrapper" id="hub-links">
             <ul class="links-list">
                 
@@ -419,72 +466,49 @@
     </div>
 
     <script>
-        // === ЛОГИКА KASPI (Копирование + Редирект) ===
-        function copyAndRedirectKaspi() {
+        // === ИНТЕГРИРОВАННАЯ ЛОГИКА KASPI ===
+        let kaspiResetTimeout;
+        
+        function copyKaspiIntegrated() {
             const phoneNumber = "77471242778"; 
-            
-            navigator.clipboard.writeText(phoneNumber).then(() => {
-                const toast = document.getElementById('toast');
-                const toastMsg = document.getElementById('toast-message');
-                const progressBar = document.getElementById('toast-progress-bar');
-                const progress = document.getElementById('progress');
-                
-                toast.classList.add('toast-kaspi');
-                toastMsg.innerHTML = `Номер <span class="toast-highlight">${phoneNumber}</span> скопирован!<br><span class="toast-subtext">Открываем приложение Kaspi...</span>`;
-                progressBar.classList.add('active');
-                
-                toast.classList.add('show');
-                
-                setTimeout(() => { progress.style.width = '100%'; }, 50);
+            const btn = document.getElementById('kaspi-main-btn');
 
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                    progress.style.width = '0%'; 
-                    forceRedirectToKaspi();
-                }, 1500);
+            navigator.clipboard.writeText(phoneNumber).then(() => {
+                // Включаем успешное состояние (анимация переворота)
+                btn.classList.add('copied');
                 
+                // Вибрация телефона для тактильного отклика (если поддерживает браузер)
+                if (navigator.vibrate) navigator.vibrate(50);
+
+                // Очищаем предыдущий таймер, если кликнули несколько раз подряд
+                clearTimeout(kaspiResetTimeout);
+
+                // Через 3.5 секунды возвращаем кнопку в исходное положение
+                kaspiResetTimeout = setTimeout(() => {
+                    btn.classList.remove('copied');
+                }, 3500);
+
             }).catch(err => {
-                alert('Не удалось скопировать номер. Выдайте разрешение браузеру.');
+                alert('Не удалось скопировать. Проверьте разрешения браузера.');
             });
         }
 
-        function forceRedirectToKaspi() {
-            const userAgent = navigator.userAgent.toLowerCase();
-            const isAndroid = /android/.test(userAgent);
-            const isIOS = /iphone|ipad|ipod/.test(userAgent);
-
-            const androidIntent = "intent://kaspi.kz/#Intent;scheme=https;package=kz.kaspi.mobile;end;";
-            const iosScheme = "kaspi://";
-            const webFallback = "https://kaspi.kz/";
-
-            if (isAndroid) {
-                window.location.href = androidIntent;
-                setTimeout(() => { window.location.href = webFallback; }, 800);
-            } else if (isIOS) {
-                window.location.href = iosScheme;
-                setTimeout(() => { window.location.href = webFallback; }, 800);
-            } else {
-                window.location.href = webFallback;
-            }
-        }
-
-        // === ПРОСТОЕ КОПИРОВАНИЕ (ВТБ, Крипта) ===
+        // === ПРОСТОЕ КОПИРОВАНИЕ (Для ВТБ и Крипты) ===
         let simpleToastTimeout;
         function copySimple(text, label) {
             navigator.clipboard.writeText(text).then(() => {
                 const toast = document.getElementById('toast');
                 const toastMsg = document.getElementById('toast-message');
-                const progressBar = document.getElementById('toast-progress-bar');
                 
-                toast.classList.remove('toast-kaspi', 'show');
-                progressBar.classList.remove('active');
                 clearTimeout(simpleToastTimeout);
-                
                 toastMsg.innerHTML = `${label} скопирован!`;
                 
+                toast.classList.remove('show');
                 void toast.offsetWidth; // Сброс анимации
                 toast.classList.add('show');
                 
+                if (navigator.vibrate) navigator.vibrate(30);
+
                 simpleToastTimeout = setTimeout(() => {
                     toast.classList.remove('show');
                 }, 2000);
@@ -522,7 +546,7 @@
                     submenu.style.maxHeight = submenu.scrollHeight + 30 + "px";
                 }
                 
-                // Пересчитываем высоту родительского контейнера, чтобы блок не обрезался
+                // Пересчет высоты родительского контейнера при открытии подменю
                 setTimeout(() => {
                     if (parentHub.classList.contains('open')) {
                         parentHub.style.maxHeight = parentHub.scrollHeight + "px";
