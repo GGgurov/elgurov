@@ -5,24 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>elgurov | Hub</title>
     
-    <!-- Шрифты и иконки -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     
     <style>
         :root {
-            --bg-dark: #121212;
-            --kaspi-red: #f02d2d;
+            --bg-dark: #050509;
+            --primary-neon: #00f2fe;
+            --secondary-neon: #4facfe;
             --twitch-color: #9146FF;
             --tg-color: #0088cc;
+            --kaspi-color: #f14635;
             --vtb-color: #002882;
             --crypto-color: #f3ba2f;
             --dalink-color: #ff3b8f;
             --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.5);
-            --success-color: #00e676;
+            --text-muted: #8b9bb4;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --menu-glass: rgba(0, 0, 0, 0.3);
         }
 
         * {
@@ -34,8 +37,8 @@
         }
 
         body {
-            font-family: 'Unbounded', sans-serif;
-            background: radial-gradient(circle at 50% 0%, #3a1c1d 0%, var(--bg-dark) 100%);
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -44,516 +47,696 @@
             padding: 20px;
             overflow-x: hidden;
             position: relative;
+            transform: translateZ(0);
         }
 
-        /* Фоновый эффект Kaspi */
-        .glow-circle {
+        body::before {
+            content: '';
             position: fixed;
-            top: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 350px;
-            height: 350px;
-            background: var(--kaspi-red);
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.35;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 242, 254, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(145, 70, 255, 0.05) 0%, transparent 60%),
+                linear-gradient(135deg, #050509 0%, #11111d 100%);
             z-index: -1;
-            animation: pulseBg 4s infinite alternate;
+            animation: bgPulse 15s ease infinite alternate;
+            will-change: transform, opacity;
         }
 
-        @keyframes pulseBg {
-            0% { transform: translate(-50%, 0) scale(1); opacity: 0.25; }
-            100% { transform: translate(-50%, 0) scale(1.1); opacity: 0.45; }
+        @keyframes bgPulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.05); opacity: 1; }
         }
 
-        .main-container {
+        .main-card {
             width: 100%;
             max-width: 420px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 1;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px 25px;
+            border: 1px solid var(--border-glass);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            position: relative;
+            animation: cardAppear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0;
+            transform: translateY(40px);
+            will-change: transform, opacity;
         }
 
-        /* Профиль */
-        .avatar-img {
-            width: 90px;
-            height: 90px;
+        @keyframes cardAppear {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-area { margin-bottom: 30px; }
+
+        .avatar-wrapper {
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
-            margin: 0 auto 15px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin: 0 auto 20px;
+            position: relative;
+            padding: 5px;
+            background: linear-gradient(135deg, var(--primary-neon), var(--secondary-neon));
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #0a0a12;
+            position: relative;
+            z-index: 1;
             overflow: hidden;
         }
+
         .avatar-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border-radius: 50%;
         }
+
+        .status-dot {
+            width: 18px;
+            height: 18px;
+            background-color: #00ff88;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 5px; right: 5px;
+            border: 3px solid #0a0a12;
+            z-index: 2;
+            box-shadow: 0 0 10px #00ff88;
+        }
+
         h1 {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
-            margin-bottom: 40px;
-            text-align: center;
-            letter-spacing: 1px;
+            background: linear-gradient(to right, #fff, #b2b9c9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
         }
 
-        /* ===== ГЛАВНАЯ КНОПКА KASPI (Интегрированное уведомление) ===== */
-        .glass-btn {
-            position: relative;
-            width: 100%;
-            height: 110px; /* Фиксированная высота для анимации внутренностей */
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px) saturate(150%);
-            -webkit-backdrop-filter: blur(20px) saturate(150%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            border-radius: 32px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            text-decoration: none;
-            overflow: hidden;
-            margin-bottom: 30px;
-            padding: 0;
-        }
-
-        .glass-btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
-            transform: skewX(-20deg);
-            transition: 0.6s;
-        }
-
-        .glass-btn:hover::before { left: 150%; }
-        .glass-btn:hover {
-            transform: translateY(-5px);
-            border-color: rgba(240, 45, 45, 0.4);
-            box-shadow: 0 25px 50px rgba(240, 45, 45, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-        .glass-btn:active { transform: scale(0.97); }
-
-        /* Внутренние состояния кнопки Kaspi */
-        .kaspi-state {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            width: 100%;
-            height: 100%;
-        }
-
-        .kaspi-default {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-        }
-
-        .kaspi-success {
-            opacity: 0;
-            transform: scale(0.5) translateY(20px);
-            pointer-events: none;
-            background: rgba(240, 45, 45, 0.15); /* Легкая подсветка при успехе */
-        }
-
-        /* Класс, который вешается через JS при клике */
-        .glass-btn.copied {
-            border-color: var(--kaspi-red);
-            box-shadow: 0 0 40px rgba(240, 45, 45, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-
-        .glass-btn.copied .kaspi-default {
-            opacity: 0;
-            transform: scale(1.2) translateY(-20px);
-        }
-
-        .glass-btn.copied .kaspi-success {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-        }
-
-        /* Тексты внутри кнопки */
-        .btn-title-main {
-            font-size: 24px;
-            font-weight: 800;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .btn-title-main i.fa-credit-card { color: var(--kaspi-red); font-size: 28px; }
-        
-        .btn-number-main {
-            font-size: 18px;
-            font-weight: 400;
-            color: var(--text-muted);
-            letter-spacing: 2px;
-        }
-
-        /* Стили для успешного текста */
-        .success-title {
-            font-size: 20px;
-            font-weight: 800;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .success-title i { color: var(--success-color); font-size: 22px; }
-        
-        .success-subtitle {
-            font-size: 15px;
-            font-weight: 600;
-            color: #ffb7b7;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* ===== КНОПКА РАСКРЫТИЯ (ДОПОЛНИТЕЛЬНО) ===== */
-        .toggle-hub-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            transition: 0.3s;
-            margin-bottom: 20px;
-        }
-        .toggle-hub-btn:hover { color: #fff; }
-        .toggle-hub-btn i { transition: transform 0.4s ease; }
-        .toggle-hub-btn.active i { transform: rotate(180deg); color: #fff; }
-
-        /* ===== СКРЫТЫЙ БЛОК СО ССЫЛКАМИ ===== */
-        .hub-links-wrapper {
-            width: 100%;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-            opacity: 0;
-        }
-        .hub-links-wrapper.open {
-            opacity: 1;
-        }
-        
+        /* ========== СПИСОК КНОПОК ========== */
         .links-list {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            padding-bottom: 30px;
+            gap: 14px;
         }
 
-        /* Стили второстепенных кнопок */
+        .link-item {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: itemAppear 0.5s ease forwards;
+            will-change: transform, opacity;
+        }
+
+        .link-item:nth-child(1) { animation-delay: 0.15s; }
+        .link-item:nth-child(2) { animation-delay: 0.25s; }
+        .link-item:nth-child(3) { animation-delay: 0.35s; }
+        .link-item:nth-child(4) { animation-delay: 0.45s; }
+        .link-item:nth-child(5) { animation-delay: 0.55s; }
+        .link-item:nth-child(6) { animation-delay: 0.65s; }
+        .link-item:nth-child(7) { animation-delay: 0.75s; }
+        .link-item:nth-child(8) { animation-delay: 0.85s; }
+
+        @keyframes itemAppear {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== БАЗОВЫЕ КНОПКИ ===== */
         .btn-action {
             display: flex;
             align-items: center;
             width: 100%;
-            padding: 16px 20px;
+            padding: 18px 22px;
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
+            border: 1px solid var(--border-glass);
+            border-radius: 18px;
             color: var(--text-main);
             text-decoration: none;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
             text-align: left;
         }
+
         .btn-action i.main-icon {
-            font-size: 20px;
+            font-size: 24px;
             margin-right: 15px;
-            width: 24px;
+            width: 30px;
             text-align: center;
+            transition: transform 0.3s ease;
         }
-        .btn-content { display: flex; flex-direction: column; flex: 1; }
-        .btn-title { font-size: 14px; }
-        .btn-subtitle { font-size: 11px; color: var(--text-muted); font-weight: 400; margin-top: 4px; }
-        .arrow-icon { font-size: 12px; opacity: 0.3; }
+
+        .btn-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .btn-title { font-size: 15px; }
+        .btn-subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .arrow-icon {
+            font-size: 12px;
+            opacity: 0.4;
+            transition: all 0.3s ease;
+        }
 
         .btn-action:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.06);
             transform: translateY(-2px);
-            border-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.15);
         }
-        
-        .btn-twitch i.main-icon { color: var(--twitch-color); text-shadow: 0 0 10px rgba(145, 70, 255, 0.5); }
-        .btn-donate i.main-icon { color: #ff4757; }
-        .btn-vtb i.main-icon { color: #00a3ff; }
-        .btn-crypto i.main-icon { color: var(--crypto-color); }
-        .btn-tg i.main-icon { color: var(--tg-color); }
 
-        /* Вложенные меню (ВТБ) */
+        .btn-action:active { transform: scale(0.98); }
+
+        /* ===== МАЛЕНЬКИЕ КНОПКИ (вторичные) ===== */
+        .btn-action.btn-small {
+            padding: 13px 18px;
+        }
+        .btn-action.btn-small i.main-icon {
+            font-size: 19px;
+            margin-right: 12px;
+            width: 24px;
+        }
+        .btn-action.btn-small .btn-title { font-size: 13px; }
+        .btn-action.btn-small .btn-subtitle { font-size: 11px; }
+
+        /* ===== 1. KASPI — HERO (самый большой) ===== */
+        .btn-kaspi-hero {
+            padding: 22px 24px;
+            background: linear-gradient(135deg, rgba(241, 70, 53, 0.18) 0%, rgba(200, 40, 30, 0.10) 100%);
+            border: 1.5px solid rgba(241, 70, 53, 0.5);
+            border-radius: 22px;
+            box-shadow: 0 6px 30px rgba(241, 70, 53, 0.2), inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+        .btn-kaspi-hero i.main-icon {
+            font-size: 28px;
+            color: var(--kaspi-color);
+        }
+        .btn-kaspi-hero .btn-title { font-size: 17px; }
+        .btn-kaspi-hero .btn-subtitle { font-size: 13px; }
+        .btn-kaspi-hero:hover {
+            background: linear-gradient(135deg, rgba(241, 70, 53, 0.28) 0%, rgba(200, 40, 30, 0.18) 100%);
+            box-shadow: 0 8px 40px rgba(241, 70, 53, 0.35);
+            transform: translateY(-3px);
+            border-color: rgba(241, 70, 53, 0.7);
+        }
+
+        /* ===== 2. TWITCH — ГЛАВНЫЙ (светящийся) ===== */
+        .btn-twitch-hero {
+            padding: 20px 22px;
+            background: linear-gradient(135deg, rgba(145, 70, 255, 0.25) 0%, rgba(100, 40, 220, 0.15) 100%);
+            border: 1.5px solid rgba(145, 70, 255, 0.6);
+            border-radius: 20px;
+            box-shadow:
+                0 0 0 0 rgba(145, 70, 255, 0.5),
+                0 6px 30px rgba(145, 70, 255, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.07);
+            animation: itemAppear 0.5s ease forwards, twitchGlow 2.5s ease-in-out infinite;
+            position: relative;
+            overflow: visible;
+        }
+
+        /* Светящийся ореол */
+        .btn-twitch-hero::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(145, 70, 255, 0.4), rgba(180, 120, 255, 0.2), rgba(145, 70, 255, 0.4));
+            background-size: 200% 200%;
+            animation: twitchBorderFlow 2.5s linear infinite;
+            z-index: -1;
+            filter: blur(4px);
+        }
+
+        @keyframes twitchGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(145, 70, 255, 0.4), 0 6px 30px rgba(145, 70, 255, 0.25); }
+            50%       { box-shadow: 0 0 40px rgba(145, 70, 255, 0.7), 0 8px 40px rgba(145, 70, 255, 0.45); }
+        }
+
+        @keyframes twitchBorderFlow {
+            0%   { background-position: 0% 50%; opacity: 0.8; }
+            50%  { background-position: 100% 50%; opacity: 1; }
+            100% { background-position: 0% 50%; opacity: 0.8; }
+        }
+
+        .btn-twitch-hero i.main-icon {
+            font-size: 26px;
+            color: #bf94ff;
+            filter: drop-shadow(0 0 8px rgba(145, 70, 255, 0.9));
+            animation: iconPulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { filter: drop-shadow(0 0 8px rgba(145, 70, 255, 0.9)); }
+            50%       { filter: drop-shadow(0 0 16px rgba(145, 70, 255, 1)) drop-shadow(0 0 30px rgba(180, 120, 255, 0.5)); }
+        }
+
+        .btn-twitch-hero .btn-title {
+            font-size: 16px;
+            background: linear-gradient(to right, #fff, #d4b4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-twitch-hero .btn-subtitle { font-size: 12px; }
+        .btn-twitch-hero .arrow-icon {
+            color: #9146FF;
+            opacity: 0.8;
+        }
+
+        .btn-twitch-hero:hover {
+            transform: translateY(-3px) scale(1.01);
+            background: linear-gradient(135deg, rgba(145, 70, 255, 0.35) 0%, rgba(100, 40, 220, 0.25) 100%);
+            border-color: rgba(145, 70, 255, 0.85);
+        }
+
+        /* LIVE Badge */
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(145, 70, 255, 0.2);
+            border: 1px solid rgba(145, 70, 255, 0.5);
+            border-radius: 20px;
+            padding: 3px 9px;
+            font-size: 10px;
+            font-weight: 700;
+            color: #bf94ff;
+            letter-spacing: 0.5px;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .live-badge .live-dot {
+            width: 6px;
+            height: 6px;
+            background: #9146FF;
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(145, 70, 255, 0.9);
+            animation: livePulse 1.2s ease infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.7); }
+        }
+
+        /* ===== 3. ДОНАТ — MEGA ===== */
+        .btn-donate-mega {
+            background: linear-gradient(270deg, #ff9f43, #ff4757, #ff9f43);
+            background-size: 200% 200%;
+            animation: itemAppear 0.5s ease forwards, gradientShift 3s ease infinite;
+            border: 1px solid rgba(255, 159, 67, 0.6);
+            box-shadow: 0 5px 25px rgba(255, 71, 87, 0.3);
+        }
+
+        .btn-donate-mega .btn-title,
+        .btn-donate-mega .btn-subtitle,
+        .btn-donate-mega i {
+            color: #fff !important;
+            -webkit-text-fill-color: #fff !important;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        @keyframes gradientShift {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .btn-donate-mega:hover {
+            box-shadow: 0 8px 35px rgba(255, 71, 87, 0.5);
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        /* ===== ОСТАЛЬНЫЕ (маленькие) ===== */
+        .btn-dalink i.main-icon { color: var(--dalink-color); }
+        .btn-dalink:hover { box-shadow: 0 0 20px rgba(255, 59, 143, 0.15); }
+
+        .btn-vtb i.main-icon { color: #00a3ff; }
+        .btn-vtb.active {
+            background: rgba(0, 163, 255, 0.1);
+            border-color: rgba(0, 163, 255, 0.3);
+        }
+
+        .btn-tg i.main-icon { color: var(--tg-color); }
+        .btn-tg:hover { box-shadow: 0 0 20px rgba(0, 136, 204, 0.15); }
+
+        .btn-crypto i.main-icon { color: var(--crypto-color); }
+        .btn-crypto:hover { box-shadow: 0 0 20px rgba(243, 186, 47, 0.15); }
+
+        /* ===== РАЗДЕЛИТЕЛЬ ===== */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            animation: itemAppear 0.5s ease forwards;
+        }
+        .section-divider span {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-glass);
+        }
+
+        /* ===== ВЫПАДАЮЩИЕ МЕНЮ ===== */
         .submenu {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease;
-            background: rgba(0, 0, 0, 0.2);
+            transition: max-height 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            background: var(--menu-glass);
             border-radius: 0 0 18px 18px;
             margin-top: -10px;
             padding: 0 10px;
             opacity: 0;
+            transform: translateY(-10px);
         }
+
         .submenu.open {
             opacity: 1;
+            transform: translateY(0);
             padding: 15px 10px 10px 10px;
             margin-bottom: 5px;
         }
+
         .sub-btn {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
             padding: 12px 15px;
-            background: rgba(255,255,255,0.03);
+            background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.05);
             border-radius: 12px;
             color: #fff;
-            font-size: 12px;
-            font-family: inherit;
+            font-size: 13px;
+            font-family: 'Poppins', sans-serif;
             cursor: pointer;
             margin-bottom: 8px;
             transition: 0.2s;
         }
-        .sub-btn:hover { background: rgba(255,255,255,0.1); }
-        
-        /* ===== ОБЫЧНЫЕ УВЕДОМЛЕНИЯ (ДЛЯ ОСТАЛЬНЫХ КНОПОК) ===== */
-        .toast {
+
+        .sub-btn:last-child { margin-bottom: 0; }
+
+        .sub-btn:hover {
+            background: rgba(255,255,255,0.15);
+            transform: scale(1.02);
+        }
+
+        .sub-btn i { font-size: 14px; opacity: 0.7; }
+
+        .btn-action.active .arrow-icon {
+            transform: rotate(180deg);
+            opacity: 1;
+        }
+
+        /* Kaspi hero — тоже expand */
+        .btn-kaspi-hero.active .arrow-icon {
+            transform: rotate(180deg);
+            opacity: 1;
+        }
+
+        /* ===== TOAST ===== */
+        #toast-container {
             position: fixed;
-            top: -100px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(20, 20, 20, 0.85);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            padding: 16px 24px;
-            border-radius: 20px;
+            z-index: 9999;
+        }
+
+        .toast {
+            background: rgba(10, 10, 18, 0.95);
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 12px;
+            border: 1px solid var(--primary-neon);
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.2);
+            backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             gap: 12px;
-            transition: top 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            z-index: 1000;
-            font-size: 14px;
             font-weight: 600;
+            font-size: 14px;
+            transform: translateY(-100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .toast.show { top: 30px; }
+
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast i { color: var(--primary-neon); font-size: 18px; }
+
+        footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 15px; align-items: flex-start; }
+            .main-card { padding: 30px 20px; border-radius: 25px; }
+            h1 { font-size: 24px; }
+            .btn-action { padding: 16px 20px; }
+            .btn-kaspi-hero { padding: 20px 20px; }
+            .btn-twitch-hero { padding: 18px 20px; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="glow-circle"></div>
+    <div class="main-card">
+        <div class="profile-area">
+            <div class="avatar-wrapper">
+                <div class="avatar-img">
+                    <img src="avatar.jpg" alt="elgurov" />
+                </div>
+                <div class="status-dot"></div>
+            </div>
+            <h1>elgurov</h1>
+        </div>
 
-    <!-- Уведомление для крипты и ВТБ -->
-    <div id="toast" class="toast">
-        <span id="toast-message">Скопировано!</span>
+        <ul class="links-list">
+
+            <!-- 1. KASPI — САМАЯ БОЛЬШАЯ -->
+            <li class="link-item">
+                <div class="expand-container">
+                    <button class="btn-action btn-kaspi-hero toggle-menu">
+                        <i class="fa-solid fa-credit-card main-icon"></i>
+                        <div class="btn-content">
+                            <span class="btn-title">Kaspi Bank (Казахстан)</span>
+                            <span class="btn-subtitle">Нажми, чтобы открыть реквизиты</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                    </button>
+                    <div class="submenu">
+                        <button class="sub-btn" onclick="copyToClipboard('4400430366330691', 'Номер карты Kaspi')">
+                            Номер карты <span><i class="fa-regular fa-copy"></i></span>
+                        </button>
+                        <button class="sub-btn" onclick="copyToClipboard('7471242778', 'Номер телефона Kaspi')">
+                            По номеру телефона <span><i class="fa-regular fa-copy"></i></span>
+                        </button>
+                    </div>
+                </div>
+            </li>
+
+            <!-- 2. TWITCH — СВЕТЯЩИЙСЯ ГЛАВНЫЙ -->
+            <li class="link-item">
+                <a href="https://www.twitch.tv/elgurov" target="_blank" class="btn-action btn-twitch-hero">
+                    <i class="fa-brands fa-twitch main-icon"></i>
+                    <div class="btn-content">
+                        <span class="btn-title">Twitch Канал</span>
+                        <span class="btn-subtitle">Смотри прямые трансляции здесь</span>
+                    </div>
+                    <div class="live-badge">
+                        <div class="live-dot"></div>
+                        LIVE
+                    </div>
+                </a>
+            </li>
+
+            <!-- 3. ДОНАТ ИЗ РФ — MEGA -->
+            <li class="link-item">
+                <a href="https://www.donationalerts.com/r/elgurov" target="_blank" class="btn-action btn-donate-mega">
+                    <i class="fa-solid fa-fire main-icon"></i>
+                    <div class="btn-content">
+                        <span class="btn-title">Донаты из РФ и СНГ</span>
+                        <span class="btn-subtitle">Поддержи стримера (Алерт на экран)</span>
+                    </div>
+                    <i class="fa-solid fa-bolt arrow-icon"></i>
+                </a>
+            </li>
+
+            <!-- РАЗДЕЛИТЕЛЬ -->
+            <li class="link-item section-divider" style="animation-delay:0.55s">
+                <span>Другие способы</span>
+            </li>
+
+            <!-- 4. DALINK -->
+            <li class="link-item">
+                <a href="https://dalink.to/elgurov" target="_blank" class="btn-action btn-dalink btn-small">
+                    <i class="fa-solid fa-link main-icon"></i>
+                    <div class="btn-content">
+                        <span class="btn-title">Dalink (Альтернатива)</span>
+                        <span class="btn-subtitle">Ещё один способ поддержать</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                </a>
+            </li>
+
+            <!-- 5. ВТБ -->
+            <li class="link-item">
+                <div class="expand-container">
+                    <button class="btn-action btn-vtb btn-small toggle-menu">
+                        <i class="fa-solid fa-building-columns main-icon"></i>
+                        <div class="btn-content">
+                            <span class="btn-title">ВТБ (Прямой из РФ)</span>
+                            <span class="btn-subtitle">Нажми, чтобы открыть реквизиты</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                    </button>
+                    <div class="submenu">
+                        <button class="sub-btn" onclick="copyToClipboard('2204360100149580', 'Номер карты ВТБ')">
+                            Скопировать карту <span><i class="fa-regular fa-copy"></i></span>
+                        </button>
+                        <button class="sub-btn" onclick="copyToClipboard('VLADISLAV GUROV', 'Имя получателя')">
+                            Скопировать имя (ENG) <span><i class="fa-regular fa-copy"></i></span>
+                        </button>
+                    </div>
+                </div>
+            </li>
+
+            <!-- 6. TELEGRAM -->
+            <li class="link-item">
+                <a href="https://t.me/elgurov" target="_blank" class="btn-action btn-tg btn-small">
+                    <i class="fa-brands fa-telegram main-icon"></i>
+                    <div class="btn-content">
+                        <span class="btn-title">Telegram Канал</span>
+                        <span class="btn-subtitle">Анонсы, новости и общение</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                </a>
+            </li>
+
+            <!-- 7. КРИПТА -->
+            <li class="link-item">
+                <button class="btn-action btn-crypto btn-small" onclick="copyToClipboard('0x06a300e8b8c459ae210432203bdf12e02e301798', 'BEP20 адрес')">
+                    <i class="fa-solid fa-wallet main-icon"></i>
+                    <div class="btn-content">
+                        <span class="btn-title">Крипта (USDT BEP20)</span>
+                        <span class="btn-subtitle">Скопировать адрес кошелька</span>
+                    </div>
+                    <i class="fa-regular fa-copy arrow-icon"></i>
+                </button>
+            </li>
+
+        </ul>
+
+        <footer>© elgurov</footer>
     </div>
 
-    <div class="main-container">
-        <!-- Профиль -->
-        <div class="avatar-img">
-            <img src="avatar.jpg" alt="elgurov" onerror="this.src='https://via.placeholder.com/90/111/fff?text=EG'"/>
-        </div>
-        <h1>elgurov</h1>
-
-        <!-- Главная кнопка Kaspi с двумя стейтами внутри -->
-        <button class="glass-btn" id="kaspi-main-btn" onclick="copyKaspiIntegrated()">
-            
-            <!-- Обычное состояние -->
-            <div class="kaspi-state kaspi-default">
-                <span class="btn-title-main"><i class="fa-solid fa-credit-card"></i> Kaspi Pay</span>
-                <span class="btn-number-main">77471242778</span>
-            </div>
-
-            <!-- Успешное состояние (Скопировано) -->
-            <div class="kaspi-state kaspi-success">
-                <span class="success-title"><i class="fa-solid fa-circle-check"></i> Скопировано</span>
-                <span class="success-subtitle">Спасибо • Рахмет ❤️</span>
-            </div>
-
-        </button>
-
-        <!-- Кнопка скрытого меню -->
-        <button class="toggle-hub-btn" onclick="toggleHub()">
-            Донат из СНГ и тд. <i class="fa-solid fa-chevron-down"></i>
-        </button>
-
-        <!-- Скрытые ссылки -->
-        <div class="hub-links-wrapper" id="hub-links">
-            <ul class="links-list">
-                
-                <li class="link-item">
-                    <a href="https://www.twitch.tv/elgurov" target="_blank" class="btn-action btn-twitch">
-                        <i class="fa-brands fa-twitch main-icon"></i>
-                        <div class="btn-content">
-                            <span class="btn-title">Twitch Канал</span>
-                            <span class="btn-subtitle">Прямые трансляции</span>
-                        </div>
-                        <i class="fa-solid fa-arrow-right arrow-icon"></i>
-                    </a>
-                </li>
-
-                <li class="link-item">
-                    <a href="https://www.donationalerts.com/r/elgurov" target="_blank" class="btn-action btn-donate">
-                        <i class="fa-solid fa-fire main-icon"></i>
-                        <div class="btn-content">
-                            <span class="btn-title">Донаты из РФ и СНГ</span>
-                            <span class="btn-subtitle">Алерт на экран</span>
-                        </div>
-                        <i class="fa-solid fa-arrow-right arrow-icon"></i>
-                    </a>
-                </li>
-
-                <li class="link-item">
-                    <div class="expand-container">
-                        <button class="btn-action btn-vtb toggle-menu">
-                            <i class="fa-solid fa-building-columns main-icon"></i>
-                            <div class="btn-content">
-                                <span class="btn-title">ВТБ (Из РФ)</span>
-                                <span class="btn-subtitle">Открыть реквизиты</span>
-                            </div>
-                            <i class="fa-solid fa-chevron-down arrow-icon"></i>
-                        </button>
-                        <div class="submenu">
-                            <button class="sub-btn" onclick="copySimple('2204360100149580', 'Номер карты ВТБ')">
-                                Скопировать карту <i class="fa-regular fa-copy"></i>
-                            </button>
-                            <button class="sub-btn" onclick="copySimple('VLADISLAV GUROV', 'Имя получателя')">
-                                Скопировать имя <i class="fa-regular fa-copy"></i>
-                            </button>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="link-item">
-                    <button class="btn-action btn-crypto" onclick="copySimple('0x06a300e8b8c459ae210432203bdf12e02e301798', 'BEP20 адрес')">
-                        <i class="fa-solid fa-wallet main-icon"></i>
-                        <div class="btn-content">
-                            <span class="btn-title">Крипта (USDT BEP20)</span>
-                            <span class="btn-subtitle">Скопировать адрес</span>
-                        </div>
-                        <i class="fa-regular fa-copy arrow-icon"></i>
-                    </button>
-                </li>
-
-                <li class="link-item">
-                    <a href="https://t.me/elgurov" target="_blank" class="btn-action btn-tg">
-                        <i class="fa-brands fa-telegram main-icon"></i>
-                        <div class="btn-content">
-                            <span class="btn-title">Telegram Канал</span>
-                            <span class="btn-subtitle">Новости и общение</span>
-                        </div>
-                        <i class="fa-solid fa-arrow-right arrow-icon"></i>
-                    </a>
-                </li>
-
-            </ul>
+    <div id="toast-container">
+        <div class="toast" id="copy-toast">
+            <i class="fa-solid fa-circle-check"></i>
+            <span id="toast-message">Скопировано!</span>
         </div>
     </div>
 
     <script>
-        // === ИНТЕГРИРОВАННАЯ ЛОГИКА KASPI ===
-        let kaspiResetTimeout;
-        
-        function copyKaspiIntegrated() {
-            const phoneNumber = "77471242778"; 
-            const btn = document.getElementById('kaspi-main-btn');
-
-            navigator.clipboard.writeText(phoneNumber).then(() => {
-                // Включаем успешное состояние (анимация переворота)
-                btn.classList.add('copied');
-                
-                // Вибрация телефона для тактильного отклика (если поддерживает браузер)
-                if (navigator.vibrate) navigator.vibrate(50);
-
-                // Очищаем предыдущий таймер, если кликнули несколько раз подряд
-                clearTimeout(kaspiResetTimeout);
-
-                // Через 3.5 секунды возвращаем кнопку в исходное положение
-                kaspiResetTimeout = setTimeout(() => {
-                    btn.classList.remove('copied');
-                }, 3500);
-
-            }).catch(err => {
-                alert('Не удалось скопировать. Проверьте разрешения браузера.');
-            });
-        }
-
-        // === ПРОСТОЕ КОПИРОВАНИЕ (Для ВТБ и Крипты) ===
-        let simpleToastTimeout;
-        function copySimple(text, label) {
-            navigator.clipboard.writeText(text).then(() => {
-                const toast = document.getElementById('toast');
-                const toastMsg = document.getElementById('toast-message');
-                
-                clearTimeout(simpleToastTimeout);
-                toastMsg.innerHTML = `${label} скопирован!`;
-                
-                toast.classList.remove('show');
-                void toast.offsetWidth; // Сброс анимации
-                toast.classList.add('show');
-                
-                if (navigator.vibrate) navigator.vibrate(30);
-
-                simpleToastTimeout = setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 2000);
-            });
-        }
-
-        // === ЛОГИКА РАСКРЫТИЯ СЕКРЕТНОГО АРСЕНАЛА ===
-        function toggleHub() {
-            const btn = document.querySelector('.toggle-hub-btn');
-            const hub = document.getElementById('hub-links');
-            
-            btn.classList.toggle('active');
-            
-            if (hub.classList.contains('open')) {
-                hub.classList.remove('open');
-                hub.style.maxHeight = null;
-            } else {
-                hub.classList.add('open');
-                hub.style.maxHeight = hub.scrollHeight + "px";
-            }
-        }
-
-        // === ЛОГИКА АККОРДЕОНА (ВТБ) ===
         document.querySelectorAll('.toggle-menu').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
                 const submenu = this.nextElementSibling;
-                const parentHub = document.getElementById('hub-links');
+
+                document.querySelectorAll('.submenu').forEach(menu => {
+                    if (menu !== submenu) {
+                        menu.classList.remove('open');
+                        menu.style.maxHeight = null;
+                        menu.previousElementSibling.classList.remove('active');
+                    }
+                });
 
                 if (submenu.classList.contains('open')) {
                     submenu.classList.remove('open');
                     submenu.style.maxHeight = null;
+                    this.classList.remove('active');
                 } else {
                     submenu.classList.add('open');
                     submenu.style.maxHeight = submenu.scrollHeight + 30 + "px";
+                    this.classList.add('active');
                 }
-                
-                // Пересчет высоты родительского контейнера при открытии подменю
-                setTimeout(() => {
-                    if (parentHub.classList.contains('open')) {
-                        parentHub.style.maxHeight = parentHub.scrollHeight + "px";
-                    }
-                }, 400);
             });
         });
+
+        function copyToClipboard(textToCopy, label) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    showToast(label + ' скопирован!');
+                }).catch(() => fallbackCopy(textToCopy, label));
+            } else {
+                fallbackCopy(textToCopy, label);
+            }
+        }
+
+        function fallbackCopy(text, label) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                if (document.execCommand('copy')) showToast(label + ' скопирован!');
+            } catch (err) {}
+            document.body.removeChild(textArea);
+        }
+
+        let toastTimeout;
+        function showToast(message) {
+            const toast = document.getElementById('copy-toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.textContent = message;
+            toast.classList.remove('show');
+            clearTimeout(toastTimeout);
+            void toast.offsetWidth;
+            toast.classList.add('show');
+            toastTimeout = setTimeout(() => toast.classList.remove('show'), 2500);
+            if ('vibrate' in navigator) navigator.vibrate(50);
+        }
     </script>
 </body>
 </html>
