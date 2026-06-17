@@ -101,30 +101,39 @@
         }
 
         .lang-btn {
-            background: rgba(255, 255, 255, 0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.05); /* Сделал фон чуть светлее */
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--text-muted);
-            padding: 8px 16px;
-            border-radius: 12px;
+            padding: 10px 18px; /* Увеличил отступы для удобного нажатия */
+            border-radius: 14px;
             font-family: 'Unbounded', sans-serif;
-            font-size: 11px;
+            font-size: 13px; /* Увеличил шрифт */
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            touch-action: manipulation; /* Улучшает отклик на мобильных */
         }
 
         .lang-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.1);
             color: var(--text-main);
             transform: translateY(-2px);
         }
+        
+        .lang-btn:active {
+            transform: scale(0.95); /* Эффект продавливания кнопки */
+        }
 
         .lang-btn.active {
-            background: rgba(0, 242, 254, 0.1);
+            background: rgba(0, 242, 254, 0.15);
             color: var(--primary-neon);
             border-color: var(--primary-neon);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
         }
 
         .profile-area { margin-bottom: 20px; }
@@ -513,6 +522,8 @@
             h1 { font-size: 19px; }
             .btn-action { padding: 15px 16px; }
             .btn-action.btn-small { padding: 12px 16px; }
+            /* Убедимся, что на смартфонах кнопки языка остаются удобными */
+            .lang-btn { padding: 12px 16px; font-size: 12px; }
         }
     </style>
 </head>
@@ -520,11 +531,11 @@
 
     <div class="main-card">
         
-        <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ -->
+        <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ С ФЛАГАМИ И АТРИБУТОМ DATA-LANG -->
         <div class="lang-switcher">
-            <button class="lang-btn active" onclick="setLanguage('ru')">RU</button>
-            <button class="lang-btn" onclick="setLanguage('kz')">KZ</button>
-            <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+            <button class="lang-btn active" data-lang="ru" onclick="setLanguage('ru')">🇷🇺 RU</button>
+            <button class="lang-btn" data-lang="kz" onclick="setLanguage('kz')">🇰🇿 KZ</button>
+            <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">🇬🇧 EN</button>
         </div>
 
         <div class="profile-area">
@@ -742,14 +753,14 @@
 
         let currentLang = 'ru'; // Язык по умолчанию
 
-        // ФУНКЦИЯ СМЕНЫ ЯЗЫКА
+        // ФУНКЦИЯ СМЕНЫ ЯЗЫКА (ОБНОВЛЕННАЯ)
         function setLanguage(lang) {
             currentLang = lang;
             
-            // Обновляем активную кнопку
+            // Обновляем активную кнопку через дата-атрибут, а не через innerText
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active');
-                if(btn.innerText.toLowerCase() === lang) {
+                if(btn.getAttribute('data-lang') === lang) {
                     btn.classList.add('active');
                 }
             });
