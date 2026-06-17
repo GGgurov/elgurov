@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>elgurov | Hub</title>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-    
+
     <style>
         :root {
             --bg-dark: #050509;
@@ -124,7 +124,7 @@
             color: var(--text-main);
             transform: translateY(-2px);
         }
-        
+
         .lang-btn:active {
             transform: scale(0.95); /* Эффект продавливания кнопки */
         }
@@ -295,7 +295,7 @@
             font-weight: 600; 
             letter-spacing: -0.2px;
         }
-        
+
         .btn-subtitle {
             font-size: 10px;
             color: var(--text-muted);
@@ -530,7 +530,7 @@
 <body>
 
     <div class="main-card">
-        
+
         <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ С ФЛАГАМИ И АТРИБУТОМ DATA-LANG -->
         <div class="lang-switcher">
             <button class="lang-btn active" data-lang="ru" onclick="setLanguage('ru')">🇷🇺 RU</button>
@@ -693,7 +693,7 @@
                 "tg_sub": "Анонсы и общение",
                 "crypto_title": "Крипта (USDT BEP20)",
                 "crypto_sub": "Скопировать адрес кошелька",
-                
+
                 // Переводы для уведомлений (toast)
                 "toast_copied": "скопирован(а)!",
                 "paypal_label": "Почта PayPal",
@@ -718,7 +718,7 @@
                 "tg_sub": "Анонстар мен чат",
                 "crypto_title": "Крипта (USDT BEP20)",
                 "crypto_sub": "Әмиян адресін көшіру",
-                
+
                 "toast_copied": "көшірілді!",
                 "paypal_label": "PayPal поштасы",
                 "vtb_card_label": "ВТБ картасының нөмірі",
@@ -742,7 +742,7 @@
                 "tg_sub": "Announcements & chat",
                 "crypto_title": "Crypto (USDT BEP20)",
                 "crypto_sub": "Copy wallet address",
-                
+
                 "toast_copied": "copied!",
                 "paypal_label": "PayPal email",
                 "vtb_card_label": "VTB Card number",
@@ -756,7 +756,7 @@
         // ФУНКЦИЯ СМЕНЫ ЯЗЫКА (ОБНОВЛЕННАЯ)
         function setLanguage(lang) {
             currentLang = lang;
-            
+
             // Обновляем активную кнопку через дата-атрибут, а не через innerText
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active');
