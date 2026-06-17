@@ -18,6 +18,7 @@
             --twitch-color: #9146FF;
             --tg-color: #0088cc;
             --vtb-color: #002882;
+            --paypal-color: #0070ba;
             --crypto-color: #f3ba2f;
             --dalink-color: #ff3b8f;
             --text-main: #ffffff;
@@ -208,6 +209,7 @@
         .link-item:nth-child(5) { animation-delay: 0.42s; }
         .link-item:nth-child(6) { animation-delay: 0.5s; }
         .link-item:nth-child(7) { animation-delay: 0.58s; }
+        .link-item:nth-child(8) { animation-delay: 0.66s; }
 
         @keyframes itemAppear {
             to { opacity: 1; transform: translateY(0); }
@@ -303,21 +305,38 @@
             transform: translateY(-3px) scale(1.01);
         }
 
-        /* ===== 2. TWITCH (ТОП-2) ===== */
-        .btn-twitch-hero {
-            background: linear-gradient(135deg, rgba(145, 70, 255, 0.15) 0%, rgba(100, 40, 220, 0.08) 100%);
-            border: 1px solid rgba(145, 70, 255, 0.4);
+        /* ===== 2. PAYPAL (ТОП-2) ===== */
+        .btn-paypal-hero {
+            background: linear-gradient(135deg, rgba(0, 112, 186, 0.15) 0%, rgba(0, 48, 135, 0.08) 100%);
+            border: 1px solid rgba(0, 112, 186, 0.4);
         }
 
-        .btn-twitch-hero i.main-icon {
-            color: #bf94ff;
+        .btn-paypal-hero i.main-icon { color: var(--paypal-color); }
+
+        .btn-paypal-hero:hover {
+            background: linear-gradient(135deg, rgba(0, 112, 186, 0.22) 0%, rgba(0, 48, 135, 0.12) 100%);
+            border-color: rgba(0, 112, 186, 0.6);
+            box-shadow: 0 0 15px rgba(0, 112, 186, 0.2);
         }
 
-        .btn-twitch-hero:hover {
-            background: linear-gradient(135deg, rgba(145, 70, 255, 0.22) 0%, rgba(100, 40, 220, 0.12) 100%);
-            border-color: rgba(145, 70, 255, 0.6);
-            box-shadow: 0 0 15px rgba(145, 70, 255, 0.2);
+        /* ===== 3. ВТБ ПРЯМОЙ ДОНАТ (ТОП-3) ===== */
+        .btn-vtb-hero {
+            background: linear-gradient(135deg, rgba(0, 163, 255, 0.12) 0%, rgba(0, 40, 130, 0.06) 100%);
+            border: 1px solid rgba(0, 163, 255, 0.4);
         }
+
+        .btn-vtb-hero i.main-icon { color: #00a3ff; }
+
+        .btn-vtb-hero:hover {
+            background: linear-gradient(135deg, rgba(0, 163, 255, 0.2) 0%, rgba(0, 40, 130, 0.1) 100%);
+            border-color: rgba(0, 163, 255, 0.6);
+        }
+
+        /* ===== СТИЛИ ДЛЯ НИЖНИХ КНОПОК ===== */
+        .btn-twitch i.main-icon { color: var(--twitch-color); }
+        .btn-dalink i.main-icon { color: var(--dalink-color); }
+        .btn-tg i.main-icon { color: var(--tg-color); }
+        .btn-crypto i.main-icon { color: var(--crypto-color); }
 
         .live-badge {
             display: inline-flex;
@@ -345,24 +364,6 @@
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.4; transform: scale(0.8); }
         }
-
-        /* ===== 3. ВТБ ПРЯМОЙ ДОНАТ (ТОП-3) ===== */
-        .btn-vtb-hero {
-            background: linear-gradient(135deg, rgba(0, 163, 255, 0.12) 0%, rgba(0, 40, 130, 0.06) 100%);
-            border: 1px solid rgba(0, 163, 255, 0.4);
-        }
-
-        .btn-vtb-hero i.main-icon { color: #00a3ff; }
-
-        .btn-vtb-hero:hover {
-            background: linear-gradient(135deg, rgba(0, 163, 255, 0.2) 0%, rgba(0, 40, 130, 0.1) 100%);
-            border-color: rgba(0, 163, 255, 0.6);
-        }
-
-        /* ===== СТИЛИ ДЛЯ НИЖНИХ КНОПОК ===== */
-        .btn-dalink i.main-icon { color: var(--dalink-color); }
-        .btn-tg i.main-icon { color: var(--tg-color); }
-        .btn-crypto i.main-icon { color: var(--crypto-color); }
 
         /* ===== РАЗДЕЛИТЕЛЬ ===== */
         .section-divider {
@@ -504,15 +505,16 @@
 
         <div class="marquee-container">
             <div class="marquee-text">
-                <span><i class="fa-solid fa-dumbbell"></i> 1 отжимание = 100 ₸ (15 ₽)</span>
-                <span><i class="fa-solid fa-music"></i> Заказ музыки = 300 ₸ (45 ₽)</span>
-                <span><i class="fa-solid fa-dumbbell"></i> 1 отжимание = 100 ₸ (15 ₽)</span>
-                <span><i class="fa-solid fa-music"></i> Заказ музыки = 300 ₸ (45 ₽)</span>
+                <span><i class="fa-solid fa-dumbbell"></i> 1 отжимание = 100 ₸ (15 ₽ / ~$0.20)</span>
+                <span><i class="fa-solid fa-music"></i> Заказ музыки = 300 ₸ (45 ₽ / ~$0.65)</span>
+                <span><i class="fa-solid fa-dumbbell"></i> 1 отжимание = 100 ₸ (15 ₽ / ~$0.20)</span>
+                <span><i class="fa-solid fa-music"></i> Заказ музыки = 300 ₸ (45 ₽ / ~$0.65)</span>
             </div>
         </div>
 
         <ul class="links-list">
 
+            <!-- ТОП-1: DONATION ALERTS -->
             <li class="link-item">
                 <a href="https://www.donationalerts.com/r/elgurov" target="_blank" class="btn-action btn-donate-mega">
                     <i class="fa-solid fa-fire main-icon"></i>
@@ -524,20 +526,19 @@
                 </a>
             </li>
 
+            <!-- ТОП-2: PAYPAL -->
             <li class="link-item">
-                <a href="https://www.twitch.tv/elgurov" target="_blank" class="btn-action btn-twitch-hero">
-                    <i class="fa-brands fa-twitch main-icon"></i>
+                <button class="btn-action btn-paypal-hero" onclick="copyToClipboard('newgurov2022@gmail.com', 'Почта PayPal')">
+                    <i class="fa-brands fa-paypal main-icon"></i>
                     <div class="btn-content">
-                        <span class="btn-title">Twitch Канал</span>
-                        <span class="btn-subtitle">Прямые трансляции тут</span>
+                        <span class="btn-title">PayPal (Зарубеж)</span>
+                        <span class="btn-subtitle">Скопировать email для перевода</span>
                     </div>
-                    <div class="live-badge">
-                        <div class="live-dot"></div>
-                        LIVE
-                    </div>
-                </a>
+                    <i class="fa-regular fa-copy arrow-icon"></i>
+                </button>
             </li>
 
+            <!-- ТОП-3: ВТБ (ПРЯМОЙ ДОНАТ) -->
             <li class="link-item">
                 <div class="expand-container">
                     <button class="btn-action btn-vtb-hero toggle-menu">
@@ -559,10 +560,27 @@
                 </div>
             </li>
 
+            <!-- РАЗДЕЛИТЕЛЬ ДЛЯ ОСТАЛЬНЫХ ССЫЛОК -->
             <li class="link-item section-divider">
                 <span>Другие способы</span>
             </li>
 
+            <!-- 4. TWITCH -->
+            <li class="link-item">
+                <a href="https://www.twitch.tv/elgurov" target="_blank" class="btn-action btn-twitch btn-small">
+                    <i class="fa-brands fa-twitch main-icon"></i>
+                    <div class="btn-content">
+                        <span class="btn-title">Twitch Канал</span>
+                        <span class="btn-subtitle">Прямые трансляции тут</span>
+                    </div>
+                    <div class="live-badge">
+                        <div class="live-dot"></div>
+                        LIVE
+                    </div>
+                </a>
+            </li>
+
+            <!-- 5. DALINK -->
             <li class="link-item">
                 <a href="https://dalink.to/elgurov" target="_blank" class="btn-action btn-dalink btn-small">
                     <i class="fa-solid fa-link main-icon"></i>
@@ -574,6 +592,7 @@
                 </a>
             </li>
 
+            <!-- 6. TELEGRAM -->
             <li class="link-item">
                 <a href="https://t.me/elgurov" target="_blank" class="btn-action btn-tg btn-small">
                     <i class="fa-brands fa-telegram main-icon"></i>
@@ -585,6 +604,7 @@
                 </a>
             </li>
 
+            <!-- 7. КРИПТА -->
             <li class="link-item">
                 <button class="btn-action btn-crypto btn-small" onclick="copyToClipboard('0x06a300e8b8c459ae210432203bdf12e02e301798', 'Адрес кошелька BEP20')">
                     <i class="fa-solid fa-wallet main-icon"></i>
@@ -667,7 +687,7 @@
             toastMsg.textContent = message;
             toast.classList.remove('show');
             clearTimeout(toastTimeout);
-            void toast.offsetWidth; // Триггер рефлоу для перезапуска анимации
+            void toast.offsetWidth; 
             toast.classList.add('show');
             toastTimeout = setTimeout(() => toast.classList.remove('show'), 2200);
             if ('vibrate' in navigator) navigator.vibrate(40);
