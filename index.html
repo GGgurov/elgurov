@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     
     <style>
@@ -17,7 +17,6 @@
             --secondary-neon: #4facfe;
             --twitch-color: #9146FF;
             --tg-color: #0088cc;
-            --kaspi-color: #f14635;
             --vtb-color: #002882;
             --crypto-color: #f3ba2f;
             --dalink-color: #ff3b8f;
@@ -25,7 +24,7 @@
             --text-muted: #8b9bb4;
             --glass: rgba(255, 255, 255, 0.03);
             --border-glass: rgba(255, 255, 255, 0.08);
-            --menu-glass: rgba(0, 0, 0, 0.3);
+            --menu-glass: rgba(0, 0, 0, 0.4);
         }
 
         * {
@@ -37,7 +36,7 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Unbounded', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-main);
             min-height: 100vh;
@@ -56,18 +55,18 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             background: 
-                radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(0, 242, 254, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 50% 50%, rgba(145, 70, 255, 0.05) 0%, transparent 60%),
-                linear-gradient(135deg, #050509 0%, #11111d 100%);
+                radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 242, 254, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(145, 70, 255, 0.04) 0%, transparent 60%),
+                linear-gradient(135deg, #050509 0%, #0d0d18 100%);
             z-index: -1;
             animation: bgPulse 15s ease infinite alternate;
             will-change: transform, opacity;
         }
 
         @keyframes bgPulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(1.05); opacity: 1; }
+            0% { transform: scale(1); opacity: 0.9; }
+            100% { transform: scale(1.03); opacity: 1; }
         }
 
         .main-card {
@@ -76,15 +75,15 @@
             background: var(--glass);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-radius: 30px;
-            padding: 40px 25px;
+            border-radius: 28px;
+            padding: 35px 22px;
             border: 1px solid var(--border-glass);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
             text-align: center;
             position: relative;
-            animation: cardAppear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation: cardAppear 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(30px);
             will-change: transform, opacity;
         }
 
@@ -92,17 +91,17 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .profile-area { margin-bottom: 30px; }
+        .profile-area { margin-bottom: 20px; }
 
         .avatar-wrapper {
-            width: 110px;
-            height: 110px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            margin: 0 auto 20px;
+            margin: 0 auto 15px;
             position: relative;
-            padding: 5px;
+            padding: 4px;
             background: linear-gradient(135deg, var(--primary-neon), var(--secondary-neon));
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.25);
         }
 
         .avatar-img {
@@ -113,7 +112,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 4px solid #0a0a12;
+            border: 3px solid #050509;
             position: relative;
             z-index: 1;
             overflow: hidden;
@@ -127,24 +126,64 @@
         }
 
         .status-dot {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             background-color: #00ff88;
             border-radius: 50%;
             position: absolute;
-            bottom: 5px; right: 5px;
-            border: 3px solid #0a0a12;
+            bottom: 4px; right: 4px;
+            border: 3px solid #050509;
             z-index: 2;
-            box-shadow: 0 0 10px #00ff88;
+            box-shadow: 0 0 8px #00ff88;
         }
 
         h1 {
-            font-size: 28px;
+            font-size: 22px;
             font-weight: 700;
+            letter-spacing: -0.5px;
             background: linear-gradient(to right, #fff, #b2b9c9);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
+        }
+
+        /* ========== БЕГУЩАЯ СТРОКА ========== */
+        .marquee-container {
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid var(--border-glass);
+            border-bottom: 1px solid var(--border-glass);
+            padding: 8px 0;
+            margin-bottom: 25px;
+            overflow: hidden;
+            width: 100%;
+            display: flex;
+        }
+
+        .marquee-text {
+            display: inline-block;
+            white-space: nowrap;
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            animation: marquee 15s linear infinite;
+        }
+
+        .marquee-text span {
+            margin-right: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .marquee-text i {
+            color: var(--primary-neon);
+            font-size: 10px;
+        }
+
+        @keyframes marquee {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
         }
 
         /* ========== СПИСОК КНОПОК ========== */
@@ -152,55 +191,51 @@
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
         }
 
         .link-item {
             opacity: 0;
-            transform: translateY(20px);
-            animation: itemAppear 0.5s ease forwards;
+            transform: translateY(15px);
+            animation: itemAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             will-change: transform, opacity;
         }
 
-        .link-item:nth-child(1) { animation-delay: 0.15s; }
-        .link-item:nth-child(2) { animation-delay: 0.25s; }
-        .link-item:nth-child(3) { animation-delay: 0.35s; }
-        .link-item:nth-child(4) { animation-delay: 0.45s; }
-        .link-item:nth-child(5) { animation-delay: 0.55s; }
-        .link-item:nth-child(6) { animation-delay: 0.65s; }
-        .link-item:nth-child(7) { animation-delay: 0.75s; }
-        .link-item:nth-child(8) { animation-delay: 0.85s; }
+        .link-item:nth-child(1) { animation-delay: 0.1s; }
+        .link-item:nth-child(2) { animation-delay: 0.18s; }
+        .link-item:nth-child(3) { animation-delay: 0.26s; }
+        .link-item:nth-child(4) { animation-delay: 0.34s; }
+        .link-item:nth-child(5) { animation-delay: 0.42s; }
+        .link-item:nth-child(6) { animation-delay: 0.5s; }
+        .link-item:nth-child(7) { animation-delay: 0.58s; }
 
         @keyframes itemAppear {
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== БАЗОВЫЕ КНОПКИ ===== */
+        /* ===== БАЗОВЫЕ СТИЛИ КНОПОК ===== */
         .btn-action {
             display: flex;
             align-items: center;
             width: 100%;
-            padding: 18px 22px;
+            padding: 16px 20px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border-glass);
-            border-radius: 18px;
+            border-radius: 16px;
             color: var(--text-main);
             text-decoration: none;
-            font-size: 16px;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
             cursor: pointer;
             position: relative;
-            overflow: hidden;
             text-align: left;
         }
 
         .btn-action i.main-icon {
-            font-size: 24px;
-            margin-right: 15px;
-            width: 30px;
+            font-size: 22px;
+            margin-right: 14px;
+            width: 28px;
             text-align: center;
-            transition: transform 0.3s ease;
+            transition: transform 0.25s ease;
         }
 
         .btn-content {
@@ -209,218 +244,138 @@
             flex: 1;
         }
 
-        .btn-title { font-size: 15px; }
+        .btn-title { 
+            font-size: 13px; 
+            font-weight: 600; 
+            letter-spacing: -0.2px;
+        }
+        
         .btn-subtitle {
-            font-size: 12px;
+            font-size: 10px;
             color: var(--text-muted);
             font-weight: 400;
-            margin-top: 2px;
+            margin-top: 3px;
+            letter-spacing: 0;
         }
 
         .arrow-icon {
-            font-size: 12px;
+            font-size: 11px;
             opacity: 0.4;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
         }
 
         .btn-action:hover {
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.05);
             transform: translateY(-2px);
             border-color: rgba(255, 255, 255, 0.15);
         }
 
-        .btn-action:active { transform: scale(0.98); }
+        .btn-action:active { transform: scale(0.99); }
 
-        /* ===== МАЛЕНЬКИЕ КНОПКИ (вторичные) ===== */
+        /* Вторичные кнопки (нижний блок) */
         .btn-action.btn-small {
-            padding: 13px 18px;
+            padding: 14px 18px;
         }
         .btn-action.btn-small i.main-icon {
-            font-size: 19px;
+            font-size: 18px;
             margin-right: 12px;
             width: 24px;
         }
-        .btn-action.btn-small .btn-title { font-size: 13px; }
-        .btn-action.btn-small .btn-subtitle { font-size: 11px; }
+        .btn-action.btn-small .btn-title { font-size: 12px; }
 
-        /* ===== 1. KASPI — HERO (самый большой) ===== */
-        .btn-kaspi-hero {
-            padding: 22px 24px;
-            background: linear-gradient(135deg, rgba(241, 70, 53, 0.18) 0%, rgba(200, 40, 30, 0.10) 100%);
-            border: 1.5px solid rgba(241, 70, 53, 0.5);
-            border-radius: 22px;
-            box-shadow: 0 6px 30px rgba(241, 70, 53, 0.2), inset 0 1px 0 rgba(255,255,255,0.05);
-        }
-        .btn-kaspi-hero i.main-icon {
-            font-size: 28px;
-            color: var(--kaspi-color);
-        }
-        .btn-kaspi-hero .btn-title { font-size: 17px; }
-        .btn-kaspi-hero .btn-subtitle { font-size: 13px; }
-        .btn-kaspi-hero:hover {
-            background: linear-gradient(135deg, rgba(241, 70, 53, 0.28) 0%, rgba(200, 40, 30, 0.18) 100%);
-            box-shadow: 0 8px 40px rgba(241, 70, 53, 0.35);
-            transform: translateY(-3px);
-            border-color: rgba(241, 70, 53, 0.7);
-        }
-
-        /* ===== 2. TWITCH — ГЛАВНЫЙ (светящийся) ===== */
-        .btn-twitch-hero {
-            padding: 20px 22px;
-            background: linear-gradient(135deg, rgba(145, 70, 255, 0.25) 0%, rgba(100, 40, 220, 0.15) 100%);
-            border: 1.5px solid rgba(145, 70, 255, 0.6);
-            border-radius: 20px;
-            box-shadow:
-                0 0 0 0 rgba(145, 70, 255, 0.5),
-                0 6px 30px rgba(145, 70, 255, 0.3),
-                inset 0 1px 0 rgba(255,255,255,0.07);
-            animation: itemAppear 0.5s ease forwards, twitchGlow 2.5s ease-in-out infinite;
-            position: relative;
-            overflow: visible;
-        }
-
-        /* Светящийся ореол */
-        .btn-twitch-hero::before {
-            content: '';
-            position: absolute;
-            inset: -3px;
-            border-radius: 22px;
-            background: linear-gradient(135deg, rgba(145, 70, 255, 0.4), rgba(180, 120, 255, 0.2), rgba(145, 70, 255, 0.4));
-            background-size: 200% 200%;
-            animation: twitchBorderFlow 2.5s linear infinite;
-            z-index: -1;
-            filter: blur(4px);
-        }
-
-        @keyframes twitchGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(145, 70, 255, 0.4), 0 6px 30px rgba(145, 70, 255, 0.25); }
-            50%       { box-shadow: 0 0 40px rgba(145, 70, 255, 0.7), 0 8px 40px rgba(145, 70, 255, 0.45); }
-        }
-
-        @keyframes twitchBorderFlow {
-            0%   { background-position: 0% 50%; opacity: 0.8; }
-            50%  { background-position: 100% 50%; opacity: 1; }
-            100% { background-position: 0% 50%; opacity: 0.8; }
-        }
-
-        .btn-twitch-hero i.main-icon {
-            font-size: 26px;
-            color: #bf94ff;
-            filter: drop-shadow(0 0 8px rgba(145, 70, 255, 0.9));
-            animation: iconPulse 2.5s ease-in-out infinite;
-        }
-
-        @keyframes iconPulse {
-            0%, 100% { filter: drop-shadow(0 0 8px rgba(145, 70, 255, 0.9)); }
-            50%       { filter: drop-shadow(0 0 16px rgba(145, 70, 255, 1)) drop-shadow(0 0 30px rgba(180, 120, 255, 0.5)); }
-        }
-
-        .btn-twitch-hero .btn-title {
-            font-size: 16px;
-            background: linear-gradient(to right, #fff, #d4b4ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .btn-twitch-hero .btn-subtitle { font-size: 12px; }
-        .btn-twitch-hero .arrow-icon {
-            color: #9146FF;
-            opacity: 0.8;
-        }
-
-        .btn-twitch-hero:hover {
-            transform: translateY(-3px) scale(1.01);
-            background: linear-gradient(135deg, rgba(145, 70, 255, 0.35) 0%, rgba(100, 40, 220, 0.25) 100%);
-            border-color: rgba(145, 70, 255, 0.85);
-        }
-
-        /* LIVE Badge */
-        .live-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: rgba(145, 70, 255, 0.2);
-            border: 1px solid rgba(145, 70, 255, 0.5);
-            border-radius: 20px;
-            padding: 3px 9px;
-            font-size: 10px;
-            font-weight: 700;
-            color: #bf94ff;
-            letter-spacing: 0.5px;
-            margin-left: auto;
-            flex-shrink: 0;
-        }
-
-        .live-badge .live-dot {
-            width: 6px;
-            height: 6px;
-            background: #9146FF;
-            border-radius: 50%;
-            box-shadow: 0 0 6px rgba(145, 70, 255, 0.9);
-            animation: livePulse 1.2s ease infinite;
-        }
-
-        @keyframes livePulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.7); }
-        }
-
-        /* ===== 3. ДОНАТ — MEGA ===== */
+        /* ===== 1. DONATION ALERTS (ТОП-1 MEGA) ===== */
         .btn-donate-mega {
-            background: linear-gradient(270deg, #ff9f43, #ff4757, #ff9f43);
-            background-size: 200% 200%;
-            animation: itemAppear 0.5s ease forwards, gradientShift 3s ease infinite;
-            border: 1px solid rgba(255, 159, 67, 0.6);
-            box-shadow: 0 5px 25px rgba(255, 71, 87, 0.3);
+            background: linear-gradient(135deg, #ff9f43 0%, #ff4757 50%, #ff2a6d 100%);
+            background-size: 150% 150%;
+            border: none;
+            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.35);
         }
 
         .btn-donate-mega .btn-title,
         .btn-donate-mega .btn-subtitle,
         .btn-donate-mega i {
             color: #fff !important;
-            -webkit-text-fill-color: #fff !important;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        @keyframes gradientShift {
-            0%   { background-position: 0% 50%; }
-            50%  { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            text-shadow: 0 1px 3px rgba(0,0,0,0.15);
         }
 
         .btn-donate-mega:hover {
-            box-shadow: 0 8px 35px rgba(255, 71, 87, 0.5);
-            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(255, 71, 87, 0.5);
+            transform: translateY(-3px) scale(1.01);
         }
 
-        /* ===== ОСТАЛЬНЫЕ (маленькие) ===== */
+        /* ===== 2. TWITCH (ТОП-2) ===== */
+        .btn-twitch-hero {
+            background: linear-gradient(135deg, rgba(145, 70, 255, 0.15) 0%, rgba(100, 40, 220, 0.08) 100%);
+            border: 1px solid rgba(145, 70, 255, 0.4);
+        }
+
+        .btn-twitch-hero i.main-icon {
+            color: #bf94ff;
+        }
+
+        .btn-twitch-hero:hover {
+            background: linear-gradient(135deg, rgba(145, 70, 255, 0.22) 0%, rgba(100, 40, 220, 0.12) 100%);
+            border-color: rgba(145, 70, 255, 0.6);
+            box-shadow: 0 0 15px rgba(145, 70, 255, 0.2);
+        }
+
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(145, 70, 255, 0.25);
+            border: 1px solid rgba(145, 70, 255, 0.4);
+            border-radius: 8px;
+            padding: 3px 6px;
+            font-size: 9px;
+            font-weight: 700;
+            color: #bf94ff;
+            margin-left: auto;
+        }
+
+        .live-badge .live-dot {
+            width: 5px;
+            height: 5px;
+            background: #9146FF;
+            border-radius: 50%;
+            animation: livePulse 1.2s ease infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        /* ===== 3. ВТБ ПРЯМОЙ ДОНАТ (ТОП-3) ===== */
+        .btn-vtb-hero {
+            background: linear-gradient(135deg, rgba(0, 163, 255, 0.12) 0%, rgba(0, 40, 130, 0.06) 100%);
+            border: 1px solid rgba(0, 163, 255, 0.4);
+        }
+
+        .btn-vtb-hero i.main-icon { color: #00a3ff; }
+
+        .btn-vtb-hero:hover {
+            background: linear-gradient(135deg, rgba(0, 163, 255, 0.2) 0%, rgba(0, 40, 130, 0.1) 100%);
+            border-color: rgba(0, 163, 255, 0.6);
+        }
+
+        /* ===== СТИЛИ ДЛЯ НИЖНИХ КНОПОК ===== */
         .btn-dalink i.main-icon { color: var(--dalink-color); }
-        .btn-dalink:hover { box-shadow: 0 0 20px rgba(255, 59, 143, 0.15); }
-
-        .btn-vtb i.main-icon { color: #00a3ff; }
-        .btn-vtb.active {
-            background: rgba(0, 163, 255, 0.1);
-            border-color: rgba(0, 163, 255, 0.3);
-        }
-
         .btn-tg i.main-icon { color: var(--tg-color); }
-        .btn-tg:hover { box-shadow: 0 0 20px rgba(0, 136, 204, 0.15); }
-
         .btn-crypto i.main-icon { color: var(--crypto-color); }
-        .btn-crypto:hover { box-shadow: 0 0 20px rgba(243, 186, 47, 0.15); }
 
         /* ===== РАЗДЕЛИТЕЛЬ ===== */
         .section-divider {
             display: flex;
             align-items: center;
-            gap: 10px;
-            opacity: 0;
-            animation: itemAppear 0.5s ease forwards;
+            gap: 12px;
+            margin: 10px 0 2px;
         }
         .section-divider span {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 600;
             color: var(--text-muted);
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             text-transform: uppercase;
             white-space: nowrap;
         }
@@ -432,24 +387,26 @@
             background: var(--border-glass);
         }
 
-        /* ===== ВЫПАДАЮЩИЕ МЕНЮ ===== */
+        /* ===== ВЫПАДАЮЩЕЕ МЕНЮ РЕКВИЗИТОВ ===== */
         .submenu {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             background: var(--menu-glass);
-            border-radius: 0 0 18px 18px;
-            margin-top: -10px;
-            padding: 0 10px;
+            border-radius: 0 0 16px 16px;
+            margin-top: -8px;
+            padding: 0 8px;
             opacity: 0;
-            transform: translateY(-10px);
+            transform: translateY(-6px);
         }
 
         .submenu.open {
             opacity: 1;
             transform: translateY(0);
-            padding: 15px 10px 10px 10px;
-            margin-bottom: 5px;
+            padding: 12px 8px 8px 8px;
+            margin-bottom: 4px;
+            border: 1px solid var(--border-glass);
+            border-top: none;
         }
 
         .sub-btn {
@@ -457,42 +414,38 @@
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            padding: 12px 15px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 12px;
+            padding: 12px 14px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 10px;
             color: #fff;
-            font-size: 13px;
-            font-family: 'Poppins', sans-serif;
+            font-size: 11px;
+            font-family: 'Unbounded', sans-serif;
             cursor: pointer;
-            margin-bottom: 8px;
-            transition: 0.2s;
+            margin-bottom: 6px;
+            transition: background 0.2s, transform 0.2s;
         }
 
         .sub-btn:last-child { margin-bottom: 0; }
-
         .sub-btn:hover {
-            background: rgba(255,255,255,0.15);
-            transform: scale(1.02);
+            background: rgba(255,255,255,0.1);
+            transform: scale(1.01);
         }
+        .sub-btn i { font-size: 12px; opacity: 0.6; }
 
-        .sub-btn i { font-size: 14px; opacity: 0.7; }
-
+        .btn-action.active {
+            border-radius: 16px 16px 0 0;
+            background: rgba(255, 255, 255, 0.04);
+        }
         .btn-action.active .arrow-icon {
             transform: rotate(180deg);
             opacity: 1;
         }
 
-        /* Kaspi hero — тоже expand */
-        .btn-kaspi-hero.active .arrow-icon {
-            transform: rotate(180deg);
-            opacity: 1;
-        }
-
-        /* ===== TOAST ===== */
+        /* ===== TOAST УВЕДОМЛЕНИЯ ===== */
         #toast-container {
             position: fixed;
-            top: 20px;
+            top: 24px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 9999;
@@ -501,38 +454,38 @@
         .toast {
             background: rgba(10, 10, 18, 0.95);
             color: #fff;
-            padding: 15px 25px;
+            padding: 12px 20px;
             border-radius: 12px;
             border: 1px solid var(--primary-neon);
-            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.2);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 25px rgba(0, 242, 254, 0.15);
+            backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             font-weight: 600;
-            font-size: 14px;
-            transform: translateY(-100px);
+            font-size: 11px;
+            transform: translateY(-80px);
             opacity: 0;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .toast.show { transform: translateY(0); opacity: 1; }
-        .toast i { color: var(--primary-neon); font-size: 18px; }
+        .toast i { color: var(--primary-neon); font-size: 14px; }
 
         footer {
-            margin-top: 30px;
-            font-size: 12px;
+            margin-top: 25px;
+            font-size: 10px;
             color: var(--text-muted);
-            opacity: 0.5;
+            opacity: 0.4;
+            letter-spacing: 0.5px;
         }
 
         @media (max-width: 480px) {
-            body { padding: 15px; align-items: flex-start; }
-            .main-card { padding: 30px 20px; border-radius: 25px; }
-            h1 { font-size: 24px; }
-            .btn-action { padding: 16px 20px; }
-            .btn-kaspi-hero { padding: 20px 20px; }
-            .btn-twitch-hero { padding: 18px 20px; }
+            body { padding: 12px; align-items: flex-start; }
+            .main-card { padding: 30px 16px; border-radius: 24px; }
+            h1 { font-size: 19px; }
+            .btn-action { padding: 15px 16px; }
+            .btn-action.btn-small { padding: 12px 16px; }
         }
     </style>
 </head>
@@ -549,37 +502,34 @@
             <h1>elgurov</h1>
         </div>
 
+        <div class="marquee-container">
+            <div class="marquee-text">
+                <span><i class="fa-solid fa-dumbbell"></i> 1 отжимание = 100 ₸ (15 ₽)</span>
+                <span><i class="fa-solid fa-music"></i> Заказ музыки = 300 ₸ (45 ₽)</span>
+                <span><i class="fa-solid fa-dumbbell"></i> 1 отжимание = 100 ₸ (15 ₽)</span>
+                <span><i class="fa-solid fa-music"></i> Заказ музыки = 300 ₸ (45 ₽)</span>
+            </div>
+        </div>
+
         <ul class="links-list">
 
-            <!-- 1. KASPI — САМАЯ БОЛЬШАЯ -->
             <li class="link-item">
-                <div class="expand-container">
-                    <button class="btn-action btn-kaspi-hero toggle-menu">
-                        <i class="fa-solid fa-credit-card main-icon"></i>
-                        <div class="btn-content">
-                            <span class="btn-title">Kaspi Bank (Казахстан)</span>
-                            <span class="btn-subtitle">Нажми, чтобы открыть реквизиты</span>
-                        </div>
-                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
-                    </button>
-                    <div class="submenu">
-                        <button class="sub-btn" onclick="copyToClipboard('4400430366330691', 'Номер карты Kaspi')">
-                            Номер карты <span><i class="fa-regular fa-copy"></i></span>
-                        </button>
-                        <button class="sub-btn" onclick="copyToClipboard('7471242778', 'Номер телефона Kaspi')">
-                            По номеру телефона <span><i class="fa-regular fa-copy"></i></span>
-                        </button>
+                <a href="https://www.donationalerts.com/r/elgurov" target="_blank" class="btn-action btn-donate-mega">
+                    <i class="fa-solid fa-fire main-icon"></i>
+                    <div class="btn-content">
+                        <span class="btn-title">DonationAlerts</span>
+                        <span class="btn-subtitle">Поддержать стримака (Алерт на экран)</span>
                     </div>
-                </div>
+                    <i class="fa-solid fa-bolt arrow-icon"></i>
+                </a>
             </li>
 
-            <!-- 2. TWITCH — СВЕТЯЩИЙСЯ ГЛАВНЫЙ -->
             <li class="link-item">
                 <a href="https://www.twitch.tv/elgurov" target="_blank" class="btn-action btn-twitch-hero">
                     <i class="fa-brands fa-twitch main-icon"></i>
                     <div class="btn-content">
                         <span class="btn-title">Twitch Канал</span>
-                        <span class="btn-subtitle">Смотри прямые трансляции здесь</span>
+                        <span class="btn-subtitle">Прямые трансляции тут</span>
                     </div>
                     <div class="live-badge">
                         <div class="live-dot"></div>
@@ -588,72 +538,55 @@
                 </a>
             </li>
 
-            <!-- 3. ДОНАТ ИЗ РФ — MEGA -->
-            <li class="link-item">
-                <a href="https://www.donationalerts.com/r/elgurov" target="_blank" class="btn-action btn-donate-mega">
-                    <i class="fa-solid fa-fire main-icon"></i>
-                    <div class="btn-content">
-                        <span class="btn-title">Донаты из РФ и СНГ</span>
-                        <span class="btn-subtitle">Поддержи стримера (Алерт на экран)</span>
-                    </div>
-                    <i class="fa-solid fa-bolt arrow-icon"></i>
-                </a>
-            </li>
-
-            <!-- РАЗДЕЛИТЕЛЬ -->
-            <li class="link-item section-divider" style="animation-delay:0.55s">
-                <span>Другие способы</span>
-            </li>
-
-            <!-- 4. DALINK -->
-            <li class="link-item">
-                <a href="https://dalink.to/elgurov" target="_blank" class="btn-action btn-dalink btn-small">
-                    <i class="fa-solid fa-link main-icon"></i>
-                    <div class="btn-content">
-                        <span class="btn-title">Dalink (Альтернатива)</span>
-                        <span class="btn-subtitle">Ещё один способ поддержать</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
-                </a>
-            </li>
-
-            <!-- 5. ВТБ -->
             <li class="link-item">
                 <div class="expand-container">
-                    <button class="btn-action btn-vtb btn-small toggle-menu">
+                    <button class="btn-action btn-vtb-hero toggle-menu">
                         <i class="fa-solid fa-building-columns main-icon"></i>
                         <div class="btn-content">
-                            <span class="btn-title">ВТБ (Прямой из РФ)</span>
-                            <span class="btn-subtitle">Нажми, чтобы открыть реквизиты</span>
+                            <span class="btn-title">ВТБ (Прямой донат)</span>
+                            <span class="btn-subtitle">Копировать реквизиты карты РФ</span>
                         </div>
                         <i class="fa-solid fa-chevron-down arrow-icon"></i>
                     </button>
                     <div class="submenu">
                         <button class="sub-btn" onclick="copyToClipboard('2204360100149580', 'Номер карты ВТБ')">
-                            Скопировать карту <span><i class="fa-regular fa-copy"></i></span>
+                            Карта: 2204...9580 <span><i class="fa-regular fa-copy"></i></span>
                         </button>
                         <button class="sub-btn" onclick="copyToClipboard('VLADISLAV GUROV', 'Имя получателя')">
-                            Скопировать имя (ENG) <span><i class="fa-regular fa-copy"></i></span>
+                            Имя: VLADISLAV GUROV <span><i class="fa-regular fa-copy"></i></span>
                         </button>
                     </div>
                 </div>
             </li>
 
-            <!-- 6. TELEGRAM -->
+            <li class="link-item section-divider">
+                <span>Другие способы</span>
+            </li>
+
             <li class="link-item">
-                <a href="https://t.me/elgurov" target="_blank" class="btn-action btn-tg btn-small">
-                    <i class="fa-brands fa-telegram main-icon"></i>
+                <a href="https://dalink.to/elgurov" target="_blank" class="btn-action btn-dalink btn-small">
+                    <i class="fa-solid fa-link main-icon"></i>
                     <div class="btn-content">
-                        <span class="btn-title">Telegram Канал</span>
-                        <span class="btn-subtitle">Анонсы, новости и общение</span>
+                        <span class="btn-title">Dalink</span>
+                        <span class="btn-subtitle">Альтернативный сбор</span>
                     </div>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </a>
             </li>
 
-            <!-- 7. КРИПТА -->
             <li class="link-item">
-                <button class="btn-action btn-crypto btn-small" onclick="copyToClipboard('0x06a300e8b8c459ae210432203bdf12e02e301798', 'BEP20 адрес')">
+                <a href="https://t.me/elgurov" target="_blank" class="btn-action btn-tg btn-small">
+                    <i class="fa-brands fa-telegram main-icon"></i>
+                    <div class="btn-content">
+                        <span class="btn-title">Telegram Канал</span>
+                        <span class="btn-subtitle">Анонсы и общение</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                </a>
+            </li>
+
+            <li class="link-item">
+                <button class="btn-action btn-crypto btn-small" onclick="copyToClipboard('0x06a300e8b8c459ae210432203bdf12e02e301798', 'Адрес кошелька BEP20')">
                     <i class="fa-solid fa-wallet main-icon"></i>
                     <div class="btn-content">
                         <span class="btn-title">Крипта (USDT BEP20)</span>
@@ -676,6 +609,7 @@
     </div>
 
     <script>
+        // Логика раскрытия аккордеона / подменю
         document.querySelectorAll('.toggle-menu').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -695,12 +629,13 @@
                     this.classList.remove('active');
                 } else {
                     submenu.classList.add('open');
-                    submenu.style.maxHeight = submenu.scrollHeight + 30 + "px";
+                    submenu.style.maxHeight = submenu.scrollHeight + 20 + "px";
                     this.classList.add('active');
                 }
             });
         });
 
+        // Функция копирования
         function copyToClipboard(textToCopy, label) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(textToCopy).then(() => {
@@ -732,10 +667,10 @@
             toastMsg.textContent = message;
             toast.classList.remove('show');
             clearTimeout(toastTimeout);
-            void toast.offsetWidth;
+            void toast.offsetWidth; // Триггер рефлоу для перезапуска анимации
             toast.classList.add('show');
-            toastTimeout = setTimeout(() => toast.classList.remove('show'), 2500);
-            if ('vibrate' in navigator) navigator.vibrate(50);
+            toastTimeout = setTimeout(() => toast.classList.remove('show'), 2200);
+            if ('vibrate' in navigator) navigator.vibrate(40);
         }
     </script>
 </body>
