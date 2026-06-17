@@ -92,6 +92,41 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* ========== ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ ========== */
+        .lang-switcher {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+            transform: translateY(-2px);
+        }
+
+        .lang-btn.active {
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--primary-neon);
+            border-color: var(--primary-neon);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+        }
+
         .profile-area { margin-bottom: 20px; }
 
         .avatar-wrapper {
@@ -274,10 +309,7 @@
 
         .btn-action:active { transform: scale(0.99); }
 
-        /* Вторичные кнопки (нижний блок) */
-        .btn-action.btn-small {
-            padding: 14px 18px;
-        }
+        .btn-action.btn-small { padding: 14px 18px; }
         .btn-action.btn-small i.main-icon {
             font-size: 18px;
             margin-right: 12px;
@@ -285,48 +317,42 @@
         }
         .btn-action.btn-small .btn-title { font-size: 12px; }
 
-        /* ===== 1. DONATION ALERTS (ТОП-1 MEGA) ===== */
+        /* ===== 1. DONATION ALERTS ===== */
         .btn-donate-mega {
             background: linear-gradient(135deg, #ff9f43 0%, #ff4757 50%, #ff2a6d 100%);
             background-size: 150% 150%;
             border: none;
             box-shadow: 0 6px 20px rgba(255, 71, 87, 0.35);
         }
-
         .btn-donate-mega .btn-title,
         .btn-donate-mega .btn-subtitle,
         .btn-donate-mega i {
             color: #fff !important;
             text-shadow: 0 1px 3px rgba(0,0,0,0.15);
         }
-
         .btn-donate-mega:hover {
             box-shadow: 0 8px 25px rgba(255, 71, 87, 0.5);
             transform: translateY(-3px) scale(1.01);
         }
 
-        /* ===== 2. PAYPAL (ТОП-2) ===== */
+        /* ===== 2. PAYPAL ===== */
         .btn-paypal-hero {
             background: linear-gradient(135deg, rgba(0, 112, 186, 0.15) 0%, rgba(0, 48, 135, 0.08) 100%);
             border: 1px solid rgba(0, 112, 186, 0.4);
         }
-
         .btn-paypal-hero i.main-icon { color: var(--paypal-color); }
-
         .btn-paypal-hero:hover {
             background: linear-gradient(135deg, rgba(0, 112, 186, 0.22) 0%, rgba(0, 48, 135, 0.12) 100%);
             border-color: rgba(0, 112, 186, 0.6);
             box-shadow: 0 0 15px rgba(0, 112, 186, 0.2);
         }
 
-        /* ===== 3. ВТБ ПРЯМОЙ ДОНАТ (ТОП-3) ===== */
+        /* ===== 3. ВТБ ===== */
         .btn-vtb-hero {
             background: linear-gradient(135deg, rgba(0, 163, 255, 0.12) 0%, rgba(0, 40, 130, 0.06) 100%);
             border: 1px solid rgba(0, 163, 255, 0.4);
         }
-
         .btn-vtb-hero i.main-icon { color: #00a3ff; }
-
         .btn-vtb-hero:hover {
             background: linear-gradient(135deg, rgba(0, 163, 255, 0.2) 0%, rgba(0, 40, 130, 0.1) 100%);
             border-color: rgba(0, 163, 255, 0.6);
@@ -493,6 +519,14 @@
 <body>
 
     <div class="main-card">
+        
+        <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ -->
+        <div class="lang-switcher">
+            <button class="lang-btn active" onclick="setLanguage('ru')">RU</button>
+            <button class="lang-btn" onclick="setLanguage('kz')">KZ</button>
+            <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+        </div>
+
         <div class="profile-area">
             <div class="avatar-wrapper">
                 <div class="avatar-img">
@@ -505,10 +539,10 @@
 
         <div class="marquee-container">
             <div class="marquee-text">
-                <span><i class="fa-solid fa-dumbbell"></i> 1 отжимание = 100 ₸ (15 ₽ / ~$0.20)</span>
-                <span><i class="fa-solid fa-music"></i> Заказ музыки = 300 ₸ (45 ₽ / ~$0.65)</span>
-                <span><i class="fa-solid fa-dumbbell"></i> 1 отжимание = 100 ₸ (15 ₽ / ~$0.20)</span>
-                <span><i class="fa-solid fa-music"></i> Заказ музыки = 300 ₸ (45 ₽ / ~$0.65)</span>
+                <span><i class="fa-solid fa-dumbbell"></i> <span data-i18n="marquee_pushup">1 отжимание = 100 ₸ (15 ₽ / ~$0.20)</span></span>
+                <span><i class="fa-solid fa-music"></i> <span data-i18n="marquee_music">Заказ музыки = 300 ₸ (45 ₽ / ~$0.65)</span></span>
+                <span><i class="fa-solid fa-dumbbell"></i> <span data-i18n="marquee_pushup">1 отжимание = 100 ₸ (15 ₽ / ~$0.20)</span></span>
+                <span><i class="fa-solid fa-music"></i> <span data-i18n="marquee_music">Заказ музыки = 300 ₸ (45 ₽ / ~$0.65)</span></span>
             </div>
         </div>
 
@@ -520,7 +554,7 @@
                     <i class="fa-solid fa-fire main-icon"></i>
                     <div class="btn-content">
                         <span class="btn-title">DonationAlerts</span>
-                        <span class="btn-subtitle">Поддержать стримака (Алерт на экран)</span>
+                        <span class="btn-subtitle" data-i18n="da_sub">Поддержать стримака (Алерт на экран)</span>
                     </div>
                     <i class="fa-solid fa-bolt arrow-icon"></i>
                 </a>
@@ -528,11 +562,11 @@
 
             <!-- ТОП-2: PAYPAL -->
             <li class="link-item">
-                <button class="btn-action btn-paypal-hero" onclick="copyToClipboard('newgurov2022@gmail.com', 'Почта PayPal')">
+                <button class="btn-action btn-paypal-hero" onclick="copyToClipboard('newgurov2022@gmail.com', 'paypal_label')">
                     <i class="fa-brands fa-paypal main-icon"></i>
                     <div class="btn-content">
                         <span class="btn-title">PayPal account</span>
-                        <span class="btn-subtitle">Copy email for donation</span>
+                        <span class="btn-subtitle" data-i18n="paypal_sub">Copy email for donation</span>
                     </div>
                     <i class="fa-regular fa-copy arrow-icon"></i>
                 </button>
@@ -544,17 +578,17 @@
                     <button class="btn-action btn-vtb-hero toggle-menu">
                         <i class="fa-solid fa-building-columns main-icon"></i>
                         <div class="btn-content">
-                            <span class="btn-title">ВТБ (Прямой донат)</span>
-                            <span class="btn-subtitle">Копировать реквизиты карты РФ</span>
+                            <span class="btn-title" data-i18n="vtb_title">ВТБ (Прямой донат)</span>
+                            <span class="btn-subtitle" data-i18n="vtb_sub">Копировать реквизиты карты РФ</span>
                         </div>
                         <i class="fa-solid fa-chevron-down arrow-icon"></i>
                     </button>
                     <div class="submenu">
-                        <button class="sub-btn" onclick="copyToClipboard('2204360100149580', 'Номер карты ВТБ')">
-                            Карта: 2204...9580 <span><i class="fa-regular fa-copy"></i></span>
+                        <button class="sub-btn" onclick="copyToClipboard('2204360100149580', 'vtb_card_label')">
+                            <span data-i18n="vtb_card">Карта: 2204...9580</span> <span><i class="fa-regular fa-copy"></i></span>
                         </button>
-                        <button class="sub-btn" onclick="copyToClipboard('VLADISLAV GUROV', 'Имя получателя')">
-                            Имя: VLADISLAV GUROV <span><i class="fa-regular fa-copy"></i></span>
+                        <button class="sub-btn" onclick="copyToClipboard('VLADISLAV GUROV', 'vtb_name_label')">
+                            <span data-i18n="vtb_name">Имя: VLADISLAV GUROV</span> <span><i class="fa-regular fa-copy"></i></span>
                         </button>
                     </div>
                 </div>
@@ -562,7 +596,7 @@
 
             <!-- РАЗДЕЛИТЕЛЬ ДЛЯ ОСТАЛЬНЫХ ССЫЛОК -->
             <li class="link-item section-divider">
-                <span>Другие способы</span>
+                <span data-i18n="divider">Другие способы</span>
             </li>
 
             <!-- 4. TWITCH -->
@@ -570,8 +604,8 @@
                 <a href="https://www.twitch.tv/elgurov" target="_blank" class="btn-action btn-twitch btn-small">
                     <i class="fa-brands fa-twitch main-icon"></i>
                     <div class="btn-content">
-                        <span class="btn-title">Twitch Канал</span>
-                        <span class="btn-subtitle">Прямые трансляции тут</span>
+                        <span class="btn-title" data-i18n="twitch_title">Twitch Канал</span>
+                        <span class="btn-subtitle" data-i18n="twitch_sub">Прямые трансляции тут</span>
                     </div>
                     <div class="live-badge">
                         <div class="live-dot"></div>
@@ -586,7 +620,7 @@
                     <i class="fa-solid fa-link main-icon"></i>
                     <div class="btn-content">
                         <span class="btn-title">Dalink</span>
-                        <span class="btn-subtitle">Альтернативный сбор</span>
+                        <span class="btn-subtitle" data-i18n="dalink_sub">Альтернативный сбор</span>
                     </div>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </a>
@@ -597,8 +631,8 @@
                 <a href="https://t.me/elgurov" target="_blank" class="btn-action btn-tg btn-small">
                     <i class="fa-brands fa-telegram main-icon"></i>
                     <div class="btn-content">
-                        <span class="btn-title">Telegram Канал</span>
-                        <span class="btn-subtitle">Анонсы и общение</span>
+                        <span class="btn-title" data-i18n="tg_title">Telegram Канал</span>
+                        <span class="btn-subtitle" data-i18n="tg_sub">Анонсы и общение</span>
                     </div>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </a>
@@ -606,11 +640,11 @@
 
             <!-- 7. КРИПТА -->
             <li class="link-item">
-                <button class="btn-action btn-crypto btn-small" onclick="copyToClipboard('0x06a300e8b8c459ae210432203bdf12e02e301798', 'Адрес кошелька BEP20')">
+                <button class="btn-action btn-crypto btn-small" onclick="copyToClipboard('0x06a300e8b8c459ae210432203bdf12e02e301798', 'crypto_label')">
                     <i class="fa-solid fa-wallet main-icon"></i>
                     <div class="btn-content">
-                        <span class="btn-title">Крипта (USDT BEP20)</span>
-                        <span class="btn-subtitle">Скопировать адрес кошелька</span>
+                        <span class="btn-title" data-i18n="crypto_title">Крипта (USDT BEP20)</span>
+                        <span class="btn-subtitle" data-i18n="crypto_sub">Скопировать адрес кошелька</span>
                     </div>
                     <i class="fa-regular fa-copy arrow-icon"></i>
                 </button>
@@ -629,6 +663,107 @@
     </div>
 
     <script>
+        // СЛОВАРЬ ПЕРЕВОДОВ
+        const translations = {
+            ru: {
+                "marquee_pushup": "1 отжимание = 100 ₸ (15 ₽ / ~$0.20)",
+                "marquee_music": "Заказ музыки = 300 ₸ (45 ₽ / ~$0.65)",
+                "da_sub": "Поддержать стримака (Алерт на экран)",
+                "paypal_sub": "Copy email for donation",
+                "vtb_title": "ВТБ (Прямой донат)",
+                "vtb_sub": "Копировать реквизиты карты РФ",
+                "vtb_card": "Карта: 2204...9580",
+                "vtb_name": "Имя: VLADISLAV GUROV",
+                "divider": "Другие способы",
+                "twitch_title": "Twitch Канал",
+                "twitch_sub": "Прямые трансляции тут",
+                "dalink_sub": "Альтернативный сбор",
+                "tg_title": "Telegram Канал",
+                "tg_sub": "Анонсы и общение",
+                "crypto_title": "Крипта (USDT BEP20)",
+                "crypto_sub": "Скопировать адрес кошелька",
+                
+                // Переводы для уведомлений (toast)
+                "toast_copied": "скопирован(а)!",
+                "paypal_label": "Почта PayPal",
+                "vtb_card_label": "Номер карты ВТБ",
+                "vtb_name_label": "Имя получателя",
+                "crypto_label": "Адрес кошелька"
+            },
+            kz: {
+                "marquee_pushup": "1 жерден итеру = 100 ₸ (15 ₽ / ~$0.20)",
+                "marquee_music": "Музыкаға тапсырыс = 300 ₸ (45 ₽ / ~$0.65)",
+                "da_sub": "Стримерді қолдау (Экранға алерт)",
+                "paypal_sub": "Донат үшін email көшіру",
+                "vtb_title": "ВТБ (Тікелей донат)",
+                "vtb_sub": "РФ картасының деректемелерін көшіру",
+                "vtb_card": "Карта: 2204...9580",
+                "vtb_name": "Аты-жөні: VLADISLAV GUROV",
+                "divider": "Басқа тәсілдер",
+                "twitch_title": "Twitch Арнасы",
+                "twitch_sub": "Тікелей эфирлер осында",
+                "dalink_sub": "Балама жинақ",
+                "tg_title": "Telegram Арнасы",
+                "tg_sub": "Анонстар мен чат",
+                "crypto_title": "Крипта (USDT BEP20)",
+                "crypto_sub": "Әмиян адресін көшіру",
+                
+                "toast_copied": "көшірілді!",
+                "paypal_label": "PayPal поштасы",
+                "vtb_card_label": "ВТБ картасының нөмірі",
+                "vtb_name_label": "Алушының аты-жөні",
+                "crypto_label": "Әмиян адресі"
+            },
+            en: {
+                "marquee_pushup": "1 push-up = 100 ₸ (15 ₽ / ~$0.20)",
+                "marquee_music": "Music request = 300 ₸ (45 ₽ / ~$0.65)",
+                "da_sub": "Support the streamer (On-screen alert)",
+                "paypal_sub": "Copy email for donation",
+                "vtb_title": "VTB (Direct donation)",
+                "vtb_sub": "Copy RU card details",
+                "vtb_card": "Card: 2204...9580",
+                "vtb_name": "Name: VLADISLAV GUROV",
+                "divider": "Other methods",
+                "twitch_title": "Twitch Channel",
+                "twitch_sub": "Live streams here",
+                "dalink_sub": "Alternative funding",
+                "tg_title": "Telegram Channel",
+                "tg_sub": "Announcements & chat",
+                "crypto_title": "Crypto (USDT BEP20)",
+                "crypto_sub": "Copy wallet address",
+                
+                "toast_copied": "copied!",
+                "paypal_label": "PayPal email",
+                "vtb_card_label": "VTB Card number",
+                "vtb_name_label": "Recipient name",
+                "crypto_label": "Wallet address"
+            }
+        };
+
+        let currentLang = 'ru'; // Язык по умолчанию
+
+        // ФУНКЦИЯ СМЕНЫ ЯЗЫКА
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Обновляем активную кнопку
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.innerText.toLowerCase() === lang) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Заменяем тексты во всех элементах с атрибутом data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if(translations[lang][key]) {
+                    element.innerText = translations[lang][key];
+                }
+            });
+        }
+
+
         // Логика раскрытия аккордеона / подменю
         document.querySelectorAll('.toggle-menu').forEach(btn => {
             btn.addEventListener('click', function(e) {
@@ -655,18 +790,22 @@
             });
         });
 
-        // Функция копирования
-        function copyToClipboard(textToCopy, label) {
+        // Функция копирования с мультиязычными уведомлениями
+        function copyToClipboard(textToCopy, labelKey) {
+            const labelText = translations[currentLang][labelKey];
+            const copiedText = translations[currentLang]['toast_copied'];
+            const fullMessage = `${labelText} ${copiedText}`;
+
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(textToCopy).then(() => {
-                    showToast(label + ' скопирован!');
-                }).catch(() => fallbackCopy(textToCopy, label));
+                    showToast(fullMessage);
+                }).catch(() => fallbackCopy(textToCopy, fullMessage));
             } else {
-                fallbackCopy(textToCopy, label);
+                fallbackCopy(textToCopy, fullMessage);
             }
         }
 
-        function fallbackCopy(text, label) {
+        function fallbackCopy(text, fullMessage) {
             const textArea = document.createElement("textarea");
             textArea.value = text;
             textArea.style.position = "fixed";
@@ -675,7 +814,7 @@
             textArea.focus();
             textArea.select();
             try {
-                if (document.execCommand('copy')) showToast(label + ' скопирован!');
+                if (document.execCommand('copy')) showToast(fullMessage);
             } catch (err) {}
             document.body.removeChild(textArea);
         }
