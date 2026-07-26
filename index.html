@@ -376,7 +376,7 @@
         </div>
     </div>
 
-    <!-- ПЛАВАЮЩИЕ КНОПКИ (УНИКАЛЬНЫЕ, ДУБЛЕЙ НЕТ) -->
+    <!-- ПЛАВАЮЩИЕ КНОПКИ -->
     <div class="floating-socials" id="floating-btns">
         <a href="https://www.twitch.tv/elgurov" target="_blank" class="float-btn ft-twitch"><i class="fa-brands fa-twitch"></i></a>
         <a href="https://t.me/elgurov" target="_blank" class="float-btn ft-tg"><i class="fa-brands fa-telegram"></i></a>
@@ -395,7 +395,7 @@
             <div class="subtitle" data-i18n="profile_sub">Live Streamer & Content Creator</div>
         </div>
 
-        <!-- ИНТЕРАКТИВНЫЙ БЛОК (ЦЕНЫ МЕНЯЮТСЯ ДИНАМИЧЕСКИ) -->
+        <!-- ИНТЕРАКТИВНЫЙ БЛОК -->
         <div class="interactive-panel">
             <div class="reward-item">
                 <div class="reward-icon"><i class="fa-solid fa-dumbbell"></i></div>
@@ -409,7 +409,7 @@
                 <div class="reward-icon"><i class="fa-solid fa-music"></i></div>
                 <div class="reward-info">
                     <div class="reward-title" data-i18n="music_title">Заказ вашей музыки</div>
-                    <div class="reward-desc" data-i18n="music_desc">Включаем ваш трек на трансляции</div>
+                    <div class="reward-desc" data-i18n="music_desc">Включаем ваш трек на трансляции (нужна YouTube-ссылка)</div>
                 </div>
                 <div class="reward-price" id="price-music">--</div>
             </div>
@@ -472,7 +472,7 @@
                 </button>
             </li>
 
-            <!-- CRYPTO (ПОКАЗЫВАЕТСЯ ВСЕГДА КАК УНИВЕРСАЛЬНЫЙ СПОСОБ) -->
+            <!-- CRYPTO (ПОКАЗЫВАЕТСЯ ВСЕГДА) -->
             <li class="link-item method-item" id="method-crypto">
                 <button class="btn-action btn-crypto" onclick="copyStandard('0x06a300e8b8c459ae210432203bdf12e02e301798')">
                     <i class="fa-solid fa-wallet main-icon"></i>
@@ -504,7 +504,7 @@
                 "pushup_title": "Отжимания (в эфире с вебкой)",
                 "pushup_desc": "Стример выполняет отжимания прямо на стриме",
                 "music_title": "Заказ вашей музыки",
-                "music_desc": "Включаем ваш трек на трансляции",
+                "music_desc": "Включаем ваш трек на трансляции (нужна YouTube-ссылка)",
                 "kaspi_sub": "Есть алерт на экран",
                 "da_sub": "Донат из любой страны • Есть алерт",
                 "vtb_sub": "Прямой перевод на карту • Без алерта",
@@ -522,7 +522,7 @@
                 "pushup_title": "Жерден итеру (вебкамерамен)",
                 "pushup_desc": "Стример тікелей эфирде жерден итереді",
                 "music_title": "Музыкаға тапсырыс",
-                "music_desc": "Эфирде сіздің трекіңізді қосамыз",
+                "music_desc": "Эфирде сіздің трекіңізді қосамыз (тек YouTube сілтемесі)",
                 "kaspi_sub": "Экранға алерт шығады",
                 "da_sub": "Кез келген елден донат • Алерт бар",
                 "vtb_sub": "Картаға тікелей аударым • Алертсіз",
@@ -540,7 +540,7 @@
                 "pushup_title": "Push-ups (Live on Cam)",
                 "pushup_desc": "Streamer does push-ups live on stream",
                 "music_title": "Music Request",
-                "music_desc": "Play your track on the broadcast",
+                "music_desc": "Play your track on broadcast (YouTube link required)",
                 "kaspi_sub": "On-screen alert included",
                 "da_sub": "Donate from anywhere • With alert",
                 "vtb_sub": "Direct card transfer • No alert",
@@ -570,7 +570,6 @@
             }, 100);
         }
 
-        // ЛОГИКА ФИЛЬТРАЦИИ И ДИНАМИЧЕСКИХ ЦЕН
         function selectCurr(curr) {
             const overlay = document.getElementById('setup-overlay');
             overlay.style.opacity = '0';
@@ -580,33 +579,26 @@
                 document.getElementById('floating-btns').classList.add('visible');
             }, 400);
 
-            // Скрываем все методы, кроме крипты (она всегда видна)
             const methods = ['method-kaspi', 'method-da', 'method-vtb', 'method-paypal'];
             methods.forEach(id => document.getElementById(id).style.display = 'none');
-            document.getElementById('method-crypto').style.display = 'flex'; // Крипта всегда
+            document.getElementById('method-crypto').style.display = 'flex';
 
             const pricePushup = document.getElementById('price-pushup');
             const priceMusic = document.getElementById('price-music');
 
             if (curr === 'kzt') {
-                // Показываем цену ТОЛЬКО в Тенге
                 pricePushup.innerText = '50 ₸';
                 priceMusic.innerText = '250 ₸';
-                // Включаем нужные методы
                 document.getElementById('method-kaspi').style.display = 'flex';
                 document.getElementById('method-paypal').style.display = 'flex';
             } else if (curr === 'rub') {
-                // Показываем цену ТОЛЬКО в Рублях
                 pricePushup.innerText = '10 ₽';
                 priceMusic.innerText = '45 ₽';
-                // Включаем нужные методы
                 document.getElementById('method-da').style.display = 'flex';
                 document.getElementById('method-vtb').style.display = 'block'; 
             } else { 
-                // USD и Другие - показываем в Долларах
                 pricePushup.innerText = '~$0.11';
                 priceMusic.innerText = '~$0.50';
-                // Включаем нужные методы
                 document.getElementById('method-paypal').style.display = 'flex';
                 document.getElementById('method-da').style.display = 'flex';
             }
