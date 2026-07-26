@@ -23,7 +23,6 @@
             --vtb-color: #002882;
             --paypal-color: #0070ba;
             --crypto-color: #f3ba2f;
-            --dalink-color: #ff3b8f;
             --text-main: #ffffff;
             --text-muted: #8b9bb4;
             --border-glass: rgba(255, 255, 255, 0.08);
@@ -64,7 +63,6 @@
             z-index: -2;
         }
 
-        /* Сетка на фоне */
         body::after {
             content: '';
             position: fixed;
@@ -78,7 +76,7 @@
             pointer-events: none;
         }
 
-        /* ===== МОДАЛЬНЫЕ ОКНА (SETUP) ===== */
+        /* ===== МОДАЛЬНЫЕ ОКНА ===== */
         .overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -103,12 +101,10 @@
             text-align: center;
             box-shadow: 0 0 40px rgba(0, 242, 254, 0.1);
             animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            display: none; /* Скрыты по умолчанию */
+            display: none; 
         }
 
-        .modal-card.active {
-            display: block;
-        }
+        .modal-card.active { display: block; }
 
         .modal-title {
             font-size: 18px;
@@ -118,10 +114,7 @@
             text-shadow: 0 0 10px var(--primary-glow);
         }
 
-        .grid-options {
-            display: grid;
-            gap: 12px;
-        }
+        .grid-options { display: grid; gap: 12px; }
 
         .option-btn {
             background: rgba(255, 255, 255, 0.03);
@@ -137,7 +130,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
         }
 
         .option-btn:hover {
@@ -175,7 +167,6 @@
             transform: translateY(0);
         }
 
-        /* ПРОФИЛЬ */
         .profile-area { text-align: center; margin-bottom: 25px; }
         .avatar-wrapper {
             width: 105px; height: 105px;
@@ -184,7 +175,6 @@
             padding: 4px;
             background: linear-gradient(135deg, var(--primary-neon), var(--secondary-neon));
             box-shadow: 0 0 25px var(--primary-glow);
-            position: relative;
         }
         .avatar-img {
             width: 100%; height: 100%;
@@ -197,7 +187,7 @@
         h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
         .subtitle { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
 
-        /* ===== ИНТЕРАКТИВНЫЕ НАГРАДЫ (СТАТИКА) ===== */
+        /* ===== ИНТЕРАКТИВНЫЕ НАГРАДЫ ===== */
         .interactive-panel {
             background: rgba(0, 242, 254, 0.03);
             border: 1px solid var(--border-neon);
@@ -215,9 +205,7 @@
             background: var(--primary-neon);
             box-shadow: 0 0 10px var(--primary-neon);
         }
-        .reward-item {
-            display: flex; align-items: center; gap: 14px;
-        }
+        .reward-item { display: flex; align-items: center; gap: 14px; }
         .reward-icon {
             width: 36px; height: 36px;
             border-radius: 10px;
@@ -231,8 +219,9 @@
         .reward-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
         .reward-desc { font-size: 10px; color: var(--text-muted); line-height: 1.3;}
         .reward-price { 
-            font-size: 11px; font-weight: 700; color: #fff; 
-            background: rgba(255,255,255,0.08); padding: 4px 8px; border-radius: 6px;
+            font-size: 12px; font-weight: 700; color: #fff; 
+            background: rgba(255,255,255,0.08); padding: 6px 10px; border-radius: 8px;
+            min-width: 60px; text-align: center;
         }
 
         /* ===== СПИСОК КНОПОК ===== */
@@ -263,7 +252,7 @@
         .btn-subtitle { font-size: 10.5px; color: var(--text-muted); margin-top: 3px; }
         .arrow-icon { font-size: 12px; opacity: 0.5; }
 
-        /* Специфичные стили кнопок */
+        /* Цвета кнопок */
         .btn-kaspi { border-color: rgba(241, 70, 53, 0.4); }
         .btn-kaspi:hover { background: rgba(241, 70, 53, 0.08); box-shadow: 0 0 15px rgba(241, 70, 53, 0.2); }
         .btn-kaspi i.main-icon { color: var(--kaspi-color); }
@@ -282,21 +271,6 @@
         
         .btn-crypto { border-color: rgba(243, 186, 47, 0.3); }
         .btn-crypto i.main-icon { color: var(--crypto-color); }
-
-        .btn-twitch i.main-icon { color: var(--twitch-color); }
-        
-        /* Разделитель */
-        .section-divider {
-            display: flex; align-items: center; gap: 12px; margin: 15px 0 5px;
-        }
-        .section-divider span {
-            font-size: 10px; font-weight: 700; color: var(--primary-neon);
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-        .section-divider::after {
-            content: ''; flex: 1; height: 1px;
-            background: linear-gradient(90deg, var(--border-neon), transparent);
-        }
 
         /* Выпадающее меню ВТБ */
         .submenu {
@@ -320,27 +294,18 @@
         }
         .sub-btn:hover { background: rgba(0, 163, 255, 0.15); border-color: rgba(0, 163, 255, 0.4); }
 
-        /* ===== ПЛАВАЮЩИЕ КНОПКИ ===== */
+        /* ===== ПЛАВАЮЩИЕ КНОПКИ (TWITCH И TG) ===== */
         .floating-socials {
-            position: fixed;
-            right: 25px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 50;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.5s ease;
+            position: fixed; right: 25px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 15px; z-index: 50;
+            opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
         }
         .floating-socials.visible { opacity: 1; pointer-events: all; }
 
         .float-btn {
-            width: 55px; height: 55px;
-            border-radius: 50%;
+            width: 55px; height: 55px; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px);
             border: 1px solid var(--border-glass);
             color: #fff; font-size: 22px; text-decoration: none;
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
@@ -362,14 +327,11 @@
             position: fixed; top: 25px; left: 50%; transform: translateX(-50%); z-index: 9999;
         }
         .toast {
-            background: rgba(15, 15, 20, 0.95);
-            color: #fff; padding: 14px 24px; border-radius: 14px;
-            border: 1px solid var(--primary-neon);
-            box-shadow: 0 10px 30px var(--primary-glow);
-            backdrop-filter: blur(10px);
-            display: flex; align-items: center; gap: 12px;
-            font-weight: 600; font-size: 12px; text-align: center;
-            transform: translateY(-100px); opacity: 0;
+            background: rgba(15, 15, 20, 0.95); color: #fff;
+            padding: 14px 24px; border-radius: 14px; border: 1px solid var(--primary-neon);
+            box-shadow: 0 10px 30px var(--primary-glow); backdrop-filter: blur(10px);
+            display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 12px;
+            text-align: center; transform: translateY(-100px); opacity: 0;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .toast.show { transform: translateY(0); opacity: 1; }
@@ -384,9 +346,7 @@
             body { padding: 15px; align-items: flex-start; }
             .main-card { padding: 25px 20px; border-radius: 20px; margin-bottom: 80px; }
             .modal-card { padding: 25px 20px; }
-            .reward-item { flex-direction: column; align-items: flex-start; gap: 8px; }
-            .reward-price { align-self: flex-start; }
-            .btn-action { padding: 14px 16px; }
+            .reward-price { min-width: auto; }
         }
     </style>
 </head>
@@ -416,7 +376,7 @@
         </div>
     </div>
 
-    <!-- ПЛАВАЮЩИЕ КНОПКИ -->
+    <!-- ПЛАВАЮЩИЕ КНОПКИ (УНИКАЛЬНЫЕ, ДУБЛЕЙ НЕТ) -->
     <div class="floating-socials" id="floating-btns">
         <a href="https://www.twitch.tv/elgurov" target="_blank" class="float-btn ft-twitch"><i class="fa-brands fa-twitch"></i></a>
         <a href="https://t.me/elgurov" target="_blank" class="float-btn ft-tg"><i class="fa-brands fa-telegram"></i></a>
@@ -428,7 +388,6 @@
         <div class="profile-area">
             <div class="avatar-wrapper">
                 <div class="avatar-img">
-                    <!-- Заглушка аватара -->
                     <img src="https://ui-avatars.com/api/?name=EL&background=0d0d14&color=00f2fe&size=200" alt="Streamer" />
                 </div>
             </div>
@@ -436,7 +395,7 @@
             <div class="subtitle" data-i18n="profile_sub">Live Streamer & Content Creator</div>
         </div>
 
-        <!-- ИНТЕРАКТИВНЫЙ БЛОК -->
+        <!-- ИНТЕРАКТИВНЫЙ БЛОК (ЦЕНЫ МЕНЯЮТСЯ ДИНАМИЧЕСКИ) -->
         <div class="interactive-panel">
             <div class="reward-item">
                 <div class="reward-icon"><i class="fa-solid fa-dumbbell"></i></div>
@@ -444,7 +403,7 @@
                     <div class="reward-title" data-i18n="pushup_title">Отжимания (в эфире с вебкой)</div>
                     <div class="reward-desc" data-i18n="pushup_desc">Стример выполняет отжимания прямо на стриме</div>
                 </div>
-                <div class="reward-price">10 ₽ / 50 ₸ / ~$0.11</div>
+                <div class="reward-price" id="price-pushup">--</div>
             </div>
             <div class="reward-item" style="margin-top: 5px;">
                 <div class="reward-icon"><i class="fa-solid fa-music"></i></div>
@@ -452,14 +411,12 @@
                     <div class="reward-title" data-i18n="music_title">Заказ вашей музыки</div>
                     <div class="reward-desc" data-i18n="music_desc">Включаем ваш трек на трансляции</div>
                 </div>
-                <div class="reward-price">45 ₽ / 250 ₸ / ~$0.50</div>
+                <div class="reward-price" id="price-music">--</div>
             </div>
         </div>
 
         <ul class="links-list" id="methods-list">
             
-            <!-- ДИНАМИЧЕСКИЕ СПОСОБЫ -->
-
             <!-- KASPI (KZT) -->
             <li class="link-item method-item" id="method-kaspi">
                 <button class="btn-action btn-kaspi" onclick="copyKaspi()">
@@ -515,26 +472,7 @@
                 </button>
             </li>
 
-            <!-- РАЗДЕЛИТЕЛЬ -->
-            <li class="link-item section-divider">
-                <span data-i18n="divider">Прочие способы</span>
-            </li>
-
-            <!-- ПРОЧИЕ СПОСОБЫ -->
-
-            <!-- TWITCH -->
-            <li class="link-item">
-                <a href="https://www.twitch.tv/elgurov" target="_blank" class="btn-action btn-twitch">
-                    <i class="fa-brands fa-twitch main-icon"></i>
-                    <div class="btn-content">
-                        <span class="btn-title" data-i18n="twitch_title">Twitch Канал</span>
-                        <span class="btn-subtitle" data-i18n="twitch_sub">Прямые трансляции и сабки</span>
-                    </div>
-                    <i class="fa-solid fa-arrow-right arrow-icon"></i>
-                </a>
-            </li>
-
-            <!-- CRYPTO -->
+            <!-- CRYPTO (ПОКАЗЫВАЕТСЯ ВСЕГДА КАК УНИВЕРСАЛЬНЫЙ СПОСОБ) -->
             <li class="link-item method-item" id="method-crypto">
                 <button class="btn-action btn-crypto" onclick="copyStandard('0x06a300e8b8c459ae210432203bdf12e02e301798')">
                     <i class="fa-solid fa-wallet main-icon"></i>
@@ -558,7 +496,6 @@
     </div>
 
     <script>
-        // БАЗА ПЕРЕВОДОВ
         const translations = {
             ru: {
                 "curr_title": "Выберите валюту",
@@ -573,9 +510,6 @@
                 "vtb_sub": "Прямой перевод на карту • Без алерта",
                 "vtb_card": "Карта: 2204...9580",
                 "paypal_sub": "Стандартный способ",
-                "divider": "Прочие способы",
-                "twitch_title": "Twitch Канал",
-                "twitch_sub": "Прямые трансляции и сабки",
                 "crypto_title": "Криптовалюта",
                 "crypto_sub": "USDT BEP20",
                 "toast_kaspi": "Номер успешно скопирован. Можете перейти в приложение и отправить донат",
@@ -594,9 +528,6 @@
                 "vtb_sub": "Картаға тікелей аударым • Алертсіз",
                 "vtb_card": "Карта: 2204...9580",
                 "paypal_sub": "Стандартты тәсіл",
-                "divider": "Басқа тәсілдер",
-                "twitch_title": "Twitch Арнасы",
-                "twitch_sub": "Тікелей эфирлер",
                 "crypto_title": "Криптовалюта",
                 "crypto_sub": "USDT BEP20",
                 "toast_kaspi": "Нөмір сәтті көшірілді. Қосымшаға өтіп донат жібере аласыз",
@@ -615,9 +546,6 @@
                 "vtb_sub": "Direct card transfer • No alert",
                 "vtb_card": "Card: 2204...9580",
                 "paypal_sub": "Standard method",
-                "divider": "Other methods",
-                "twitch_title": "Twitch Channel",
-                "twitch_sub": "Live streams & subs",
                 "crypto_title": "Cryptocurrency",
                 "crypto_sub": "USDT BEP20",
                 "toast_kaspi": "Number copied successfully. You can open the app and send the donation",
@@ -626,13 +554,9 @@
         };
 
         let currentLang = 'ru';
-        let currentCurr = 'rub';
 
-        // 1. ВЫБОР ЯЗЫКА
         function selectLang(lang) {
             currentLang = lang;
-            
-            // Применяем переводы
             document.getElementById('curr-title').innerText = translations[lang]['curr_title'];
             document.getElementById('curr-other').innerText = translations[lang]['curr_other'];
             document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -640,18 +564,14 @@
                 if(translations[lang][key]) { el.innerText = translations[lang][key]; }
             });
 
-            // Переключение модалок
             document.getElementById('modal-lang').classList.remove('active');
             setTimeout(() => {
                 document.getElementById('modal-curr').classList.add('active');
             }, 100);
         }
 
-        // 2. ВЫБОР ВАЛЮТЫ И ФИЛЬТРАЦИЯ
+        // ЛОГИКА ФИЛЬТРАЦИИ И ДИНАМИЧЕСКИХ ЦЕН
         function selectCurr(curr) {
-            currentCurr = curr;
-            
-            // Скрываем модалку и показываем контент
             const overlay = document.getElementById('setup-overlay');
             overlay.style.opacity = '0';
             setTimeout(() => {
@@ -660,25 +580,38 @@
                 document.getElementById('floating-btns').classList.add('visible');
             }, 400);
 
-            // Скрываем все динамические методы
+            // Скрываем все методы, кроме крипты (она всегда видна)
             const methods = ['method-kaspi', 'method-da', 'method-vtb', 'method-paypal'];
             methods.forEach(id => document.getElementById(id).style.display = 'none');
+            document.getElementById('method-crypto').style.display = 'flex'; // Крипта всегда
 
-            // Показываем нужные в зависимости от валюты
+            const pricePushup = document.getElementById('price-pushup');
+            const priceMusic = document.getElementById('price-music');
+
             if (curr === 'kzt') {
+                // Показываем цену ТОЛЬКО в Тенге
+                pricePushup.innerText = '50 ₸';
+                priceMusic.innerText = '250 ₸';
+                // Включаем нужные методы
                 document.getElementById('method-kaspi').style.display = 'flex';
                 document.getElementById('method-paypal').style.display = 'flex';
             } else if (curr === 'rub') {
+                // Показываем цену ТОЛЬКО в Рублях
+                pricePushup.innerText = '10 ₽';
+                priceMusic.innerText = '45 ₽';
+                // Включаем нужные методы
                 document.getElementById('method-da').style.display = 'flex';
-                document.getElementById('method-vtb').style.display = 'block'; // Блок для выпадающего меню
-            } else { // USD и Другие
+                document.getElementById('method-vtb').style.display = 'block'; 
+            } else { 
+                // USD и Другие - показываем в Долларах
+                pricePushup.innerText = '~$0.11';
+                priceMusic.innerText = '~$0.50';
+                // Включаем нужные методы
                 document.getElementById('method-paypal').style.display = 'flex';
                 document.getElementById('method-da').style.display = 'flex';
             }
-            // Криптовалюта, Twitch всегда остаются в блоке "Прочие"
         }
 
-        // ЛОГИКА АККОРДЕОНА (ВТБ)
         document.querySelectorAll('.toggle-menu').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -697,22 +630,14 @@
             });
         });
 
-        // ФУНКЦИИ КОПИРОВАНИЯ
-        function copyKaspi() {
-            copyToClipboard('747 124 27 78', translations[currentLang]['toast_kaspi']);
-        }
-
-        function copyStandard(text) {
-            copyToClipboard(text, translations[currentLang]['toast_standard']);
-        }
+        function copyKaspi() { copyToClipboard('747 124 27 78', translations[currentLang]['toast_kaspi']); }
+        function copyStandard(text) { copyToClipboard(text, translations[currentLang]['toast_standard']); }
 
         function copyToClipboard(text, toastMsg) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(text).then(() => showToast(toastMsg))
                 .catch(() => fallbackCopy(text, toastMsg));
-            } else {
-                fallbackCopy(text, toastMsg);
-            }
+            } else { fallbackCopy(text, toastMsg); }
         }
 
         function fallbackCopy(text, toastMsg) {
@@ -730,7 +655,7 @@
             document.getElementById('toast-message').innerText = message;
             toast.classList.remove('show');
             clearTimeout(toastTimeout);
-            void toast.offsetWidth; // Рефреш анимации
+            void toast.offsetWidth; 
             toast.classList.add('show');
             toastTimeout = setTimeout(() => toast.classList.remove('show'), 3500);
             if ('vibrate' in navigator) navigator.vibrate(50);
