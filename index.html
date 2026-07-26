@@ -23,6 +23,7 @@
             --vtb-color: #002882;
             --paypal-color: #0070ba;
             --crypto-color: #f3ba2f;
+            --voice-color: #00e676; /* Цвет для голосового доната */
             --text-main: #ffffff;
             --text-muted: #8b9bb4;
             --border-glass: rgba(255, 255, 255, 0.08);
@@ -253,6 +254,12 @@
         .arrow-icon { font-size: 12px; opacity: 0.5; }
 
         /* Цвета кнопок */
+        
+        /* Кнопка Голосового доната */
+        .btn-voice { border-color: rgba(0, 230, 118, 0.4); }
+        .btn-voice:hover { background: rgba(0, 230, 118, 0.08); box-shadow: 0 0 15px rgba(0, 230, 118, 0.2); }
+        .btn-voice i.main-icon { color: var(--voice-color); }
+
         .btn-kaspi { border-color: rgba(241, 70, 53, 0.4); }
         .btn-kaspi:hover { background: rgba(241, 70, 53, 0.08); box-shadow: 0 0 15px rgba(241, 70, 53, 0.2); }
         .btn-kaspi i.main-icon { color: var(--kaspi-color); }
@@ -417,6 +424,18 @@
 
         <ul class="links-list" id="methods-list">
             
+            <!-- VOICE DONATION (KZT) - Добавлено на первое место -->
+            <li class="link-item method-item" id="method-voice">
+                <a href="https://kaz-alerts.kz/elgurovnew" target="_blank" class="btn-action btn-voice">
+                    <i class="fa-solid fa-microphone-lines main-icon"></i>
+                    <div class="btn-content">
+                        <span class="btn-title" data-i18n="voice_title">Голосовой донат</span>
+                        <span class="btn-subtitle" data-i18n="voice_sub">Озвучка вашего сообщения на стриме</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
+                </a>
+            </li>
+
             <!-- KASPI (KZT) -->
             <li class="link-item method-item" id="method-kaspi">
                 <button class="btn-action btn-kaspi" onclick="copyKaspi()">
@@ -505,6 +524,8 @@
                 "pushup_desc": "Стример выполняет отжимания прямо на стриме",
                 "music_title": "Заказ вашей музыки",
                 "music_desc": "Включаем ваш трек на трансляции (нужна YouTube-ссылка)",
+                "voice_title": "Голосовой донат",
+                "voice_sub": "Озвучка вашего сообщения на стриме",
                 "kaspi_sub": "Есть алерт на экран",
                 "da_sub": "Донат из любой страны • Есть алерт",
                 "vtb_sub": "Прямой перевод на карту • Без алерта",
@@ -523,6 +544,8 @@
                 "pushup_desc": "Стример тікелей эфирде жерден итереді",
                 "music_title": "Музыкаға тапсырыс",
                 "music_desc": "Эфирде сіздің трекіңізді қосамыз (тек YouTube сілтемесі)",
+                "voice_title": "Дауыстық донат",
+                "voice_sub": "Эфирде хабарламаңызды оқу",
                 "kaspi_sub": "Экранға алерт шығады",
                 "da_sub": "Кез келген елден донат • Алерт бар",
                 "vtb_sub": "Картаға тікелей аударым • Алертсіз",
@@ -541,6 +564,8 @@
                 "pushup_desc": "Streamer does push-ups live on stream",
                 "music_title": "Music Request",
                 "music_desc": "Play your track on broadcast (YouTube link required)",
+                "voice_title": "Voice Donation",
+                "voice_sub": "Text-to-speech message on stream",
                 "kaspi_sub": "On-screen alert included",
                 "da_sub": "Donate from anywhere • With alert",
                 "vtb_sub": "Direct card transfer • No alert",
@@ -579,8 +604,10 @@
                 document.getElementById('floating-btns').classList.add('visible');
             }, 400);
 
-            const methods = ['method-kaspi', 'method-da', 'method-vtb', 'method-paypal'];
+            // Скрываем все методы оплаты перед показом нужных
+            const methods = ['method-voice', 'method-kaspi', 'method-da', 'method-vtb', 'method-paypal'];
             methods.forEach(id => document.getElementById(id).style.display = 'none');
+            
             document.getElementById('method-crypto').style.display = 'flex';
 
             const pricePushup = document.getElementById('price-pushup');
@@ -589,6 +616,7 @@
             if (curr === 'kzt') {
                 pricePushup.innerText = '50 ₸';
                 priceMusic.innerText = '250 ₸';
+                document.getElementById('method-voice').style.display = 'flex'; // Показываем голосовой донат
                 document.getElementById('method-kaspi').style.display = 'flex';
                 document.getElementById('method-paypal').style.display = 'flex';
             } else if (curr === 'rub') {
