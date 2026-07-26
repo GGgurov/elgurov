@@ -3,32 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>elgurov | Official Hub</title>
+    <title>Streamer Hub | Donations</title>
 
-    <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 
     <style>
         :root {
-            --bg-dark: #050509;
+            --bg-dark: #07070a;
+            --bg-card: rgba(15, 15, 20, 0.65);
             --primary-neon: #00f2fe;
-            --secondary-neon: #4facfe;
-            --kaspi-color: #f14635;
+            --primary-glow: rgba(0, 242, 254, 0.4);
+            --secondary-neon: #ff007f;
             --twitch-color: #9146FF;
             --tg-color: #0088cc;
-            --vtb-color: #0072ce;
+            --kaspi-color: #f14635;
+            --vtb-color: #002882;
             --paypal-color: #0070ba;
             --crypto-color: #f3ba2f;
             --dalink-color: #ff3b8f;
-            --da-color: #ff5e00;
             --text-main: #ffffff;
-            --text-muted: #94a3b8;
-            --glass-bg: rgba(15, 18, 28, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --card-radius: 24px;
+            --text-muted: #8b9bb4;
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --border-neon: rgba(0, 242, 254, 0.2);
         }
 
         * {
@@ -52,1250 +51,689 @@
             position: relative;
         }
 
-        /* Dynamic Glow Background */
+        /* Киберпанк фон */
         body::before {
             content: '';
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             background: 
-                radial-gradient(circle at 15% 15%, rgba(0, 242, 254, 0.12) 0%, transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(241, 70, 53, 0.1) 0%, transparent 45%),
-                radial-gradient(circle at 50% 50%, rgba(145, 70, 255, 0.08) 0%, transparent 60%),
-                linear-gradient(135deg, #050509 0%, #0a0c16 100%);
-            z-index: -1;
-            animation: bgPulse 12s ease infinite alternate;
+                radial-gradient(circle at 15% 30%, rgba(0, 242, 254, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 70%, rgba(255, 0, 127, 0.06) 0%, transparent 40%),
+                linear-gradient(180deg, #07070a 0%, #0d0d14 100%);
+            z-index: -2;
         }
 
-        @keyframes bgPulse {
-            0% { transform: scale(1); opacity: 0.95; }
-            100% { transform: scale(1.04); opacity: 1; }
-        }
-
-        /* ===== LANGUAGE MODAL SELECTION ON START ===== */
-        .modal-overlay {
+        /* Сетка на фоне */
+        body::after {
+            content: '';
             position: fixed;
             top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: rgba(4, 5, 10, 0.85);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            z-index: 10000;
+            width: 100%; height: 100%;
+            background-image: linear-gradient(var(--border-glass) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--border-glass) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.15;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* ===== МОДАЛЬНЫЕ ОКНА (SETUP) ===== */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 1000;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            opacity: 1;
-            visibility: visible;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.4s ease;
         }
 
-        .modal-overlay.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .lang-modal {
-            background: rgba(20, 24, 38, 0.9);
-            border: 1px solid rgba(0, 242, 254, 0.3);
-            border-radius: 28px;
-            padding: 35px 25px;
+        .modal-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-neon);
+            border-radius: 24px;
+            padding: 30px 25px;
             width: 100%;
-            max-width: 420px;
+            max-width: 380px;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(0, 242, 254, 0.2), 0 0 40px rgba(0, 0, 0, 0.8);
-            transform: scale(1);
-            animation: modalPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 40px rgba(0, 242, 254, 0.1);
+            animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            display: none; /* Скрыты по умолчанию */
         }
 
-        @keyframes modalPop {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        .modal-card.active {
+            display: block;
         }
 
-        .lang-modal-icon {
-            font-size: 38px;
-            background: linear-gradient(135deg, var(--primary-neon), var(--secondary-neon));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
-        }
-
-        .lang-modal h2 {
-            font-size: 20px;
+        .modal-title {
+            font-size: 18px;
             font-weight: 700;
-            margin-bottom: 8px;
-            color: #fff;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            text-shadow: 0 0 10px var(--primary-glow);
         }
 
-        .lang-modal p {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 25px;
-            line-height: 1.5;
-        }
-
-        .lang-options {
-            display: flex;
-            flex-direction: column;
+        .grid-options {
+            display: grid;
             gap: 12px;
         }
 
-        .lang-select-btn {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 20px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            color: #fff;
+        .option-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            padding: 16px;
+            border-radius: 14px;
+            color: var(--text-main);
             font-family: 'Unbounded', sans-serif;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.25s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .lang-select-btn:hover {
-            background: rgba(0, 242, 254, 0.12);
-            border-color: var(--primary-neon);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 242, 254, 0.2);
-        }
-
-        .lang-select-btn:active {
-            transform: scale(0.98);
-        }
-
-        .lang-flag {
-            font-size: 22px;
-            margin-right: 12px;
-        }
-
-        .lang-info {
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-        }
-
-        /* ===== MAIN LAYOUT CONTAINER ===== */
-        .wrapper {
-            width: 100%;
-            max-width: 960px;
-            display: flex;
-            gap: 25px;
-            align-items: flex-start;
             justify-content: center;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            gap: 10px;
         }
 
-        .wrapper.visible {
+        .option-btn:hover {
+            background: rgba(0, 242, 254, 0.1);
+            border-color: var(--primary-neon);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--primary-glow);
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+        .main-card {
+            width: 100%;
+            max-width: 440px;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 28px;
+            padding: 35px 25px;
+            border: 1px solid var(--border-glass);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            display: none;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .main-card.visible {
+            display: block;
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Left/Main Column */
-        .main-card {
-            flex: 1;
-            max-width: 450px;
-            width: 100%;
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-radius: var(--card-radius);
-            padding: 30px 22px;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
-            text-align: center;
-            position: relative;
-        }
-
-        /* Top Header & Re-select Language Button */
-        .top-bar {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 10px;
-        }
-
-        .current-lang-badge {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-muted);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .current-lang-badge:hover {
-            background: rgba(0, 242, 254, 0.15);
-            color: var(--primary-neon);
-            border-color: var(--primary-neon);
-        }
-
-        /* Profile Header */
-        .profile-area { margin-bottom: 22px; }
-
+        /* ПРОФИЛЬ */
+        .profile-area { text-align: center; margin-bottom: 25px; }
         .avatar-wrapper {
-            width: 95px;
-            height: 95px;
+            width: 105px; height: 105px;
             border-radius: 50%;
-            margin: 0 auto 14px;
+            margin: 0 auto 15px;
+            padding: 4px;
+            background: linear-gradient(135deg, var(--primary-neon), var(--secondary-neon));
+            box-shadow: 0 0 25px var(--primary-glow);
             position: relative;
-            padding: 3px;
-            background: linear-gradient(135deg, var(--primary-neon), #7928ca, var(--kaspi-color));
-            background-size: 200% 200%;
-            animation: gradientShift 6s ease infinite;
-            box-shadow: 0 0 25px rgba(0, 242, 254, 0.3);
         }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
         .avatar-img {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             border-radius: 50%;
-            background: #000;
-            border: 3px solid #050509;
+            background: #111;
+            border: 3px solid var(--bg-dark);
             overflow: hidden;
         }
+        .avatar-img img { width: 100%; height: 100%; object-fit: cover; }
+        h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+        .subtitle { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
 
-        .avatar-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .status-dot {
-            width: 16px;
-            height: 16px;
-            background-color: #00ff88;
-            border-radius: 50%;
-            position: absolute;
-            bottom: 4px; right: 4px;
-            border: 3px solid #050509;
-            box-shadow: 0 0 10px #00ff88;
-        }
-
-        h1 {
-            font-size: 23px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            background: linear-gradient(to right, #ffffff, #c0c8df);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* ===== SIDE / TOP INTERACTIVE GOALS PANEL ===== */
-        .side-card {
-            flex: 0.9;
-            max-width: 420px;
-            width: 100%;
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-radius: var(--card-radius);
-            padding: 24px 20px;
-            border: 1px solid rgba(0, 242, 254, 0.25);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 242, 254, 0.08);
-            position: relative;
-        }
-
-        .widget-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .widget-header i {
-            font-size: 20px;
-            color: var(--primary-neon);
-        }
-
-        .widget-header h3 {
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-            color: #fff;
-            text-transform: uppercase;
-        }
-
-        .interactive-list {
+        /* ===== ИНТЕРАКТИВНЫЕ НАГРАДЫ (СТАТИКА) ===== */
+        .interactive-panel {
+            background: rgba(0, 242, 254, 0.03);
+            border: 1px solid var(--border-neon);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 25px;
             display: flex;
             flex-direction: column;
             gap: 12px;
-        }
-
-        .interactive-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            border-radius: 16px;
-            padding: 14px;
-            transition: all 0.25s ease;
             position: relative;
             overflow: hidden;
         }
-
-        .interactive-item:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(0, 242, 254, 0.3);
-            transform: translateY(-2px);
+        .interactive-panel::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--primary-neon);
+            box-shadow: 0 0 10px var(--primary-neon);
         }
-
-        .item-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 6px;
+        .reward-item {
+            display: flex; align-items: center; gap: 14px;
         }
-
-        .item-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .item-title i {
-            color: var(--primary-neon);
-        }
-
-        .item-price {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--primary-neon);
-            background: rgba(0, 242, 254, 0.1);
-            padding: 4px 10px;
+        .reward-icon {
+            width: 36px; height: 36px;
             border-radius: 10px;
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--primary-neon);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px;
             border: 1px solid rgba(0, 242, 254, 0.2);
-            white-space: nowrap;
+        }
+        .reward-info { flex: 1; }
+        .reward-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+        .reward-desc { font-size: 10px; color: var(--text-muted); line-height: 1.3;}
+        .reward-price { 
+            font-size: 11px; font-weight: 700; color: #fff; 
+            background: rgba(255,255,255,0.08); padding: 4px 8px; border-radius: 6px;
         }
 
-        .item-details {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 11px;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
+        /* ===== СПИСОК КНОПОК ===== */
+        .links-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
 
-        /* Highlight WebCam Notice */
-        .webcam-badge {
-            margin-top: 8px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: linear-gradient(135deg, rgba(255, 42, 109, 0.2), rgba(255, 107, 0, 0.2));
-            border: 1px solid rgba(255, 42, 109, 0.4);
-            color: #ff758c;
-            padding: 6px 10px;
-            border-radius: 8px;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        .webcam-badge i {
-            color: #ff2a6d;
-            animation: pulseCam 1.5s ease infinite;
-        }
-
-        @keyframes pulseCam {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.85); }
-        }
-
-        /* ===== LINKS BUTTONS LIST ===== */
-        .links-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 13px;
-        }
-
-        .link-item {
-            position: relative;
-        }
-
-        /* Base Button Styles */
         .btn-action {
-            display: flex;
-            align-items: center;
-            width: 100%;
+            display: flex; align-items: center; width: 100%;
             padding: 16px 18px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--glass-border);
-            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
             color: var(--text-main);
             text-decoration: none;
-            transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
-            cursor: pointer;
-            position: relative;
-            text-align: left;
-            user-select: none;
-        }
-
-        .btn-action i.main-icon {
-            font-size: 22px;
-            margin-right: 14px;
-            width: 30px;
-            text-align: center;
-            transition: transform 0.25s ease;
-        }
-
-        .btn-content {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-
-        .btn-title-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .btn-title {
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: -0.2px;
-        }
-
-        .btn-subtitle {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 11px;
-            color: var(--text-muted);
-            font-weight: 500;
-            margin-top: 3px;
-            letter-spacing: 0;
-            line-height: 1.3;
-        }
-
-        .alert-badge {
-            font-size: 9px;
-            font-weight: 700;
-            padding: 2px 7px;
-            border-radius: 6px;
-            letter-spacing: 0.2px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            white-space: nowrap;
-        }
-
-        .alert-badge.has-alert {
-            background: rgba(0, 255, 136, 0.15);
-            color: #00ff88;
-            border: 1px solid rgba(0, 255, 136, 0.3);
-        }
-
-        .alert-badge.no-alert {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--text-muted);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .arrow-icon {
-            font-size: 12px;
-            opacity: 0.5;
             transition: all 0.25s ease;
-            margin-left: 8px;
+            cursor: pointer; text-align: left;
+            position: relative; overflow: hidden;
         }
-
         .btn-action:hover {
-            background: rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.06);
             transform: translateY(-2px);
             border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
-
-        .btn-action:hover i.main-icon {
-            transform: scale(1.15);
-        }
-
-        .btn-action:hover .arrow-icon {
-            opacity: 1;
-            transform: translateX(3px);
-        }
-
         .btn-action:active { transform: scale(0.98); }
 
-        /* 1. DONATION ALERTS */
-        .btn-da {
-            background: linear-gradient(135deg, rgba(255, 94, 0, 0.2) 0%, rgba(255, 42, 109, 0.15) 100%);
-            border: 1px solid rgba(255, 94, 0, 0.5);
-            box-shadow: 0 6px 20px rgba(255, 94, 0, 0.15);
-        }
-        .btn-da i.main-icon { color: var(--da-color); }
-        .btn-da:hover {
-            background: linear-gradient(135deg, rgba(255, 94, 0, 0.3) 0%, rgba(255, 42, 109, 0.25) 100%);
-            border-color: rgba(255, 94, 0, 0.8);
-            box-shadow: 0 10px 25px rgba(255, 94, 0, 0.3);
-        }
+        .btn-action i.main-icon { font-size: 20px; margin-right: 14px; width: 26px; text-align: center; }
+        .btn-content { display: flex; flex-direction: column; flex: 1; }
+        .btn-title { font-size: 13.5px; font-weight: 700; }
+        .btn-subtitle { font-size: 10.5px; color: var(--text-muted); margin-top: 3px; }
+        .arrow-icon { font-size: 12px; opacity: 0.5; }
 
-        /* 2. ВТБ */
-        .btn-vtb {
-            background: linear-gradient(135deg, rgba(0, 114, 206, 0.15) 0%, rgba(0, 40, 130, 0.1) 100%);
-            border: 1px solid rgba(0, 114, 206, 0.4);
-        }
-        .btn-vtb i.main-icon { color: var(--vtb-color); }
-        .btn-vtb:hover {
-            background: linear-gradient(135deg, rgba(0, 114, 206, 0.25) 0%, rgba(0, 40, 130, 0.2) 100%);
-            border-color: rgba(0, 114, 206, 0.7);
-        }
-
-        /* 3. PAYPAL */
-        .btn-paypal {
-            background: linear-gradient(135deg, rgba(0, 112, 186, 0.15) 0%, rgba(0, 48, 135, 0.1) 100%);
-            border: 1px solid rgba(0, 112, 186, 0.4);
-        }
-        .btn-paypal i.main-icon { color: var(--paypal-color); }
-        .btn-paypal:hover {
-            background: linear-gradient(135deg, rgba(0, 112, 186, 0.25) 0%, rgba(0, 48, 135, 0.2) 100%);
-            border-color: rgba(0, 112, 186, 0.7);
-        }
-
-        /* 4. KASPI BANK */
-        .btn-kaspi {
-            background: linear-gradient(135deg, rgba(241, 70, 53, 0.2) 0%, rgba(180, 20, 20, 0.12) 100%);
-            border: 1px solid rgba(241, 70, 53, 0.5);
-            box-shadow: 0 6px 20px rgba(241, 70, 53, 0.15);
-        }
+        /* Специфичные стили кнопок */
+        .btn-kaspi { border-color: rgba(241, 70, 53, 0.4); }
+        .btn-kaspi:hover { background: rgba(241, 70, 53, 0.08); box-shadow: 0 0 15px rgba(241, 70, 53, 0.2); }
         .btn-kaspi i.main-icon { color: var(--kaspi-color); }
-        .btn-kaspi:hover {
-            background: linear-gradient(135deg, rgba(241, 70, 53, 0.3) 0%, rgba(180, 20, 20, 0.2) 100%);
-            border-color: rgba(241, 70, 53, 0.8);
-            box-shadow: 0 10px 25px rgba(241, 70, 53, 0.3);
-        }
 
-        /* SECTION DIVIDER FOR PROCHIE */
-        .section-divider {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 14px 0 6px;
+        .btn-da {
+            background: linear-gradient(135deg, rgba(255, 159, 67, 0.1), rgba(255, 42, 109, 0.1));
+            border-color: rgba(255, 71, 87, 0.4);
         }
-        .section-divider span {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--text-muted);
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            white-space: nowrap;
-        }
-        .section-divider::before,
-        .section-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.12);
-        }
+        .btn-da:hover { box-shadow: 0 0 20px rgba(255, 71, 87, 0.25); border-color: #ff4757; }
+        .btn-da i.main-icon { color: #ff4757; }
 
-        /* 5. TWITCH */
-        .btn-twitch i.main-icon { color: var(--twitch-color); }
-        .live-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            background: rgba(145, 70, 255, 0.25);
-            border: 1px solid rgba(145, 70, 255, 0.4);
-            border-radius: 8px;
-            padding: 3px 7px;
-            font-size: 9px;
-            font-weight: 700;
-            color: #bf94ff;
-            margin-left: auto;
-        }
-        .live-badge .live-dot {
-            width: 6px;
-            height: 6px;
-            background: #9146FF;
-            border-radius: 50%;
-            animation: livePulse 1.2s ease infinite;
-        }
-        @keyframes livePulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(0.7); }
-        }
+        .btn-vtb { border-color: rgba(0, 163, 255, 0.3); }
+        .btn-vtb i.main-icon { color: #00a3ff; }
 
-        /* 6. CRYPTO */
+        .btn-paypal i.main-icon { color: var(--paypal-color); }
+        
+        .btn-crypto { border-color: rgba(243, 186, 47, 0.3); }
         .btn-crypto i.main-icon { color: var(--crypto-color); }
 
-        /* 7. TELEGRAM & DALINK */
-        .btn-tg i.main-icon { color: var(--tg-color); }
-        .btn-dalink i.main-icon { color: var(--dalink-color); }
+        .btn-twitch i.main-icon { color: var(--twitch-color); }
+        
+        /* Разделитель */
+        .section-divider {
+            display: flex; align-items: center; gap: 12px; margin: 15px 0 5px;
+        }
+        .section-divider span {
+            font-size: 10px; font-weight: 700; color: var(--primary-neon);
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .section-divider::after {
+            content: ''; flex: 1; height: 1px;
+            background: linear-gradient(90deg, var(--border-neon), transparent);
+        }
 
-        /* ===== SUBMENU / ACCORDION FOR VTB DETAILS ===== */
+        /* Выпадающее меню ВТБ */
         .submenu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
-            background: rgba(0, 0, 0, 0.4);
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 0 0 16px 16px;
-            margin-top: -6px;
-            opacity: 0;
-            border: 0px solid transparent;
+            margin-top: -8px; padding: 0 10px;
         }
-
         .submenu.open {
-            opacity: 1;
-            padding: 12px 10px 10px 10px;
-            margin-bottom: 4px;
-            border: 1px solid var(--glass-border);
-            border-top: none;
+            padding: 15px 10px 10px; margin-bottom: 5px;
+            border: 1px solid var(--border-glass); border-top: none;
         }
-
         .sub-btn {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            padding: 11px 14px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 12px;
-            color: #fff;
-            font-size: 11px;
-            font-family: 'Unbounded', sans-serif;
-            cursor: pointer;
-            margin-bottom: 6px;
-            transition: background 0.2s, transform 0.2s;
+            display: flex; justify-content: space-between; align-items: center;
+            width: 100%; padding: 12px 14px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 10px; color: #fff; font-size: 11.5px;
+            font-family: 'Unbounded', sans-serif; cursor: pointer; margin-bottom: 6px;
         }
+        .sub-btn:hover { background: rgba(0, 163, 255, 0.15); border-color: rgba(0, 163, 255, 0.4); }
 
-        .sub-btn:last-child { margin-bottom: 0; }
-        .sub-btn:hover {
-            background: rgba(255,255,255,0.09);
-            transform: scale(1.01);
-        }
-        .sub-btn i { font-size: 12px; color: var(--primary-neon); }
-
-        .btn-action.active {
-            border-radius: 18px 18px 0 0;
-            background: rgba(255, 255, 255, 0.06);
-        }
-        .btn-action.active .arrow-icon {
-            transform: rotate(180deg);
-            opacity: 1;
-        }
-
-        /* ===== POPUP / TOAST NOTIFICATION ===== */
-        #toast-container {
+        /* ===== ПЛАВАЮЩИЕ КНОПКИ ===== */
+        .floating-socials {
             position: fixed;
-            top: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 99999;
-            width: 90%;
-            max-width: 420px;
-            pointer-events: none;
-        }
-
-        .toast {
-            background: rgba(10, 14, 26, 0.96);
-            color: #fff;
-            padding: 16px 20px;
-            border-radius: 18px;
-            border: 1px solid var(--primary-neon);
-            box-shadow: 0 15px 40px rgba(0, 242, 254, 0.25), 0 0 20px rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(15px);
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            transform: translateY(-100px) scale(0.9);
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            pointer-events: auto;
-        }
-
-        .toast.show {
-            transform: translateY(0) scale(1);
-            opacity: 1;
-        }
-
-        .toast-icon {
-            font-size: 22px;
-            color: var(--primary-neon);
-            margin-top: 2px;
-            flex-shrink: 0;
-        }
-
-        .toast-content {
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 15px;
+            z-index: 50;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.5s ease;
         }
+        .floating-socials.visible { opacity: 1; pointer-events: all; }
 
-        .toast-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: #fff;
+        .float-btn {
+            width: 55px; height: 55px;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-glass);
+            color: #fff; font-size: 22px; text-decoration: none;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
         }
-
-        .toast-message {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 12px;
-            color: var(--text-muted);
-            line-height: 1.4;
+        .float-btn::before {
+            content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border-radius: 50%; z-index: -1; opacity: 0; transition: opacity 0.3s ease;
         }
+        .float-btn.ft-twitch::before { background: linear-gradient(45deg, var(--twitch-color), #b87aff); }
+        .float-btn.ft-tg::before { background: linear-gradient(45deg, var(--tg-color), #00c6ff); }
+        
+        .float-btn:hover { transform: scale(1.1) translateY(-3px); border-color: transparent; }
+        .float-btn:hover::before { opacity: 1; }
 
-        footer {
-            margin-top: 22px;
-            font-size: 11px;
-            color: var(--text-muted);
-            opacity: 0.5;
-            letter-spacing: 0.5px;
+        /* ===== УВЕДОМЛЕНИЯ (TOAST) ===== */
+        #toast-container {
+            position: fixed; top: 25px; left: 50%; transform: translateX(-50%); z-index: 9999;
         }
+        .toast {
+            background: rgba(15, 15, 20, 0.95);
+            color: #fff; padding: 14px 24px; border-radius: 14px;
+            border: 1px solid var(--primary-neon);
+            box-shadow: 0 10px 30px var(--primary-glow);
+            backdrop-filter: blur(10px);
+            display: flex; align-items: center; gap: 12px;
+            font-weight: 600; font-size: 12px; text-align: center;
+            transform: translateY(-100px); opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast i { color: var(--primary-neon); font-size: 18px; }
 
-        /* ===== MOBILE RESPONSIVENESS ===== */
-        @media (max-width: 850px) {
-            .wrapper {
-                flex-direction: column;
-                align-items: center;
-            }
-            .side-card {
-                max-width: 450px;
-                order: 1; /* Interactive widget top placement on mobile */
-            }
-            .main-card {
-                order: 2;
-            }
+        @media (max-width: 768px) {
+            .floating-socials { right: 15px; bottom: 25px; top: auto; transform: none; flex-direction: row; }
+            .float-btn { width: 48px; height: 48px; font-size: 18px; }
         }
 
         @media (max-width: 480px) {
-            body { padding: 12px; }
-            .main-card, .side-card {
-                padding: 24px 16px;
-                border-radius: 20px;
-            }
-            h1 { font-size: 20px; }
-            .btn-action { padding: 15px 14px; }
-            .btn-title { font-size: 13px; }
-            .btn-subtitle { font-size: 10px; }
-            .lang-modal { padding: 28px 18px; }
+            body { padding: 15px; align-items: flex-start; }
+            .main-card { padding: 25px 20px; border-radius: 20px; margin-bottom: 80px; }
+            .modal-card { padding: 25px 20px; }
+            .reward-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .reward-price { align-self: flex-start; }
+            .btn-action { padding: 14px 16px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== LANGUAGE SELECTION OVERLAY (FIRST ENTRY) ===== -->
-    <div class="modal-overlay" id="langModalOverlay">
-        <div class="lang-modal">
-            <div class="lang-modal-icon">
-                <i class="fa-solid fa-language"></i>
+    <!-- OVERLAY ДЛЯ ПЕРВИЧНОЙ НАСТРОЙКИ -->
+    <div class="overlay" id="setup-overlay">
+        <!-- МОДАЛКА 1: ЯЗЫК -->
+        <div class="modal-card active" id="modal-lang">
+            <h2 class="modal-title">Select Language / Выберите язык</h2>
+            <div class="grid-options">
+                <button class="option-btn" onclick="selectLang('ru')">🇷🇺 Русский</button>
+                <button class="option-btn" onclick="selectLang('kz')">🇰🇿 Қазақша</button>
+                <button class="option-btn" onclick="selectLang('en')">🇬🇧 English</button>
             </div>
-            <h2 id="modalTitle">Выберите язык / Тілді таңдаңыз</h2>
-            <p id="modalDesc">Choose your preferred language to continue / Выберите язык для удобной навигации</p>
+        </div>
 
-            <div class="lang-options">
-                <button class="lang-select-btn" onclick="selectInitialLanguage('ru')">
-                    <div class="lang-info">
-                        <span class="lang-flag">🇷🇺</span>
-                        <span>Русский</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
-
-                <button class="lang-select-btn" onclick="selectInitialLanguage('kz')">
-                    <div class="lang-info">
-                        <span class="lang-flag">🇰🇿</span>
-                        <span>Қазақша</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
-
-                <button class="lang-select-btn" onclick="selectInitialLanguage('en')">
-                    <div class="lang-info">
-                        <span class="lang-flag">🇬🇧</span>
-                        <span>English</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
+        <!-- МОДАЛКА 2: ВАЛЮТА -->
+        <div class="modal-card" id="modal-curr">
+            <h2 class="modal-title" id="curr-title">Выберите валюту</h2>
+            <div class="grid-options">
+                <button class="option-btn" onclick="selectCurr('kzt')">₸ Тенге (KZT)</button>
+                <button class="option-btn" onclick="selectCurr('rub')">₽ Рубли (RUB)</button>
+                <button class="option-btn" onclick="selectCurr('usd')">$ Доллары (USD)</button>
+                <button class="option-btn" onclick="selectCurr('other')" id="curr-other">Другие способы</button>
             </div>
         </div>
     </div>
 
-    <!-- ===== MAIN CONTENT WRAPPER ===== -->
-    <div class="wrapper" id="mainWrapper">
+    <!-- ПЛАВАЮЩИЕ КНОПКИ -->
+    <div class="floating-socials" id="floating-btns">
+        <a href="https://www.twitch.tv/elgurov" target="_blank" class="float-btn ft-twitch"><i class="fa-brands fa-twitch"></i></a>
+        <a href="https://t.me/elgurov" target="_blank" class="float-btn ft-tg"><i class="fa-brands fa-telegram"></i></a>
+    </div>
 
-        <!-- MAIN HUB CARD -->
-        <div class="main-card">
-
-            <!-- Top bar with language switcher trigger -->
-            <div class="top-bar">
-                <div class="current-lang-badge" onclick="openLangModal()">
-                    <i class="fa-solid fa-globe"></i>
-                    <span id="currentLangLabel">🇷🇺 RU</span>
+    <!-- ОСНОВНОЙ КОНТЕНТ ЛЕНДИНГА -->
+    <div class="main-card" id="main-content">
+        
+        <div class="profile-area">
+            <div class="avatar-wrapper">
+                <div class="avatar-img">
+                    <!-- Заглушка аватара -->
+                    <img src="https://ui-avatars.com/api/?name=EL&background=0d0d14&color=00f2fe&size=200" alt="Streamer" />
                 </div>
             </div>
+            <h1>elgurov</h1>
+            <div class="subtitle" data-i18n="profile_sub">Live Streamer & Content Creator</div>
+        </div>
 
-            <!-- Profile Header -->
-            <div class="profile-area">
-                <div class="avatar-wrapper">
-                    <div class="avatar-img">
-                        <img src="avatar.jpg" alt="elgurov" onerror="this.src='https://ui-avatars.com/api/?name=elgurov&background=0D8ABC&color=fff&size=128'" />
+        <!-- ИНТЕРАКТИВНЫЙ БЛОК -->
+        <div class="interactive-panel">
+            <div class="reward-item">
+                <div class="reward-icon"><i class="fa-solid fa-dumbbell"></i></div>
+                <div class="reward-info">
+                    <div class="reward-title" data-i18n="pushup_title">Отжимания (в эфире с вебкой)</div>
+                    <div class="reward-desc" data-i18n="pushup_desc">Стример выполняет отжимания прямо на стриме</div>
+                </div>
+                <div class="reward-price">10 ₽ / 50 ₸ / ~$0.11</div>
+            </div>
+            <div class="reward-item" style="margin-top: 5px;">
+                <div class="reward-icon"><i class="fa-solid fa-music"></i></div>
+                <div class="reward-info">
+                    <div class="reward-title" data-i18n="music_title">Заказ вашей музыки</div>
+                    <div class="reward-desc" data-i18n="music_desc">Включаем ваш трек на трансляции</div>
+                </div>
+                <div class="reward-price">45 ₽ / 250 ₸ / ~$0.50</div>
+            </div>
+        </div>
+
+        <ul class="links-list" id="methods-list">
+            
+            <!-- ДИНАМИЧЕСКИЕ СПОСОБЫ -->
+
+            <!-- KASPI (KZT) -->
+            <li class="link-item method-item" id="method-kaspi">
+                <button class="btn-action btn-kaspi" onclick="copyKaspi()">
+                    <i class="fa-solid fa-mobile-screen main-icon"></i>
+                    <div class="btn-content">
+                        <span class="btn-title">Kaspi.kz</span>
+                        <span class="btn-subtitle" data-i18n="kaspi_sub">Есть алерт на экран</span>
                     </div>
-                    <div class="status-dot"></div>
-                </div>
-                <h1>elgurov</h1>
-            </div>
+                    <i class="fa-regular fa-copy arrow-icon"></i>
+                </button>
+            </li>
 
-            <!-- LINKS LIST -->
-            <ul class="links-list">
+            <!-- DONATIONALERTS (RUB, USD, OTHER) -->
+            <li class="link-item method-item" id="method-da">
+                <a href="#" target="_blank" class="btn-action btn-da">
+                    <i class="fa-solid fa-fire main-icon"></i>
+                    <div class="btn-content">
+                        <span class="btn-title">DonationAlerts</span>
+                        <span class="btn-subtitle" data-i18n="da_sub">Донат из любой страны • Есть алерт</span>
+                    </div>
+                    <i class="fa-solid fa-bolt arrow-icon"></i>
+                </a>
+            </li>
 
-                <!-- 1. DONATION ALERTS -->
-                <li class="link-item">
-                    <a href="https://www.donationalerts.com/r/elgurov" target="_blank" class="btn-action btn-da">
-                        <i class="fa-solid fa-fire main-icon"></i>
+            <!-- VTB (RUB) -->
+            <li class="link-item method-item" id="method-vtb">
+                <div class="expand-container">
+                    <button class="btn-action btn-vtb toggle-menu">
+                        <i class="fa-solid fa-building-columns main-icon"></i>
                         <div class="btn-content">
-                            <div class="btn-title-row">
-                                <span class="btn-title">DonationAlerts</span>
-                                <span class="alert-badge has-alert"><i class="fa-solid fa-bell"></i> <span data-i18n="badge_alert">Алерт на экран</span></span>
-                            </div>
-                            <span class="btn-subtitle" data-i18n="da_sub">Донат из любой страны</span>
+                            <span class="btn-title">ВТБ</span>
+                            <span class="btn-subtitle" data-i18n="vtb_sub">Прямой перевод на карту • Без алерта</span>
                         </div>
-                        <i class="fa-solid fa-arrow-up-right-from-square arrow-icon"></i>
-                    </a>
-                </li>
-
-                <!-- 2. ВТБ -->
-                <li class="link-item">
-                    <div class="expand-container">
-                        <button class="btn-action btn-vtb toggle-menu">
-                            <i class="fa-solid fa-building-columns main-icon"></i>
-                            <div class="btn-content">
-                                <div class="btn-title-row">
-                                    <span class="btn-title" data-i18n="vtb_title">ВТБ</span>
-                                    <span class="alert-badge no-alert"><i class="fa-solid fa-bell-slash"></i> <span data-i18n="badge_no_alert">Нет алерта</span></span>
-                                </div>
-                                <span class="btn-subtitle" data-i18n="vtb_sub">Прямой перевод сразу на карту</span>
-                            </div>
-                            <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                    </button>
+                    <div class="submenu">
+                        <button class="sub-btn" onclick="copyStandard('2204360100149580')">
+                            <span data-i18n="vtb_card">Карта: 2204...9580</span> <i class="fa-regular fa-copy"></i>
                         </button>
-                        <div class="submenu">
-                            <button class="sub-btn" onclick="copyToClipboard('2204360100149580', 'vtb_card_toast_title', 'vtb_card_toast_desc')">
-                                <span data-i18n="vtb_card">Карта: 2204...9580</span> <span><i class="fa-regular fa-copy"></i></span>
-                            </button>
-                            <button class="sub-btn" onclick="copyToClipboard('VLADISLAV GUROV', 'vtb_name_toast_title', 'vtb_name_toast_desc')">
-                                <span data-i18n="vtb_name">Имя: VLADISLAV GUROV</span> <span><i class="fa-regular fa-copy"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- 3. PAYPAL -->
-                <li class="link-item">
-                    <button class="btn-action btn-paypal" onclick="copyToClipboard('newgurov2022@gmail.com', 'paypal_toast_title', 'paypal_toast_desc')">
-                        <i class="fa-brands fa-paypal main-icon"></i>
-                        <div class="btn-content">
-                            <div class="btn-title-row">
-                                <span class="btn-title">PayPal</span>
-                            </div>
-                            <span class="btn-subtitle" data-i18n="paypal_sub">Перевод для международных донатов</span>
-                        </div>
-                        <i class="fa-regular fa-copy arrow-icon"></i>
-                    </button>
-                </li>
-
-                <!-- 4. KASPI BANK -->
-                <li class="link-item">
-                    <button class="btn-action btn-kaspi" onclick="copyKaspiNumber()">
-                        <i class="fa-solid fa-wallet main-icon"></i>
-                        <div class="btn-content">
-                            <div class="btn-title-row">
-                                <span class="btn-title">Kaspi.kz</span>
-                                <span class="alert-badge has-alert"><i class="fa-solid fa-bell"></i> <span data-i18n="badge_alert">Алерт на экран</span></span>
-                            </div>
-                            <span class="btn-subtitle" data-i18n="kaspi_sub">Прямой перевод Kaspi Gold (747 124 27 78)</span>
-                        </div>
-                        <i class="fa-regular fa-copy arrow-icon"></i>
-                    </button>
-                </li>
-
-                <!-- SECTION DIVIDER: PROCHIE -->
-                <li class="link-item section-divider">
-                    <span data-i18n="divider_prochie">Прочие</span>
-                </li>
-
-                <!-- 5. TWITCH -->
-                <li class="link-item">
-                    <a href="https://www.twitch.tv/elgurov" target="_blank" class="btn-action btn-twitch">
-                        <i class="fa-brands fa-twitch main-icon"></i>
-                        <div class="btn-content">
-                            <span class="btn-title" data-i18n="twitch_title">Twitch Канал</span>
-                            <span class="btn-subtitle" data-i18n="twitch_sub">Прямые трансляции тут</span>
-                        </div>
-                        <div class="live-badge">
-                            <div class="live-dot"></div>
-                            LIVE
-                        </div>
-                    </a>
-                </li>
-
-                <!-- 6. КРИПТА -->
-                <li class="link-item">
-                    <button class="btn-action btn-crypto" onclick="copyToClipboard('0x06a300e8b8c459ae210432203bdf12e02e301798', 'crypto_toast_title', 'crypto_toast_desc')">
-                        <i class="fa-solid fa-coins main-icon"></i>
-                        <div class="btn-content">
-                            <span class="btn-title" data-i18n="crypto_title">Крипта (USDT BEP20)</span>
-                            <span class="btn-subtitle" data-i18n="crypto_sub">Скопировать адрес кошелька</span>
-                        </div>
-                        <i class="fa-regular fa-copy arrow-icon"></i>
-                    </button>
-                </li>
-
-                <!-- 7. TELEGRAM -->
-                <li class="link-item">
-                    <a href="https://t.me/elgurov" target="_blank" class="btn-action btn-tg">
-                        <i class="fa-brands fa-telegram main-icon"></i>
-                        <div class="btn-content">
-                            <span class="btn-title" data-i18n="tg_title">Telegram Канал</span>
-                            <span class="btn-subtitle" data-i18n="tg_sub">Анонсы и общение</span>
-                        </div>
-                        <i class="fa-solid fa-chevron-right arrow-icon"></i>
-                    </a>
-                </li>
-
-                <!-- 8. DALINK -->
-                <li class="link-item">
-                    <a href="https://dalink.to/elgurov" target="_blank" class="btn-action btn-dalink">
-                        <i class="fa-solid fa-link main-icon"></i>
-                        <div class="btn-content">
-                            <span class="btn-title">Dalink</span>
-                            <span class="btn-subtitle" data-i18n="dalink_sub">Альтернативный сбор</span>
-                        </div>
-                        <i class="fa-solid fa-chevron-right arrow-icon"></i>
-                    </a>
-                </li>
-
-            </ul>
-
-            <footer>© elgurov</footer>
-        </div>
-
-        <!-- SIDE / TOP INTERACTIVE STREAM PRICE WIDGET -->
-        <div class="side-card">
-            <div class="widget-header">
-                <i class="fa-solid fa-bolt"></i>
-                <h3 data-i18n="widget_header">Интерактив на стриме</h3>
-            </div>
-
-            <div class="interactive-list">
-
-                <!-- Push-ups goal -->
-                <div class="interactive-item">
-                    <div class="item-top">
-                        <span class="item-title"><i class="fa-solid fa-dumbbell"></i> <span data-i18n="pushups_title">1 Отжимание</span></span>
-                        <span class="item-price">50 ₸ / 10 ₽ (~$0.11)</span>
-                    </div>
-                    <div class="item-details" data-i18n="pushups_desc">За каждые 50 тенге или 10 рублей выполняю 1 отжимание!</div>
-                    <div class="webcam-badge">
-                        <i class="fa-solid fa-video"></i>
-                        <span data-i18n="webcam_notice">Делаю с вебкой в эфире!</span>
                     </div>
                 </div>
+            </li>
 
-                <!-- Music request goal -->
-                <div class="interactive-item">
-                    <div class="item-top">
-                        <span class="item-title"><i class="fa-solid fa-music"></i> <span data-i18n="music_title">Заказ музыки</span></span>
-                        <span class="item-price">250 ₸ / 45 ₽ (~$0.55)</span>
+            <!-- PAYPAL (KZT, USD, OTHER) -->
+            <li class="link-item method-item" id="method-paypal">
+                <button class="btn-action btn-paypal" onclick="copyStandard('newgurov2022@gmail.com')">
+                    <i class="fa-brands fa-paypal main-icon"></i>
+                    <div class="btn-content">
+                        <span class="btn-title">PayPal</span>
+                        <span class="btn-subtitle" data-i18n="paypal_sub">Стандартный способ</span>
                     </div>
-                    <div class="item-details" data-i18n="music_desc">Включу твой трек прямо на стриме без очереди.</div>
-                </div>
+                    <i class="fa-regular fa-copy arrow-icon"></i>
+                </button>
+            </li>
 
-                <!-- Live Stream Support Note -->
-                <div class="interactive-item" style="border-color: rgba(0, 242, 254, 0.2);">
-                    <div class="item-top">
-                        <span class="item-title" style="color: var(--primary-neon);"><i class="fa-solid fa-star"></i> <span data-i18n="support_title">Поддержка стрима</span></span>
+            <!-- РАЗДЕЛИТЕЛЬ -->
+            <li class="link-item section-divider">
+                <span data-i18n="divider">Прочие способы</span>
+            </li>
+
+            <!-- ПРОЧИЕ СПОСОБЫ -->
+
+            <!-- TWITCH -->
+            <li class="link-item">
+                <a href="https://www.twitch.tv/elgurov" target="_blank" class="btn-action btn-twitch">
+                    <i class="fa-brands fa-twitch main-icon"></i>
+                    <div class="btn-content">
+                        <span class="btn-title" data-i18n="twitch_title">Twitch Канал</span>
+                        <span class="btn-subtitle" data-i18n="twitch_sub">Прямые трансляции и сабки</span>
                     </div>
-                    <div class="item-details" data-i18n="support_desc">
-                        Все средства идут на улучшение качества контента и стримов. Спасибо каждому за поддержку! ❤️
+                    <i class="fa-solid fa-arrow-right arrow-icon"></i>
+                </a>
+            </li>
+
+            <!-- CRYPTO -->
+            <li class="link-item method-item" id="method-crypto">
+                <button class="btn-action btn-crypto" onclick="copyStandard('0x06a300e8b8c459ae210432203bdf12e02e301798')">
+                    <i class="fa-solid fa-wallet main-icon"></i>
+                    <div class="btn-content">
+                        <span class="btn-title" data-i18n="crypto_title">Криптовалюта</span>
+                        <span class="btn-subtitle" data-i18n="crypto_sub">USDT BEP20</span>
                     </div>
-                </div>
+                    <i class="fa-regular fa-copy arrow-icon"></i>
+                </button>
+            </li>
 
-            </div>
-        </div>
-
+        </ul>
     </div>
 
-    <!-- TOAST NOTIFICATION CONTAINER -->
+    <!-- TOAST УВЕДОМЛЕНИЕ -->
     <div id="toast-container">
-        <div class="toast" id="copyToast">
-            <i class="fa-solid fa-circle-check toast-icon"></i>
-            <div class="toast-content">
-                <div class="toast-title" id="toastTitle">Успешно скопировано!</div>
-                <div class="toast-message" id="toastMessage">Можете перейти в приложение и отправить донат.</div>
-            </div>
+        <div class="toast" id="copy-toast">
+            <i class="fa-solid fa-circle-check"></i>
+            <span id="toast-message">Скопировано!</span>
         </div>
     </div>
 
-    <!-- ===== JAVASCRIPT LOGIC ===== -->
     <script>
-        // TRANSLATIONS DICTIONARY
+        // БАЗА ПЕРЕВОДОВ
         const translations = {
             ru: {
-                "modal_title": "Выберите язык",
-                "modal_desc": "Выберите удобный язык для дальнейшего перехода",
-                "current_lang": "🇷🇺 RU",
-                "badge_alert": "Есть алерт",
-                "badge_no_alert": "Нет алерта",
-                "da_sub": "Донат из любой страны",
-                "vtb_title": "ВТБ",
-                "vtb_sub": "Прямой перевод сразу на карту",
+                "curr_title": "Выберите валюту",
+                "curr_other": "Другие способы",
+                "profile_sub": "Стример & Контент-мейкер",
+                "pushup_title": "Отжимания (в эфире с вебкой)",
+                "pushup_desc": "Стример выполняет отжимания прямо на стриме",
+                "music_title": "Заказ вашей музыки",
+                "music_desc": "Включаем ваш трек на трансляции",
+                "kaspi_sub": "Есть алерт на экран",
+                "da_sub": "Донат из любой страны • Есть алерт",
+                "vtb_sub": "Прямой перевод на карту • Без алерта",
                 "vtb_card": "Карта: 2204...9580",
-                "vtb_name": "Имя: VLADISLAV GUROV",
-                "paypal_sub": "Перевод для международных донатов",
-                "kaspi_sub": "Прямой перевод Kaspi Gold (747 124 27 78)",
-                "divider_prochie": "Прочие",
+                "paypal_sub": "Стандартный способ",
+                "divider": "Прочие способы",
                 "twitch_title": "Twitch Канал",
-                "twitch_sub": "Прямые трансляции тут",
-                "crypto_title": "Крипта (USDT BEP20)",
-                "crypto_sub": "Скопировать адрес кошелька",
-                "tg_title": "Telegram Канал",
-                "tg_sub": "Анонсы и общение",
-                "dalink_sub": "Альтернативный сбор",
-                "widget_header": "Интерактив на стриме",
-                "pushups_title": "1 Отжимание",
-                "pushups_desc": "За каждые 50 тенге или 10 рублей выполняю 1 отжимание!",
-                "webcam_notice": "Делаю с вебкой в эфире!",
-                "music_title": "Заказ музыки",
-                "music_desc": "Включу твой трек прямо на стриме без очереди.",
-                "support_title": "Поддержка контента",
-                "support_desc": "Все донаты идут на развитие стримов и контента. Спасибо за поддержку! ❤️",
-                "kaspi_toast_title": "Номер Kaspi скопирован!",
-                "kaspi_toast_desc": "Можете перейти в приложение и отправить донат. Номер успешно скопирован",
-                "vtb_card_toast_title": "Номер карты ВТБ",
-                "vtb_card_toast_desc": "Номер карты ВТБ скопирован в буфер обмена!",
-                "vtb_name_toast_title": "Имя получателя ВТБ",
-                "vtb_name_toast_desc": "Имя VLADISLAV GUROV скопировано!",
-                "paypal_toast_title": "Email PayPal",
-                "paypal_toast_desc": "Email для перевода PayPal скопирован!",
-                "crypto_toast_title": "Крипто-адрес",
-                "crypto_toast_desc": "Адрес USDT BEP20 скопирован!"
+                "twitch_sub": "Прямые трансляции и сабки",
+                "crypto_title": "Криптовалюта",
+                "crypto_sub": "USDT BEP20",
+                "toast_kaspi": "Номер успешно скопирован. Можете перейти в приложение и отправить донат",
+                "toast_standard": "Успешно скопировано в буфер!"
             },
             kz: {
-                "modal_title": "Тілді таңдаңыз",
-                "modal_desc": "Ыңғайлы тілді таңдап, жалғастырыңыз",
-                "current_lang": "🇰🇿 KZ",
-                "badge_alert": "Экранда алерт бар",
-                "badge_no_alert": "Алерт жоқ",
-                "da_sub": "Кез келген елден донат жіберу",
-                "vtb_title": "ВТБ",
-                "vtb_sub": "Тікелей картаға аудару",
-                "vtb_card": "Карта: 2204...9580",
-                "vtb_name": "Аты-жөні: VLADISLAV GUROV",
-                "paypal_sub": "Халықаралық донаттар үшін",
-                "kaspi_sub": "Kaspi Gold тікелей аударымы (747 124 27 78)",
-                "divider_prochie": "Басқалары",
-                "twitch_title": "Twitch Арнасы",
-                "twitch_sub": "Тікелей эфирлер осында",
-                "crypto_title": "Крипта (USDT BEP20)",
-                "crypto_sub": "Әмиян мекенжайын көшіру",
-                "tg_title": "Telegram Арнасы",
-                "tg_sub": "Анонстар мен чат",
-                "dalink_sub": "Балама жинақ",
-                "widget_header": "Стримдегі интерактив",
-                "pushups_title": "1 Жерден итеру",
-                "pushups_desc": "Әрбір 50 теңге немесе 10 рубль үшін 1 рет жерден итеремін!",
-                "webcam_notice": "Эфирде веб-камерамен жасаймын!",
+                "curr_title": "Валютаны таңдаңыз",
+                "curr_other": "Басқа тәсілдер",
+                "profile_sub": "Стример & Контент-мейкер",
+                "pushup_title": "Жерден итеру (вебкамерамен)",
+                "pushup_desc": "Стример тікелей эфирде жерден итереді",
                 "music_title": "Музыкаға тапсырыс",
-                "music_desc": "Әніңізді стримде кезексіз қосамын.",
-                "support_title": "Контентті қолдау",
-                "support_desc": "Барлық донаттар стрим сапасын жақсартуға кетеді. Рақмет! ❤️",
-                "kaspi_toast_title": "Kaspi нөмірі көшірілді!",
-                "kaspi_toast_desc": "Қолданбаға өтіп, донат жібере аласыз. Нөмір сәтті көшірілді",
-                "vtb_card_toast_title": "ВТБ карта нөмірі",
-                "vtb_card_toast_desc": "ВТБ картасының нөмірі көшірілді!",
-                "vtb_name_toast_title": "ВТБ алушының аты-жөні",
-                "vtb_name_toast_desc": "VLADISLAV GUROV аты-жөні көшірілді!",
-                "paypal_toast_title": "PayPal Email",
-                "paypal_toast_desc": "PayPal почтасы көшірілді!",
-                "crypto_toast_title": "Крипто-мекенжай",
-                "crypto_toast_desc": "USDT BEP20 әмиян мекенжайы көшірілді!"
+                "music_desc": "Эфирде сіздің трекіңізді қосамыз",
+                "kaspi_sub": "Экранға алерт шығады",
+                "da_sub": "Кез келген елден донат • Алерт бар",
+                "vtb_sub": "Картаға тікелей аударым • Алертсіз",
+                "vtb_card": "Карта: 2204...9580",
+                "paypal_sub": "Стандартты тәсіл",
+                "divider": "Басқа тәсілдер",
+                "twitch_title": "Twitch Арнасы",
+                "twitch_sub": "Тікелей эфирлер",
+                "crypto_title": "Криптовалюта",
+                "crypto_sub": "USDT BEP20",
+                "toast_kaspi": "Нөмір сәтті көшірілді. Қосымшаға өтіп донат жібере аласыз",
+                "toast_standard": "Сәтті көшірілді!"
             },
             en: {
-                "modal_title": "Select Language",
-                "modal_desc": "Choose your preferred language to proceed",
-                "current_lang": "🇬🇧 EN",
-                "badge_alert": "Screen Alert",
-                "badge_no_alert": "No Alert",
-                "da_sub": "Donate from any country",
-                "vtb_title": "VTB",
-                "vtb_sub": "Direct transfer to card",
+                "curr_title": "Select Currency",
+                "curr_other": "Other methods",
+                "profile_sub": "Live Streamer & Content Creator",
+                "pushup_title": "Push-ups (Live on Cam)",
+                "pushup_desc": "Streamer does push-ups live on stream",
+                "music_title": "Music Request",
+                "music_desc": "Play your track on the broadcast",
+                "kaspi_sub": "On-screen alert included",
+                "da_sub": "Donate from anywhere • With alert",
+                "vtb_sub": "Direct card transfer • No alert",
                 "vtb_card": "Card: 2204...9580",
-                "vtb_name": "Name: VLADISLAV GUROV",
-                "paypal_sub": "For international donations",
-                "kaspi_sub": "Direct Kaspi Gold transfer (747 124 27 78)",
-                "divider_prochie": "Others",
+                "paypal_sub": "Standard method",
+                "divider": "Other methods",
                 "twitch_title": "Twitch Channel",
-                "twitch_sub": "Live streams here",
-                "crypto_title": "Crypto (USDT BEP20)",
-                "crypto_sub": "Copy wallet address",
-                "tg_title": "Telegram Channel",
-                "tg_sub": "Announcements & community",
-                "dalink_sub": "Alternative funding",
-                "widget_header": "Stream Interactive",
-                "pushups_title": "1 Push-up",
-                "pushups_desc": "For every 50 ₸ or 10 ₽ I do 1 push-up live!",
-                "webcam_notice": "Doing it live on webcam!",
-                "music_title": "Song Request",
-                "music_desc": "Play your track live on stream without queue.",
-                "support_title": "Support Channel",
-                "support_desc": "All donations go directly into improving stream quality. Thank you! ❤️",
-                "kaspi_toast_title": "Kaspi Number Copied!",
-                "kaspi_toast_desc": "You can open your banking app and donate. Number copied successfully",
-                "vtb_card_toast_title": "VTB Card Number",
-                "vtb_card_toast_desc": "VTB Card number copied to clipboard!",
-                "vtb_name_toast_title": "VTB Holder Name",
-                "vtb_name_toast_desc": "Name VLADISLAV GUROV copied!",
-                "paypal_toast_title": "PayPal Email",
-                "paypal_toast_desc": "PayPal transfer email copied!",
-                "crypto_toast_title": "Crypto Address",
-                "crypto_toast_desc": "USDT BEP20 address copied!"
+                "twitch_sub": "Live streams & subs",
+                "crypto_title": "Cryptocurrency",
+                "crypto_sub": "USDT BEP20",
+                "toast_kaspi": "Number copied successfully. You can open the app and send the donation",
+                "toast_standard": "Copied to clipboard!"
             }
         };
 
         let currentLang = 'ru';
+        let currentCurr = 'rub';
 
-        // Select initial language from modal
-        function selectInitialLanguage(lang) {
-            setLanguage(lang);
-            closeLangModal();
-            localStorage.setItem('elgurov_lang', lang);
-        }
-
-        function openLangModal() {
-            const modal = document.getElementById('langModalOverlay');
-            modal.classList.remove('hidden');
-        }
-
-        function closeLangModal() {
-            const modal = document.getElementById('langModalOverlay');
-            modal.classList.add('hidden');
-            document.getElementById('mainWrapper').classList.add('visible');
-        }
-
-        function setLanguage(lang) {
+        // 1. ВЫБОР ЯЗЫКА
+        function selectLang(lang) {
             currentLang = lang;
-            document.getElementById('currentLangLabel').innerText = translations[lang]["current_lang"];
-
-            // Translate elements with data-i18n
-            document.querySelectorAll('[data-i18n]').forEach(element => {
-                const key = element.getAttribute('data-i18n');
-                if (translations[lang] && translations[lang][key]) {
-                    element.innerText = translations[lang][key];
-                }
+            
+            // Применяем переводы
+            document.getElementById('curr-title').innerText = translations[lang]['curr_title'];
+            document.getElementById('curr-other').innerText = translations[lang]['curr_other'];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(translations[lang][key]) { el.innerText = translations[lang][key]; }
             });
+
+            // Переключение модалок
+            document.getElementById('modal-lang').classList.remove('active');
+            setTimeout(() => {
+                document.getElementById('modal-curr').classList.add('active');
+            }, 100);
         }
 
-        // On Page Load Check
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem('elgurov_lang');
-            if (savedLang && translations[savedLang]) {
-                setLanguage(savedLang);
-                closeLangModal();
-            } else {
-                // Show modal initially
-                document.getElementById('langModalOverlay').classList.remove('hidden');
-            }
-        });
+        // 2. ВЫБОР ВАЛЮТЫ И ФИЛЬТРАЦИЯ
+        function selectCurr(curr) {
+            currentCurr = curr;
+            
+            // Скрываем модалку и показываем контент
+            const overlay = document.getElementById('setup-overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                document.getElementById('main-content').classList.add('visible');
+                document.getElementById('floating-btns').classList.add('visible');
+            }, 400);
 
-        // Submenu Accordion Toggle for VTB
+            // Скрываем все динамические методы
+            const methods = ['method-kaspi', 'method-da', 'method-vtb', 'method-paypal'];
+            methods.forEach(id => document.getElementById(id).style.display = 'none');
+
+            // Показываем нужные в зависимости от валюты
+            if (curr === 'kzt') {
+                document.getElementById('method-kaspi').style.display = 'flex';
+                document.getElementById('method-paypal').style.display = 'flex';
+            } else if (curr === 'rub') {
+                document.getElementById('method-da').style.display = 'flex';
+                document.getElementById('method-vtb').style.display = 'block'; // Блок для выпадающего меню
+            } else { // USD и Другие
+                document.getElementById('method-paypal').style.display = 'flex';
+                document.getElementById('method-da').style.display = 'flex';
+            }
+            // Криптовалюта, Twitch всегда остаются в блоке "Прочие"
+        }
+
+        // ЛОГИКА АККОРДЕОНА (ВТБ)
         document.querySelectorAll('.toggle-menu').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
                 const submenu = this.nextElementSibling;
-
+                const icon = this.querySelector('.arrow-icon');
+                
                 if (submenu.classList.contains('open')) {
                     submenu.classList.remove('open');
                     submenu.style.maxHeight = null;
-                    this.classList.remove('active');
+                    icon.style.transform = 'rotate(0deg)';
                 } else {
                     submenu.classList.add('open');
-                    submenu.style.maxHeight = submenu.scrollHeight + 30 + "px";
-                    this.classList.add('active');
+                    submenu.style.maxHeight = submenu.scrollHeight + 20 + "px";
+                    icon.style.transform = 'rotate(180deg)';
                 }
             });
         });
 
-        // Kaspi Copy Functionality with Special Request Message
-        function copyKaspiNumber() {
-            const kaspiNum = '747 124 27 78';
-            copyTextToClipboard(kaspiNum, () => {
-                const title = translations[currentLang]['kaspi_toast_title'];
-                const desc = translations[currentLang]['kaspi_toast_desc'];
-                showToast(title, desc);
-            });
+        // ФУНКЦИИ КОПИРОВАНИЯ
+        function copyKaspi() {
+            copyToClipboard('747 124 27 78', translations[currentLang]['toast_kaspi']);
         }
 
-        // General Clipboard Copy
-        function copyToClipboard(textToCopy, titleKey, descKey) {
-            copyTextToClipboard(textToCopy, () => {
-                const title = translations[currentLang][titleKey];
-                const desc = translations[currentLang][descKey];
-                showToast(title, desc);
-            });
+        function copyStandard(text) {
+            copyToClipboard(text, translations[currentLang]['toast_standard']);
         }
 
-        function copyTextToClipboard(text, callback) {
+        function copyToClipboard(text, toastMsg) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(callback).catch(() => fallbackCopy(text, callback));
+                navigator.clipboard.writeText(text).then(() => showToast(toastMsg))
+                .catch(() => fallbackCopy(text, toastMsg));
             } else {
-                fallbackCopy(text, callback);
+                fallbackCopy(text, toastMsg);
             }
         }
 
-        function fallbackCopy(text, callback) {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.position = "fixed";
-            textArea.style.left = "-9999px";
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            try {
-                if (document.execCommand('copy')) callback();
-            } catch (err) {}
-            document.body.removeChild(textArea);
+        function fallbackCopy(text, toastMsg) {
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "fixed"; ta.style.left = "-9999px";
+            document.body.appendChild(ta); ta.focus(); ta.select();
+            try { if (document.execCommand('copy')) showToast(toastMsg); } catch (err) {}
+            document.body.removeChild(ta);
         }
 
         let toastTimeout;
-        function showToast(title, message) {
-            const toast = document.getElementById('copyToast');
-            document.getElementById('toastTitle').textContent = title;
-            document.getElementById('toastMessage').textContent = message;
-
+        function showToast(message) {
+            const toast = document.getElementById('copy-toast');
+            document.getElementById('toast-message').innerText = message;
             toast.classList.remove('show');
             clearTimeout(toastTimeout);
-            void toast.offsetWidth; 
+            void toast.offsetWidth; // Рефреш анимации
             toast.classList.add('show');
-
-            toastTimeout = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3500);
-
-            if ('vibrate' in navigator) navigator.vibrate([30, 50, 30]);
+            toastTimeout = setTimeout(() => toast.classList.remove('show'), 3500);
+            if ('vibrate' in navigator) navigator.vibrate(50);
         }
     </script>
 </body>
