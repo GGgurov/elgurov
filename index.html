@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Streamer Hub | Donations</title>
+    <title>Streamer Hub | elgurov</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,47 +56,35 @@
             transition: opacity 0.15s ease;
         }
 
-        .modal-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 30px 25px;
-            width: 100%;
-            max-width: 380px;
+        #modal-lang {
             text-align: center;
-            display: none; 
         }
 
-        .modal-card.active { display: block; }
-
-        .modal-title {
-            font-size: 18px;
+        #modal-lang .modal-title {
+            font-size: 22px;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
             color: var(--text-main);
+            text-shadow: 0 4px 15px rgba(255,255,255,0.1);
         }
 
-        .grid-options { display: grid; gap: 12px; }
-
-        .option-btn {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            padding: 16px;
-            border-radius: 12px;
-            color: var(--text-main);
-            font-family: 'Unbounded', sans-serif;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.15s ease;
+        .flags-container {
             display: flex;
-            align-items: center;
             justify-content: center;
+            gap: 25px;
         }
 
-        .option-btn:hover {
-            background: var(--hover-bg);
-            border-color: var(--border-hover);
+        .flag-btn {
+            font-size: 65px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+        }
+
+        .flag-btn:hover {
+            transform: scale(1.15) translateY(-5px);
         }
 
         /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
@@ -138,10 +126,96 @@
         }
         
         .avatar-img img { width: 100%; height: 100%; object-fit: cover; }
-        
         h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
-        
         .subtitle { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+        /* ===== HUB Layout ===== */
+        .donate-huge-btn {
+            width: 100%;
+            background: var(--text-main);
+            color: var(--bg-dark);
+            border: none;
+            padding: 22px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: 'Unbounded', sans-serif;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.2s ease;
+            margin-bottom: 25px;
+        }
+
+        .donate-huge-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+        .donate-huge-btn i { font-size: 22px; }
+
+        .divider {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .socials-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .social-huge-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 18px 10px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .social-huge-btn i { font-size: 28px; }
+        .social-huge-btn:hover {
+            background: var(--hover-bg);
+            border-color: var(--border-hover);
+            transform: translateY(-3px);
+        }
+
+        /* Hover эффекты брендов */
+        .social-huge-btn.twitch:hover { color: #bf94ff; border-color: #bf94ff; }
+        .social-huge-btn.tiktok:hover { color: #00f2fe; border-color: #00f2fe; }
+        .social-huge-btn.youtube:hover { color: #ff4e4e; border-color: #ff4e4e; }
+        .social-huge-btn.instagram:hover { color: #ff007f; border-color: #ff007f; }
+
+        /* ===== КНОПКА НАЗАД ===== */
+        .back-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'Unbounded', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 25px;
+            transition: color 0.2s ease;
+        }
+        .back-btn:hover { color: var(--text-main); }
 
         /* ===== ИНТЕРАКТИВНЫЕ НАГРАДЫ ===== */
         .interactive-panel {
@@ -184,7 +258,7 @@
             min-width: 60px; text-align: center;
         }
 
-        /* ===== СПИСОК КНОПОК ===== */
+        /* ===== СПИСОК КНОПОК ДОНАТА ===== */
         .links-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
 
         .btn-action {
@@ -197,6 +271,7 @@
             text-decoration: none;
             transition: all 0.15s ease;
             cursor: pointer; text-align: left;
+            font-family: 'Unbounded', sans-serif;
         }
         
         .btn-action:hover {
@@ -212,7 +287,6 @@
         .btn-subtitle { font-size: 10.5px; color: var(--text-muted); margin-top: 3px; }
         .arrow-icon { font-size: 12px; opacity: 0.5; transition: transform 0.15s ease; }
 
-        /* Выпадающее меню ВТБ */
         .submenu {
             max-height: 0; overflow: hidden;
             transition: max-height 0.2s ease;
@@ -285,7 +359,6 @@
         @media (max-width: 480px) {
             body { padding: 15px; align-items: flex-start; }
             .main-card { padding: 25px 20px; border-radius: 20px; margin-bottom: 80px; }
-            .modal-card { padding: 25px 20px; }
             .reward-price { min-width: auto; }
         }
     </style>
@@ -294,12 +367,12 @@
 
     <!-- OVERLAY ДЛЯ ПЕРВИЧНОЙ НАСТРОЙКИ (ТОЛЬКО ЯЗЫК) -->
     <div class="overlay" id="setup-overlay">
-        <div class="modal-card active" id="modal-lang">
-            <h2 class="modal-title">Select Language / Выберите язык</h2>
-            <div class="grid-options">
-                <button class="option-btn" onclick="selectLang('ru')">🇷🇺 Русский</button>
-                <button class="option-btn" onclick="selectLang('kz')">🇰🇿 Қазақша</button>
-                <button class="option-btn" onclick="selectLang('en')">🇬🇧 English</button>
+        <div id="modal-lang">
+            <h2 class="modal-title" data-i18n="choose_lang">Выберите язык</h2>
+            <div class="flags-container">
+                <button class="flag-btn" onclick="selectLang('ru')">🇷🇺</button>
+                <button class="flag-btn" onclick="selectLang('kz')">🇰🇿</button>
+                <button class="flag-btn" onclick="selectLang('en')">🇬🇧</button>
             </div>
         </div>
     </div>
@@ -310,9 +383,8 @@
         <a href="https://t.me/elgurov" target="_blank" class="float-btn"><i class="fa-brands fa-telegram"></i></a>
     </div>
 
-    <!-- ОСНОВНОЙ КОНТЕНТ ЛЕНДИНГА -->
-    <div class="main-card" id="main-content">
-        
+    <!-- HUB СТРАНИЦА (ВЫБОР: ДОНАТ ИЛИ СОЦСЕТИ) -->
+    <div class="main-card" id="hub-content">
         <div class="profile-area">
             <div class="avatar-wrapper">
                 <div class="avatar-img">
@@ -322,6 +394,40 @@
             <h1>elgurov</h1>
             <div class="subtitle" data-i18n="profile_sub">Live Streamer & Content Creator</div>
         </div>
+
+        <button class="donate-huge-btn" onclick="showDonate()">
+            <i class="fa-solid fa-gem"></i>
+            <span data-i18n="hub_donate">ПОДДЕРЖАТЬ / ДОНАТ</span>
+        </button>
+
+        <div class="divider" data-i18n="hub_or">МОИ СОЦСЕТИ</div>
+
+        <div class="socials-grid">
+            <a href="https://www.twitch.tv/elgurov" target="_blank" class="social-huge-btn twitch">
+                <i class="fa-brands fa-twitch"></i>
+                <span>Twitch</span>
+            </a>
+            <a href="https://www.tiktok.com/@elgurov" target="_blank" class="social-huge-btn tiktok">
+                <i class="fa-brands fa-tiktok"></i>
+                <span>TikTok</span>
+            </a>
+            <a href="https://www.youtube.com/@elgurov" target="_blank" class="social-huge-btn youtube">
+                <i class="fa-brands fa-youtube"></i>
+                <span>YouTube</span>
+            </a>
+            <a href="https://www.instagram.com/elgurov/" target="_blank" class="social-huge-btn instagram">
+                <i class="fa-brands fa-instagram"></i>
+                <span>Instagram</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА ДОНАТОВ -->
+    <div class="main-card" id="main-content">
+        
+        <button class="back-btn" onclick="showHub()">
+            <i class="fa-solid fa-arrow-left"></i> <span data-i18n="back_btn">Назад</span>
+        </button>
 
         <!-- ИНТЕРАКТИВНЫЙ БЛОК -->
         <div class="interactive-panel">
@@ -438,6 +544,10 @@
     <script>
         const translations = {
             ru: {
+                "choose_lang": "Выберите язык",
+                "hub_donate": "ПОДДЕРЖАТЬ / ДОНАТ",
+                "hub_or": "МОИ СОЦСЕТИ",
+                "back_btn": "Назад",
                 "profile_sub": "Стример & Контент-мейкер",
                 "pushup_title": "Отжимания (в эфире с вебкой)",
                 "pushup_desc": "Стример выполняет отжимания прямо на стриме",
@@ -456,6 +566,10 @@
                 "toast_standard": "Успешно скопировано в буфер!"
             },
             kz: {
+                "choose_lang": "Тілді таңдаңыз",
+                "hub_donate": "ҚОЛДАУ / ДОНАТ",
+                "hub_or": "МЕНІҢ ЖЕЛІЛЕРІМ",
+                "back_btn": "Артқа",
                 "profile_sub": "Стример & Контент-мейкер",
                 "pushup_title": "Жерден итеру (вебкамерамен)",
                 "pushup_desc": "Стример тікелей эфирде жерден итереді",
@@ -474,6 +588,10 @@
                 "toast_standard": "Сәтті көшірілді!"
             },
             en: {
+                "choose_lang": "Select Language",
+                "hub_donate": "SUPPORT / DONATE",
+                "hub_or": "MY SOCIALS",
+                "back_btn": "Back",
                 "profile_sub": "Live Streamer & Content Creator",
                 "pushup_title": "Push-ups (Live on Cam)",
                 "pushup_desc": "Streamer does push-ups live on stream",
@@ -505,12 +623,48 @@
             const overlay = document.getElementById('setup-overlay');
             overlay.style.opacity = '0';
             
-            // Очень быстрый переход к основной странице
+            // Плавный переход к Hub-странице
             setTimeout(() => {
                 overlay.style.display = 'none';
-                document.getElementById('main-content').classList.add('visible');
-                document.getElementById('floating-btns').classList.add('visible');
+                document.getElementById('hub-content').classList.add('visible');
             }, 150);
+        }
+
+        // Переход с Hub на страницу доната
+        function showDonate() {
+            const hub = document.getElementById('hub-content');
+            const main = document.getElementById('main-content');
+            
+            hub.style.opacity = '0';
+            hub.style.transform = 'translateY(10px)';
+            
+            setTimeout(() => {
+                hub.classList.remove('visible');
+                // Сброс стилей для обратного возвращения
+                hub.style.opacity = '1'; 
+                hub.style.transform = '';
+                
+                main.classList.add('visible');
+                document.getElementById('floating-btns').classList.add('visible');
+            }, 200);
+        }
+
+        // Возврат со страницы доната в Hub
+        function showHub() {
+            const hub = document.getElementById('hub-content');
+            const main = document.getElementById('main-content');
+            
+            main.style.opacity = '0';
+            main.style.transform = 'translateY(10px)';
+            
+            setTimeout(() => {
+                main.classList.remove('visible');
+                main.style.opacity = '1';
+                main.style.transform = '';
+                
+                document.getElementById('floating-btns').classList.remove('visible');
+                hub.classList.add('visible');
+            }, 200);
         }
 
         document.querySelectorAll('.toggle-menu').forEach(btn => {
